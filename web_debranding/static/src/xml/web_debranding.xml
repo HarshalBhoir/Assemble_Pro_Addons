@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+<t t-extend="mail.client_action">
+	<t t-jquery=".o_mail_request_permission" t-operation="inner">
+		<a href="#">Your permission is required to enable desktop notifications</a>.
+	</t>
+</t>
+
+<t t-extend="UserMenu">
+	<t t-jquery=".dropdown-menu" t-operation="replace">
+		<ul class="dropdown-menu">
+			<li><a href="#" data-menu="settings">Preferences</a></li>
+			<li><a href="#" data-menu="logout">Log out</a></li>
+		</ul>
+	</t>
+</t>
+
+<!--  Change About Odoo layout and Content  -->
+<!--<t t-extend="UserMenu.about">
+    <t t-jquery=".oe_activate_debug_mode" t-operation="replace"></t>
+    <t t-jquery=".navigation" t-operation="replace">
+        <ul class="list-inline text-center navigation">
+            <li class="active">
+                <a data-toggle="tab" href="#settings">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#email">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
+            </li>
+             <li>
+                <a data-toggle="tab" href="#social">
+                    <span class="glyphicon glyphicon-share"></span>
+                </a>
+            </li>
+        </ul>
+    </t>
+    <t t-jquery=".tab-content" t-operation="replace">
+        <div class="tab-content">
+            <div id="settings" class="tab-pane active">
+                <h4>Copyright © 2004-TODAY Odoo SA. All Rights Reserved.</h4>
+                <h4>By AquaGiraffe.</h4>
+                <p>Odoo is a trademark of the OpenERP SA Company.</p>
+                <p>Licenced under the terms of <a target="_blank" href="http://www.gnu.org/licenses/agpl.html" style="text-decoration: underline;">GNU Affero General Public License</a></p>
+                <p>For more information <a target="_blank" href="http://www.aqua-giraffe.com" style="text-decoration: underline;">Contact us</a></p>
+            </div>
+            <div id="email" class="tab-pane">
+                <h4>AquaGiraffe.</h4>
+                <p>
+                    404/lodha Supremus, Wagle Estate<br/>
+                    Road No.22, Thane West<br/>
+                    Mumbai - 400604<br/>
+                </p>
+                <a class='btn btn-link' href='http://www.aqua-giraffe.com'>Our website</a>
+            </div>
+            <div id="social" class="tab-pane">
+                <h4>Follow Us...</h4>
+                <a href="https://www.facebook.com/"><i class="fa fa-facebook-square fa-3x social-fb"></i></a>
+                <a href="https://twitter.com/"><i class="fa fa-twitter-square fa-3x social-tw"></i></a>
+                <a href="https://www.linkedin.com/"><i class="fa fa-linkedin-square fa-3x social-lk"></i></a>
+                <a href="https://www.youtube.com/"><i class="fa fa-youtube-square fa-3x social-gp"></i></a>
+                <a href="http://www.google.com"><i class="fa fa-rss-square fa-3x social-gp"></i></a>
+            </div>
+        </div>
+    </t>
+</t>-->
+
+</templates>

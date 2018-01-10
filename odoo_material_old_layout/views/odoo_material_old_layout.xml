@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="odoo_material_old_layout" name="odoo material theme assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/less" href="/odoo_material_old_layout/static/src/less/variables.less" t-ignore="true"/>
+        <link rel="stylesheet" type="text/less" href="/odoo_material_old_layout/static/src/less/bootstrap.less" t-ignore="true"/>
+        <link rel="stylesheet" type="text/less" href="/odoo_material_old_layout/static/src/less/custom.less" t-ignore="true"/>
+        <!--<script type="text/javascript" src="/odoo_material_old_layout/static/src/js/material_menu.js"/>-->
+    </xpath>
+</template>
+
+<!--<template id="odoo_material_old_layout.login_layout" name="Hide DB Select" inherit_id="web.login_layout">
+    <xpath expr="//div[@class='row']/div/div[2]" position="replace">
+    </xpath>
+</template>-->
+
+</data>
+</openerp>

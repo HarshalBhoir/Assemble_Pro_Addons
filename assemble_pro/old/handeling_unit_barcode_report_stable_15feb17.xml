@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="handeling_unit_barcode_document">
+		<!--<div class="page">
+			<t t-foreach="doc.sale_id.product_packaging_one2many" t-as="package_line">
+				<t t-foreach="product.get_sequence_serial()" t-as="l">
+					<div class="row" style="padding-left:20px;">
+						<strong t-field="product.default_code"/>
+						<br/>
+						<strong t-field="product.name"/>
+						<strong t-esc="', '.join(map(lambda x: x.name, product.attribute_value_ids))"/>
+						<br/>
+						<div style="width: 100%; float: left;">
+							<img t-if="product.default_code" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', product.get_sequence_barcode(), 400, 100)"/>
+						</div>
+						<br/>
+						<strong t-esc="l"/>
+					</div>
+					<p style="page-break-after:always;"></p>
+				</t>
+			</t>
+		</div>-->
+		<div class="page">
+			<t t-foreach="doc.sale_id.product_packaging_one2many" t-as="package_line">
+				<t t-set="curr_sequence" t-value="doc.get_sequence_barcode()"/>
+				<table class="table">
+					<tr>
+						<td style=" border-left: 1px solid black; border-top: 1px solid black;border-bottom: 1px solid black;" colspan="4">
+							Handling Unit ID Number<br/>
+							<h3>HLCP<t t-esc="curr_sequence"/></h3>
+						</td>
+						<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;" colspan="8">
+							<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128','H-HLCP'+curr_sequence, 400, 50)"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;" colspan="9" rowspan="2">
+							Commision Number<br/>
+							<h1><b><t t-esc="doc.commission_no"/></b></h1>
+						</td>
+						<!--<td style="border-bottom: 1px solid black; border-right: 1px solid black; " colspan="5">
+							  HU Nr./Total     Gross Weight
+						</td>-->
+						<td colspan="1">
+							Supplier
+						</td>
+						<td colspan="1" >
+							HU Nr./Total
+						</td>
+						<td style="border-right: 1px solid black;" colspan="1">
+							Gross Weight
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px  solid black;" colspan="1">
+							<h3>LCP</h3>
+						</td>
+						<td style="border-bottom: 1px solid black;" colspan="1">
+							<h3>1/1</h3>
+						</td>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;"  colspan="1">
+							<h3>0 kg</h3>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;" colspan="5" rowspan="2">
+							Handling Unit ID Description<br/>
+							<h3><t t-esc="package_line.name.name"/></h3>
+						</td>
+						<td colspan="2" >
+							Address
+						</td>
+						<td colspan="2">
+							Project
+						</td>
+						<td style=" border-right: 1px solid black;" colspan="3">
+							Hotline
+						</td>
+					</tr>
+					<tr>
+						<td style=" border-bottom: 1px  solid black;" colspan="2">
+							
+						</td>
+						<td style=" border-bottom: 1px solid black;" colspan="2">
+							
+						</td>
+						<td style="border-right: 1px solid black; border-bottom: 1px solid black; max-width: 180px;" colspan="3">
+							<!-- <t t-esc="doc.sale_id.partner_shipping_id."/> -->
+							<div>
+								<t t-if="doc.sale_id.partner_shipping_id.name" t-esc="doc.sale_id.partner_shipping_id.name"/><br/>
+								<t t-if="doc.sale_id.partner_shipping_id.street" t-esc="doc.sale_id.partner_shipping_id.street"/>
+								<t t-if="doc.sale_id.partner_shipping_id.street2" t-esc="doc.sale_id.partner_shipping_id.street2"/>,
+								<t t-if="doc.sale_id.partner_shipping_id.city" t-esc="doc.sale_id.partner_shipping_id.city"/>-
+								<t t-if="doc.sale_id.partner_shipping_id.zip" t-esc="doc.sale_id.partner_shipping_id.zip"/>,
+								<t t-if="doc.sale_id.partner_shipping_id.state_id">
+									<!--<t t-esc="doc.sale_id.partner_shipping_id.state_id.name"/>,-->
+								</t>
+								<t t-if="doc.sale_id.partner_shipping_id.country_id" t-esc="doc.sale_id.partner_shipping_id.country_id.name"/>
+							</div>
+						<!--	<div t-field="doc.sale_id.partner_shipping_id" -->
+						<!--t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}' style=""/>-->
+						<!--	<div t-field="doc.sale_id.partner_shipping_id" -->
+						<!--t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}' style=""/>-->
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid black; border-right: 0px solid black;  border-left: 1px solid black;" colspan="5">
+							Supplier Purchase Order NO.<br/>
+							<h3><t t-esc="doc.purchase_order_no"/> / <t t-esc="package_line.code_name"/></h3>
+						</td>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 0px solid black;" colspan="5">
+							<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', doc.purchase_order_barcode+package_line.code_name, 400, 50)"/>
+						</td>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black; " colspan="2" rowspan="2" valign="middle">
+							<img t-if="doc.sale_id.partner_id.image" t-att-src="'data:image/png;base64,%s' % doc.sale_id.partner_id.image" style="max-width: 200px;"/> <!-- style="max-height: 45px;"  -->
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;" colspan="4">
+							Supplier Reference Information <br/>
+							<h3><t t-esc="doc.supplier_ref_no"/></h3>
+						</td>
+						<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;" colspan="6">
+							Central Warehouse
+							<h3><b>ECH-IND</b></h3>
+							<h4>ECH-INDIA</h4>
+							
+						</td>
+					</tr>
+				</table>
+			</t>
+		</div>
+		
+</template>
+	
+	<template id="handeling_unit_barcode_template">
+		<t t-call="report.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="assemble_pro.handeling_unit_barcode_document" />
+			</t>
+		</t>
+	</template>
+
+	<!--<report id="handeling_unit_barcode_report" name="assemble_pro.handeling_unit_barcode_template"
+		file="assemble_pro.handeling_unit_barcode_template" string="Handeling Unit Barcode" model="handeling.unit.barcode"
+		report_type="qweb-pdf" />-->
+	
+	
+	<report 
+	id="handeling_unit_barcode_report"
+	model="handeling.unit.barcode"
+	string="Handeling Unit Barcode"
+	report_type="qweb-pdf"
+	name="assemble_pro.handeling_unit_barcode_template"
+	file="assemble_pro.handeling_unit_barcode_template"
+	attachment_use="True"
+	attachment="(object.state in ('draft','done')) and ('HUB'+(object.name or '').replace('/','')+'.pdf')"
+/>
+</odoo>

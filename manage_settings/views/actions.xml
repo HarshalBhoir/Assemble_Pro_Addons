@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+<!-- Company Details -->
+<record id="act_manage_res_company" model="ir.actions.server">
+	<field name="name">Company Info</field>
+	<field name="sequence" eval="5"/>
+	<field name="state">code</field>
+	<field name="type">ir.actions.server</field>
+	<field name="model_id" ref="base.model_res_company"/>
+	<field name="code">action = pool.get('account.config.settings').open_company(cr, uid, None, context)</field>
+	<field name="condition">True</field>
+</record>
+
+<record id="action_manage_res_users" model="ir.actions.act_window">
+	<field name="name">Users</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">res.users</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="domain">[('id','!=', 1)]</field>
+</record>
+
+<record id="act_re_res_users_view1" model="ir.actions.act_window.view">
+	<field eval="10" name="sequence"/>
+	<field name="view_mode">tree</field>
+	<field name="view_id" ref="base.view_users_tree"/>
+	<field name="act_window_id" ref="action_manage_res_users"/>
+</record>
+
+<record id="act_re_res_users_view2" model="ir.actions.act_window.view">
+	<field eval="20" name="sequence"/>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="base.view_users_form"/>
+	<field name="act_window_id" ref="action_manage_res_users"/>
+</record>
+
+</odoo>

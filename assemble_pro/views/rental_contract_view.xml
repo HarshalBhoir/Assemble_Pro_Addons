@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_rental_contract_tree" model="ir.ui.view">
+	<field name="name">rental.contract.tree</field>
+	<field name="model">rental.contract</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name"/>
+			<field name="lpo"/>
+			<field name="lpo_end_date" string="LPO Expiry Date"/>
+			<field name="customer_id"/>
+			<field name="contact_id"/>
+			<field name="project_id" string="Project/Location"/>
+			<field name="product_id"/>
+			<field name="asset_id"/>
+			<field name="expected_date" type="date"/>
+			<field name="end_date" string="Expected Offhire Date"/>
+			<field name="state"/>
+		</tree>
+	</field>
+</record>
+
+<record id="view_rental_contract_form" model="ir.ui.view">
+	<field name="name">rental.contract.form</field>
+	<field name="model">rental.contract</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<button name="action_confirm" type="object" string="Create" states="draft" class="btn-primary"/>
+				<!--<button name="create_invoice" type="object" string="Create Invoice" states="confirm" class="btn-primary" confirm="Confirm Invoice Creation?"/>-->
+				<button name="action_validate" type="object" string="Close" states="confirm" class="btn-primary"/>
+				<button name="action_set_draft" type="object" string="Set to Draft" states="confirm, done"/>
+				<field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+			</header>
+			<sheet>
+				<div class="oe_button_box" name="button_box">
+					<button name="action_view_inv" string="Create/View Invoice(s)" type="object" class="oe_stat_button" icon="fa-truck" states="confirm,done" groups="titan.group_titan_asst_accountant,titan.group_titan_ops_manager"/>
+					<button name="action_view_dn" type="object" class="oe_stat_button" icon="fa-truck" states="confirm,done">
+						<field name="dn_count" widget="statinfo" string="Delivery Notes"/>
+					</button>
+				</div>
+				<div class="oe_title">
+					<h1>
+						<label for="name" />
+						<field name="name" readonly="0"/>
+					</h1>
+					<h2>
+						<label for="order_id" />
+						<field name="order_id" style="width: 65%;" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}" />
+					</h2>
+				</div>
+				<group col="4" colspan="2">
+					<field name="lpo" attrs="{'readonly': [['state', 'not in', ['draft','confirm']]], 'required': [['state', 'in', ['draft']]]}"/>
+					<label for="lpo_start_date" />
+					<div class="oe_inline inline_dates">
+						<field name="lpo_start_date" attrs="{'readonly': [['state', 'not in', ['draft','confirm']]], 'required': [['state', 'in', ['draft']]]}" nolabel="1" placeholder="LPO Start Date"/> to 
+						<field name="lpo_end_date" attrs="{'readonly': [['state', 'not in', ['draft','confirm']]], 'required': [['state', 'in', ['draft']]]}" nolabel="1" placeholder="LPO End Date"/>
+					</div>
+					<field name="customer_id" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}" domain="[('is_company','=',True)]"/>
+					<field name="payment_term_id" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}"/>
+					<field name="project_id" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}" domain="[('partner_id','=',customer_id)]"/>
+					<field name="ordered_by_id" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}"/>
+					<field name="contact_id" attrs="{'readonly': [['state', 'not in', ['draft']]], 'required': [['state', 'in', ['draft']]]}" domain="[('parent_id','=',customer_id)]" />
+					<field name="expected_date" attrs="{'readonly': [['state', 'not in', ['draft']]]}" required="1"/>
+					<field name="delivered_by_id" attrs="{'readonly': [['state', 'not in', ['draft','confirm']]]}" />
+					<field name="delivered_date" attrs="{'readonly': [['state', 'not in', ['draft','confirm']]]}" />
+				</group>
+				<group col="4" colspan="2" string="Receiver Details">
+					<field name="received_by_id" attrs="{'readonly': [('state', 'not in', ['draft','confirm'])]}" domain="[('parent_id','=',customer_id)]"/>
+					<field name="received_date" attrs="{'readonly': [('state', 'not in',['draft','confirm'])]}"/>
+					<field name="company_id" invisible="1"/>
+				</group>
+				<notebook>
+					<page string="Machine Details">
+						<group col="4" colspan="2">
+							<field name="product_id" required="1" attrs="{'readonly': [('state', 'not in',['draft'])]}"/>
+							<field name="charges" />
+							<field name="asset_id" domain="[('status','=','ready'),('product_id','=',product_id)]" attrs="{'readonly': [('state', 'not in',['draft','confirm'])]}"/>  <!-- attrs="{'required': [('state', 'not in', ['draft'])]}" -->
+							<field name="asset_description" />
+						</group>
+						<group string="Machine Change History" >
+							<field name="asset_change_ids" nolabel="1" context="{'default_product_id':product_id}">
+								<tree editable="bottom">
+									<field name="product_id" invisible="1"/>
+									<field name="asset_id" domain="[('rental','=',True),('product_id','=',product_id)]" required="1"/>
+									<field name="name" required="1"/>
+									<field name="date" required="1"/>
+									<field name="user_id" required="1"/>
+								</tree>
+							</field>
+						</group>
+					</page>
+					<page string="Remark">
+						<field name="notes" nolabel="1" placeholder="Rental Agreement Remarks"/>
+					</page>
+					<page string="Invoicing Details">
+						<group col="4" colspan="2" string="Rental Duration">
+							<field name="start_date" readonly="1"/>
+							<field name="end_date" readonly="1"/>
+						</group>
+						<group col="4" colspan="2" string="Product Rates">
+							<field name="price_day" readonly="1"/>
+							<field name="price_week" readonly="1"/>
+							<field name="price_month" readonly="1"/>
+							<field name="amount_total" />
+							<field name="dc_rate" readonly="1"/>
+							<field name="order_line_id" invisible="0"/>
+						</group>
+					</page>
+				</notebook>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers" groups="base.group_user" />
+				<field name="message_ids" widget="mail_thread" />
+			</div>
+		</form>
+	</field>
+</record>
+
+<record id="view_rental_contract_search" model="ir.ui.view">
+	<field name="name">rental.contract.search</field>
+	<field name="model">rental.contract</field>
+	<field name="arch" type="xml">
+		<search string="Search Rental Agreements">
+			<field name="name" string="Rental Agreement" filter_domain="[('name','ilike',self)]"/>
+			<field name="customer_id" string="Customer" filter_domain="[('customer_id','ilike',self)]"/>
+			<field name="contact_id" string="Contact" filter_domain="[('contact_id','ilike',self)]"/>
+			<field name="project_id" string="Project/Location" filter_domain="[('project_id','ilike',self)]"/>
+			<field name="asset_id" string="T#" filter_domain="[('asset_id','ilike',self)]"/>
+			<filter string="Draft" name="draft" domain="[('state','in',['draft'])]" />
+			<filter string="Created" name="confirm" domain="[('state','in',['confirm'])]" />
+			<filter string="Closed" name="done" domain="[('state','in',['done'])]" />
+			<filter string="Cancelled" name="cancel" domain="[('state','in',['cancel'])]" />
+			<separator/>
+			<group expand="0" string="Group By">
+				<filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+				<filter string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+				<filter string="Project/Location" domain="[]" context="{'group_by':'project_id'}"/>
+				<filter string="Contact" domain="[]" context="{'group_by':'contact_id'}"/>
+				<filter string="T#" domain="[]" context="{'group_by':'asset_id'}"/>
+			</group>
+		</search>
+	</field>
+</record>
+
+<record id="action_rental_contract" model="ir.actions.act_window">
+	<field name="name">Rental Agreement</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">rental.contract</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="help" type="html">
+		<p class="oe_view_nocontent_create">
+			Create a Rental Agreement.
+		</p>
+	</field>
+</record>
+
+</odoo>

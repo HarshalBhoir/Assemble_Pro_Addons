@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_partner_ext__form1" model="ir.ui.view">
+	<field name="name">res.partner.form</field>
+	<field name="inherit_id" ref="account.view_partner_property_form" />
+	<field name="model">res.partner</field>
+	<field name="arch" type="xml">
+		
+		<field name="website" position="after" >
+			<field name="supplier_ref" attrs="{'invisible':[('supplier','=',False)]}"/>
+		</field>
+		<field name="lang" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</field>
+		<field name="category_id" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</field>
+		
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+
+		<group name="acc_purchase" position="after">
+			<group string="Info" col="4" colspan="4">
+				<!--<field name="gstin_no" string="GSTIN No"/>
+				<field name="tax_class" string="Tax Class" widget="many2many_tags"/>-->
+				<field name="ecc_no" string="E.C.C No"/>
+				<field name="pan_no" string="PAN No"/>
+				<field name="vat_no" string="VAT TIN No"/>
+				<field name="cst_no" string="CST No"/>
+				<field name="cin_no" string="CIN No"/>
+				<field name="service_tax_no" string="Service Tax No"/>
+			</group>
+		</group>
+		
+		<group  name="fiscal_information" position="attributes">
+			<attribute name="invisible">0</attribute>
+		</group>
+		
+		 <xpath expr="//form/sheet/notebook/page[1]" position="after">
+			<page string="Order Terms">
+				<form string="Order Terms">
+				 <group col="4" colspan="2" string="Transport Details">
+					<field name="mot" /><!--attrs="{'invisible':[('customer','=',False)]}" -->
+					<!--<field name="vehicle_no" attrs="{'invisible':[('customer','=',False)]}" />
+					<field name="transporter"/>-->
+					<!--<field name="property_supplier_payment_term_id" attrs="{'invisible':[('supplier','=',False)]}"/>-->
+					<!--<field name="property_purchase_currency_id" attrs="{'invisible':[('supplier','=',False)]}"/>-->
+					<field name="freight" attrs="{'invisible':[('supplier','=',False)]}"/>
+					<field name="packaging_forwarding" attrs="{'invisible':[('supplier','=',False)]}"/>
+				 </group>
+				 <group string="Info" col="4" colspan="4">
+					<field name="gstin_no" string="GSTIN No"/>
+					<field name="tax_class" string="Tax Class" widget="many2many_tags"/>
+				 </group>
+				 <field name="delivery_terms" placeholder="Delivery Terms"/>
+				 <group string="Tax Details" col="4" colspan="4" >
+					 <field name="tax_detail2" string="Tax Details" nolabel="1" >
+						 <tree editable="top">
+							 <field name="name" />
+							 <field name="amount" />
+						 </tree>
+					 </field>
+				 </group>
+			   </form>
+			</page>
+		</xpath>
+		 
+	</field>
+</record>
+
+<record id="action_account_tax_class_configuration" model="ir.actions.act_window">
+    <field name="name">Tax Class</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">account.tax.class</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+</odoo>

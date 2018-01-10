@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- RM Stock Summary Report View -->
+<record id="view_rm_summary_report_form" model="ir.ui.view">
+	<field name="name">rm.stock.summary.report.form</field>
+	<field name="model">rm.stock.summary.report</field>
+	<field name="arch" type="xml">
+		<form>
+			<group col="4" colspan="4">
+				<group>
+					<field name="date_to" required="1"/>
+					<field name="company_id" required="1"/>
+				</group>
+				<group>
+					<field name="location_id" required="0"/>
+				</group>
+				<field name="date_from" invisible="1"/>
+				<field name="name" invisible="1"/>
+				<field name="attachment_id" invisible="1"/>
+			</group>
+			<footer>
+				<button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+				<button string="Close" class="btn-default" special="cancel" />
+			</footer>
+		</form>
+	</field>
+</record>
+
+<!-- RM Stock Summary Report Action-->
+<act_window id="action_rm_summary_report"
+	name="RM Stock Summary Report"
+	res_model="rm.stock.summary.report"
+	view_type="form" view_mode="form"
+	key2="client_action_multi" target="new"/>
+</odoo>

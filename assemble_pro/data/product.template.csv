@@ -1,0 +1,2 @@
+id,stock_id,name,default_code,list_price,standard_price,uom_po_id,tracking,purchase_ok,invoice_policy,purchase_method,tracking,type,track_service
+product_assemble_pro_1,0,Material price,Material price,0.01,0.01,Unit(s),none,TRUE,order,receive,No Tracking,product,manual

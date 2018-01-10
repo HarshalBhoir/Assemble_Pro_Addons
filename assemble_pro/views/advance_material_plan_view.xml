@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_advance_fg_material_tree" model="ir.ui.view">
+	<field name="name">advance.fg.material.tree</field>
+	<field name="model">advance.fg.material</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name"/>
+			<field name="date"/>
+			<field name="state"/>
+		</tree>
+	</field>
+</record>
+
+<record id="view_advance_fg_material_form" model="ir.ui.view">
+	<field name="name">advance.fg.material.form</field>
+	<field name="model">advance.fg.material</field>
+	<field name="arch" type="xml">
+		<form>
+	
+			<style>
+.openerp .fixed {
+	padding: 45px 0;
+}
+
+.openerp .oe_form header{
+	position: fixed;
+	z-index: 1;
+	width: 82%;
+}
+
+.oe_timesheet_weekly_today {
+    background-color: #c7ddef;
+}
+.o_datepicker{
+	width:50%;
+}
+			</style>
+			<header class="fixed">
+				<div class='col-xs-3'></div>
+				<div class='col-xs-5'><h1><center>Advance Finished Good Plan</center></h1></div>
+				<div class='col-xs-4'><field name="state" widget="statusbar"
+				statusbar_visible="draft,inprogress,done"/></div>
+				
+			</header>
+			<br/><br/>
+			<!--<h1><center>Advance Finished Good Plan</center></h1>-->
+			<div class="oe_button_box" name="button_box" states="done">
+				<button name="get_attached_docs" class="oe_stat_button"
+					type="object" icon="fa-archive">
+					<field string="RM Plan" name="attach_doc_count" widget="statinfo" />
+				</button>
+            </div>
+			<br/><br/>
+			<group col="4" colspan="2" attrs="{'invisible':[ ('state', '=', 'draft')]}">
+				<div class="oe_title">
+					<h1><field name="name" attrs="{'invisible':[('state','=','draft')]}" readonly="1"/></h1>
+				</div>
+			</group>
+			<group>
+				<group col="4" colspan="0">
+					
+				<group>
+					<field name="date" required='1' class="oe_title"/>
+					<label for="average_forecast"/>
+					<div class='oe_inline' label = 'Average Forecast' >
+						<field name="average_forecast" required='0' class='oe_inline'/>
+						<button name="compute_fg" string="(update)" type="object" class="oe_edit_only oe_link oe_inline"/>
+					</div>
+				</group>
+					
+					
+					<!--<field name="date" required='1' class="oe_title"/>
+					<label for="average_forecast"/>-->
+					<!--<button name="compute_fg" string="(update)" type="object" class="oe_edit_only oe_link oe_inline"/>-->
+					<field name="advance_rm_material_id" states="done" invisible="1"/>
+					<br/><br/><br/>
+					<button name="compute_rm_req" type="object" string="Compute RM Req"  class="btn-primary"  style="margin-right: 20px;font-size: 16px;" attrs="{'invisible':[('state','=','done')]}"/>
+				</group>
+
+			</group>
+			 <group string="Advance Finished Good" col="4" colspan="4" >
+				<field name="advance_finishgoods_one2many" string="Advance Finished Good" nolabel="1">
+					<tree editable="bottom">
+						<!--<field name="location_id" invisible="0"/>-->
+						<field name="sequence"/>
+						<field name="default_code"  invisible="0"/>
+						<field name="product_id"  invisible="0"/>
+						<field name="jan" class="oe_timesheet_weekly_today" />
+						<field name="feb"/>
+						<field name="mar"/>
+						<field name="apr"/>
+						<field name="may"/>
+						<field name="jun"/>
+						<field name="jul"/>
+						<field name="aug"/>
+						<field name="sep"/>
+						<field name="octo"/>
+						<field name="nov"/>
+						<field name="dec"/>
+						<field name="req_qty" required="0"/>
+						<field name="length"/>
+						<field name="stops"/>
+						<field name="fg_balance"/>
+						<field name="net_req_qty"/>
+					</tree>
+				</field>
+			</group>
+				
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_advance_fg_material" model="ir.actions.act_window">
+	<field name="name">Advance Finished Goods Plan</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">advance.fg.material</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+<record id="view_advance_rm_material_tree" model="ir.ui.view">
+	<field name="name">advance.rm.material.tree</field>
+	<field name="model">advance.rm.material</field>
+	<field name="arch" type="xml">
+		<tree create="0">
+			<field name="name"/>
+			<field name="fg_plan"/>
+			<field name="date"/>
+			<field name="state"/>
+		</tree>
+	</field>
+</record>
+
+<record id="view_advance_rm_material_form" model="ir.ui.view">
+	<field name="name">advance.rm.material.form</field>
+	<field name="model">advance.rm.material</field>
+	<field name="arch" type="xml">
+		<form create="0">
+			
+			<style>
+				.openerp .fixed {
+						padding: 45px 0;
+					}
+					
+					.openerp .oe_form header{
+					position: fixed;
+					z-index: 1;
+					width: 82%;
+					}
+			</style>
+			<header ><!-- class="fixed" -->
+				<div class='col-xs-3'></div>
+				<div class='col-xs-5'><h1><center>Advance Raw Material Plan</center></h1></div>
+				<div class='col-xs-4'><field name="state" widget="statusbar"  statusbar_visible="draft,inprogress,done"/></div>
+				
+			</header>
+			<br/><br/>
+			<!--<h1><center>Advance Raw Material Plan</center></h1>-->
+			<div class="oe_button_box" name="button_box" states="done"  >
+				<button name="get_attached_docs" class="oe_stat_button"
+					type="object" icon="fa-archive">
+					<field string="PO" name="attach_doc_count" widget="statinfo" />
+				</button>
+            </div>
+
+			<br/><br/>
+			<group col="4" colspan="2" attrs="{'invisible':[ ('fg_plan', '=', False)]}">
+				<!--<field name="name" />-->
+				<div class="oe_title">
+					<h1><field name="name" readonly='1'/></h1>
+				</div>
+				<!--<button name="button_dummy" states="draft"-->
+					<!--string="(update)" type="object" class="oe_edit_only oe_link"/>-->
+			</group>
+			<group col="4" colspan="2">
+				<group>
+					<field name="date" required='1'/>
+					<label for="average_forecast"/>
+					<div class='oe_inline' label = 'Average Forecast' >
+						<field name="average_forecast" required='0' class='oe_inline'/>
+						<button name="button_dummy" states="draft"
+						string="(update)" type="object" class="oe_edit_only oe_link oe_inline"/>
+					</div>
+				</group>
+				<group>
+					<field name="fg_plan" states="done"/>
+				</group>
+			</group>
+			<br/><br/>
+			<button name="generate_po" type="object" string="Generate PO"  class="btn-primary"  style="margin-right: 20px;font-size: 16px;" attrs="{'invisible':[('state','=','done')]}"/>
+			 <group string="Advance Raw Material" col="4" colspan="4" >
+				<field name="advance_rawmaterial_one2many" string="Advance Raw Material" nolabel="1" mode="tree"/>
+			</group>
+				
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+<record id="view_advance_rawmaterial_tree" model="ir.ui.view">
+	<field name="name">advance.rawmaterial.tree</field>
+	<field name="model">advance.rawmaterial</field>
+	<field name="arch" type="xml">
+		<tree editable="bottom">
+			<field name="default_code"  invisible="0"/>
+			<field name="product_id"  invisible="0"/>
+			<field name="supplier_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+			<field name="supplier_location"  invisible="0"/>
+			<field name="lead_time"  invisible="0"/>
+			<field name="custom_lead_time"  invisible="0"/>
+			<field name="total_lead_time"  invisible="0"/>
+			<field name="monthly_consumption"  invisible="0"/>
+			<field name="piece_ratio"/>
+			<field name="ss_days"/>
+			<field name="ss_qty"/>
+			<field name="oq_days"/>
+			<field name="req_qty"/>
+			<field name="order_qty"/>
+			<field name="moq"/>
+			<field name="wip_stock"/>
+			<field name="store_stock"/>
+			<field name="rol"/>
+			<field name="po_raise"/>
+			<field name="po_qty"/>
+			<field name="current_price"/>
+			<field name="landed_cost"/>
+			<field name="location_id"  invisible="1"/>
+		</tree>
+	</field>
+</record>
+
+<record id="action_advance_rm_material" model="ir.actions.act_window">
+	<field name="name">Advance Raw Material Plan</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">advance.rm.material</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+</odoo>

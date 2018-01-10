@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+	
+	
+<record id="action_res_users_extension" model="ir.actions.act_window">
+	<field name="name">Users</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">res.users</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="domain">[('id','!=', 1)]</field>
+</record>
+
+<record id="act_re_res_users_view1" model="ir.actions.act_window.view">
+	<field eval="10" name="sequence"/>
+	<field name="view_mode">tree</field>
+	<field name="view_id" ref="base.view_users_tree"/>
+	<field name="act_window_id" ref="action_res_users_extension"/>
+</record>
+
+<record id="act_re_res_users_view2" model="ir.actions.act_window.view">
+	<field eval="20" name="sequence"/>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="base.view_users_form"/>
+	<field name="act_window_id" ref="action_res_users_extension"/>
+</record>
+
+<record id="stock.menu_stock_sched" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="stock.menu_stock_procurement_action" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="mrp.menu_mrp_property_group_action" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="mrp.menu_mrp_planning" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="mrp.menu_pm_resources_config" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="sale.menu_sale_order_upselling" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="stock.menu_wms_barcode_nomenclature_all" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+<record id="base.sales_team_config" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('assemble_pro.group_assemble_pro_admin')])]"/>
+</record>
+
+
+
+<!-- Main Menu -->
+<menuitem name="Masters" id="assemble_pro_main_menu" sequence="2"/>
+
+<!-- Configuration Sub Menu -->
+<menuitem name="Configuration" id="assemble_pro_config" parent="assemble_pro_main_menu"/>
+
+<menuitem name="Customers" id="assemble_pro_customers_menu" action="base.action_partner_form"
+		  parent="assemble_pro_config" sequence="1"	/>
+
+<menuitem name="Suppliers" id="assemble_pro_supplier_menu" action="base.action_partner_supplier_form"
+		  parent="assemble_pro_config" sequence="5" />
+
+<menuitem name="Products" id="assemble_pro_product_menu2" action="product.product_template_action"
+		  parent="assemble_pro_config" sequence="6"/>
+ 
+<menuitem name="Product Categories" id="assemble_pro_product_category_menu" sequence="21"
+		  action="product.product_category_action_form" parent="assemble_pro_config"/>
+
+<menuitem name="Inventory Valuations" id="assemble_pro_quants_menu" action="stock.quantsact"
+		  parent="assemble_pro_config" sequence="22"/>
+
+<menuitem name="Payment Terms" id="assemble_pro_payment_terms_menu"  sequence="40"
+		  action="account.action_payment_term_form" parent="assemble_pro_config"/>
+
+<menuitem name="States" id="assemble_pro_states_menu" action="base.action_country_state"
+		  parent="assemble_pro_config" sequence="50"/>
+
+<menuitem name="Countries" id="assemble_pro_country_menu" action="base.action_country"
+		  parent="assemble_pro_config" sequence="51"/>
+
+<menuitem name="Locations" id="assemble_pro_cat_menus23" action="stock.action_location_form"
+		  parent="assemble_pro_config" sequence="55" />
+
+<menuitem name="Chart of Accounts" id="assemble_ac_menus23" action="account.action_account_form"
+		  parent="assemble_pro_config" sequence="56" />
+
+<menuitem name="Customer Pricelists" id="assemble_price_menus23"  sequence="57"
+		  action="product.product_pricelist_action2" parent="assemble_pro_config"/>
+
+<menuitem action="product.product_supplierinfo_type_action"  sequence="57"
+		  id="product.menu_product_pricelist_action2_purchase"
+		  parent="assemble_pro_config" groups="purchase.group_manage_vendor_price"/>
+ 
+<menuitem name="Exchange Rates" id="assemble_pro_currency_menu" parent="assemble_pro_config"
+		  action="base.action_currency_form" sequence="61"/>
+
+<menuitem name='ERP Users' id="assemble_pro_res_users_menu" parent="assemble_pro_config"
+		  sequence="98" action="action_res_users_extension" groups="base.group_hr_manager"/>
+
+<menuitem name="Company Configuration" id="assemble_pro_company_config_menu"  sequence="99"
+		  action="base.action_res_company_form" parent="assemble_pro_config"/>
+
+<menuitem name="Email Configuration" id="assemble_pro_emails_menu"
+		  parent="assemble_pro_config" sequence="101"/>
+
+<menuitem id="delivery.sale_menu_delivery" name="Delivery" parent="assemble_pro_config"
+		  groups="base.group_sale_manager" sequence="102"/>
+
+<menuitem action="delivery.action_delivery_carrier_form"  sequence="1"
+		  id="delivery.sale_menu_action_delivery_carrier_form" parent="delivery.sale_menu_delivery"/>
+
+<menuitem name="Packages" id="assemble_packages_menus24" action="product.action_packaging_view"
+		  parent="assemble_pro_config" sequence="66" />
+
+<menuitem name="Outgoing Email Servers" id="assemble_pro_outgoing_email_menu"
+		  action="base.action_ir_mail_server_list" parent="assemble_pro_emails_menu" sequence="1"/>
+
+<menuitem name="Email Templates" id="assemble_pro_eail_template_menu"  sequence="3"
+		  action="mail.action_email_template_tree_all" parent="assemble_pro_emails_menu"/>
+
+<menuitem name="Incoming Email Servers" id="assemble_pro_incoming_email_menu"
+		  action="fetchmail.action_email_server_tree" parent="assemble_pro_emails_menu" sequence="2"/>
+
+<!-- Claim Management Menu -->
+<menuitem name="Invoicing" id="sale.menu_sale_invoicing" parent="base.menu_base_partner"
+		  sequence="7"/>
+
+<menuitem name="Claim Management" id="assemble_pro_claim_menu"
+		  parent="base.menu_base_partner" sequence="6"/>
+
+<menuitem name="Claim Order" id="assemble_pro_claim_order_menu" action="claim_management_action"
+		  parent="assemble_pro_claim_menu" sequence="1"/>
+
+<menuitem name="Work Order" id="assemble_pro_work_menu2" action="work_order_action"
+		  parent="purchase.menu_procurement_management" sequence="6"/>
+
+<menuitem name="Material Plan" id="assemble_pro_material_plan" parent="base.menu_purchase_root"
+		  sequence="2"/>
+
+<menuitem name="Advance Finished Goods Plan" id="advance_fg_material_menu"  sequence="55"
+		  action="action_advance_fg_material" parent="assemble_pro_material_plan"/>
+
+<menuitem name="Advance Raw Material Plan" id="advance_rm_material_menu" sequence="56" 
+		  action="action_advance_rm_material" parent="assemble_pro_material_plan"/>
+
+<menuitem id="mrp.menu_mrp_manufacturing" name="Manufacturing" parent="base.menu_mrp_root"
+		  sequence="2"/>
+
+<menuitem name="Assembly Work Instructions" id="assemble_pro_assemble_instructions_menu"
+		  parent="base.menu_mrp_root" sequence="1"/>
+
+<menuitem name="Work Instructions" id="assemble_pro_assemble_work_menu" action="action_assemble_work"
+		  parent="assemble_pro_assemble_instructions_menu" sequence="1"	/>
+
+<menuitem name="Configuration" id="assemble_pro_assemble_instructions_config_menu" sequence="2"
+		  action="action_assemble_instructions" parent="assemble_pro_assemble_instructions_menu" />
+
+<menuitem name="Utilities" id="assemble_pro_utilities_main_menu" sequence="2"/>
+
+<menuitem name="Utilities" id="assemble_pro_utilities_menu" parent="assemble_pro_utilities_main_menu"
+		  sequence="2"/>
+
+<menuitem name="Sale Order Import" id="assemble_pro_sale_menu2" action="action_sale_order_import"
+		  parent="assemble_pro_utilities_menu" sequence="1"/>
+
+<menuitem name="Sales Declaration" id="sales_declaration_menu" action="action_sales_declaration"
+		  parent="assemble_pro_utilities_menu" sequence="2" />
+
+<menuitem name="OTD" id="assemble_pro_otd_menu" parent="assemble_pro_utilities_main_menu"
+		  sequence="4"/>
+
+<menuitem name="OTD Calculation" id="otd_calculation_menu" action="action_otd_calculation"
+		  parent="assemble_pro_otd_menu" sequence="1" />
+
+<menuitem name="OTD Delay" id="otd_delay_calculation_menu" action="action_otd_delay_calculation"
+		  parent="assemble_pro_otd_menu" sequence="2" />
+
+<menuitem name="Barcode" id="assemble_pro_barcode_menu" sequence="2"
+		  parent="assemble_pro_utilities_main_menu" />
+
+<menuitem name="Product Barcode" id="assemble_pro_product_label_id" sequence="1"
+		  action="product.product_normal_action_sell" parent="assemble_pro_barcode_menu"  />
+
+<menuitem name="Handling Unit Barcode" id="handeling_unit_barcode_menu"  sequence="2"
+		  action="action_handeling_unit_barcode" parent="assemble_pro_barcode_menu" />
+
+<menuitem name="Stock Barcode List" id="stock_barcode_list_menu" action="action_stock_barcode_list"
+		  parent="assemble_pro_barcode_menu" sequence="3" />
+
+<menuitem name="Human Resource" id="assemble_pro_hrd_menu" parent="assemble_pro_utilities_main_menu"
+		  sequence="3" groups="base.group_hr_manager,base.group_hr_user"/>
+
+<menuitem name="Overtime Details" id="hr_overtime_sheet_menu" action="action_hr_overtime_sheet"
+		  parent="assemble_pro_hrd_menu" sequence="1" />
+
+<menuitem name="Salary Calculation" id="hr_employee_export_menu" action="action_hr_employee_export"
+		  parent="assemble_pro_hrd_menu" sequence="33" />
+
+<menuitem name="Employee Bonus" id="hr_employee_bonus_menu" action="action_hr_employee_bonus"
+		  parent="assemble_pro_hrd_menu" sequence="34" />
+
+<menuitem name="Legal Compliance" id="legal_compliance_menu" action="action_legal_compliance"
+		  parent="assemble_pro_hrd_menu" sequence="58" />
+
+
+<!-- Reports Menu-->
+<menuitem name="Reports" id="assemble_pro_reports_main_menu" sequence="3"/>
+
+<menuitem name="Reports" id="assemble_pro_reports_menu" parent="assemble_pro_reports_main_menu"
+		  sequence="2"/>
+
+<menuitem name="Tally Export" id="tally_export_menu" action="action_tally_export"
+		  parent="assemble_pro_reports_menu" sequence="1" />
+<menuitem name="Sale Order" id="assemble_pro_sale_order_report" action="action_sale_order_report"
+		  parent="assemble_pro_reports_menu" sequence="2"/>
+<menuitem name="Pending Sale Order" id="assemble_pro_pending_sale_order_report"
+		  action="action_pending_sale_order_report"
+		  parent="assemble_pro_reports_menu" sequence="3"/>
+<menuitem name="Sale Order Export" id="assemble_pro_sale_order_export_report"
+		  action="action_sale_order_export_report"
+		  parent="assemble_pro_reports_menu" sequence="4"/>
+<menuitem name="Sale Summary" id="assemble_pro_sale_summary_report" action="action_sale_summary_report"
+		  parent="assemble_pro_reports_menu" sequence="5"/>
+<menuitem name="Sale Register" id="assemble_pro_sale_register_report"
+		  action="action_sale_register_report"
+		  parent="assemble_pro_reports_menu" sequence="6"/>
+<menuitem name="RG Export" id="assemble_pro_rg_export_report" action="action_rg_export_report"
+		  parent="assemble_pro_reports_menu" sequence="7"/>
+<menuitem name="Purchase Order" id="assemble_pro_purchase_order_report"
+		  action="action_purchase_order_report"
+		  parent="assemble_pro_reports_menu" sequence="8"/>
+<menuitem name="Pending Purchase Order" id="assemble_pro_pending_purchase_order_report"
+		  action="action_pending_purchase_order_report"
+		  parent="assemble_pro_reports_menu" sequence="9"/>
+<menuitem name="Packing List Export" id="assemble_pro_packing_list_export_report"
+		  action="action_packing_list_export_report"
+		  parent="assemble_pro_reports_menu" sequence="10"/>
+<menuitem name="FG Batch Summary" id="assemble_pro_fg_summary_report" action="action_fg_summary_report"
+		  parent="assemble_pro_reports_menu" sequence="11"/>
+<menuitem name="PCB Details" id="assemble_pro_pcb_details_report" action="action_pcb_details_report"
+		  parent="assemble_pro_reports_menu" sequence="12"/>
+<menuitem name="RM Serial Search" id="assemble_pro_rm_search_report" action="action_rm_search_report"
+		  parent="assemble_pro_reports_menu" sequence="13"/>
+<menuitem name="RM Stock Summary" id="assemble_pro_rm_stock_summary_report" action="action_rm_summary_report"
+		  parent="assemble_pro_reports_menu" sequence="14"/>
+<menuitem name="MSL Report" id="assemble_pro_msl_report" action="action_msl_report"
+		  parent="assemble_pro_reports_menu" sequence="15"/>
+<menuitem name="Issue Note Register" id="assemble_pro_issue_note_register_report" sequence="16"
+		  action="action_issue_note_register_report" parent="assemble_pro_reports_menu"/>
+
+
+<!-- Reports Menu-->
+
+<menuitem name="Purchase" id="assemble_purchase_menu"  parent="account.menu_finance" sequence="1"/>
+
+<menuitem name="Purchase Orders"  id="menu_purchase_form_action_assemble" sequence="2"
+		  parent="assemble_purchase_menu" action="purchase.purchase_form_action"/>
+
+<menuitem name="Work Order" id="assemble_pro_work_menu22"  parent="assemble_purchase_menu"
+		  sequence="3" action="work_order_action"/>
+ 
+<menuitem name="Purchases" id="menu_finance_payables2" parent="stock.menu_stock_root" sequence="51" />
+
+<menuitem name="Vendor Bills" action="account.action_invoice_tree2" sequence="1"
+		  id="menu_action_invoice_tree2" parent="menu_finance_payables2" />
+
+<menuitem id="hr_payroll.menu_hr_payroll_root" name="Payroll" sequence="45"
+		  web_icon="hr_payroll,static/description/icon.png" groups="base.group_hr_manager"/>
+
+
+<menuitem name='Tax Class' id="menu_tax_class_configuration" parent="account.account_account_menu" sequence="1" action="action_account_tax_class_configuration"/>
+</odoo>

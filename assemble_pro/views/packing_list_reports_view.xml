@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Packing List Export Report View -->
+<record id="view_packing_list_export_report_form" model="ir.ui.view">
+	<field name="name">packing.list.export.report.form</field>
+	<field name="model">packing.list.export.report</field>
+	<field name="arch" type="xml">
+		<form>
+			<group col="4" colspan="4">
+				<field name="date_from" required="1"/>
+				<field name="date_to" required="1"/>
+				<field name="name" invisible="1"/>
+				<field name="attachment_id" invisible="1"/>
+			</group>
+			<footer>
+				<button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+				<button string="Close" class="btn-default" special="cancel" />
+			</footer>
+		</form>
+	</field>
+</record>
+
+<!-- Packing List Export Report Action-->
+<act_window id="action_packing_list_export_report"
+	name="Packing List Export Report"
+	res_model="packing.list.export.report"
+	view_type="form" view_mode="form"
+	key2="client_action_multi" target="new"/>
+</odoo>

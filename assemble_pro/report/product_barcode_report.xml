@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assemble_pro_report_barcode">
+    <!--<t t-call="report.html_container">-->
+        <div class="page">
+            <t t-foreach="docs" t-as="product">
+                    <t t-foreach="product.get_sequence_serial()" t-as="l">
+						<div class="row" style="padding-left:20px;">
+							<strong t-field="product.default_code"/>
+							<br/>
+							<strong t-field="product.name"/>
+							<strong t-esc="', '.join(map(lambda x: x.name, product.attribute_value_ids))"/>
+							<br/>
+							<div style="width: 100%; float: left;">
+								<img t-if="product.default_code" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', product.get_sequence_barcode(), 400, 100)"/>
+							</div>
+							<br/>
+							<strong t-esc="l"/>
+						</div>
+						<p style="page-break-after:always;"></p>
+                    </t>
+                </t>
+        </div>
+</template>
+
+	<template id="product.report_productlabel">
+		<t t-call="report.html_container">
+			<t t-foreach="docs" t-as="o">
+				<t t-call="assemble_pro.assemble_pro_report_barcode"/>
+			</t>
+		</t>
+	</template>
+	
+	<record id="product.report_product_label" model="ir.actions.report.xml">
+		<field name="paperformat_id" ref="assemble_pro.barcode_page_format"/>
+	</record>
+
+</odoo>

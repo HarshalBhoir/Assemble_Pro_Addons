@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_purchase_order_filter_extension" model="ir.ui.view">
+	<field name="name">purchase.order.list.select</field>
+	<field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+	<field name="model">purchase.order</field>
+	<field name="arch" type="xml">
+		<filter name="not_invoiced" position="after">
+			<separator/>
+			<filter string="Work Order" name="work_order" domain="[('type_order','=','work')]"/>
+		</filter>
+    </field>
+</record>
+
+<record id="view_work_order_form" model="ir.ui.view">
+	<field name="name">work.order.form</field>
+	<field name="model">purchase.order</field>
+	<field name="inherit_id" ref="view_purchase_order_extension_form" />
+	<field name="arch" type="xml">
+		<field name="order_line" position="attributes" >
+			<attribute name="context">{'default_type': context.get('default_type')}</attribute>
+		</field>
+		<field name="product_id" position="attributes" >
+			<attribute name="domain">[('type','in',context.get('default_type'))]</attribute>
+		</field>
+		
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+		
+		<field name="partner_id"  position="replace">
+			<field name="partner_id" context="{'search_default_customer':1,'search_default_supplier':1, 'default_supplier':1, 'default_customer':1}" domain="['|',('supplier','=',True),('customer','=',True)]"  attrs="{'required':[('type_order','=','purchase')]}"/>
+			<!--<field name="partner_id" required ="1" />-->
+<!--			attrs="{'invisible':[('type_order','=','purchase')],'required':[('type_order','=','work')]}"-->
+		</field>
+		
+		<button name="action_view_picking" position="replace">
+		  <button name="action_view_picking" string="Receive Products" type="object" invisible="1" />
+<!--		  attrs="{'invisible': [('state','not in', ('purchase','done'))]}"-->
+		</button>
+		
+		<xpath expr="//sheet/div/button[@name='action_view_picking']" position="replace">
+			<button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck"
+					attrs="{'invisible':['|',('dc_type','=','non_returnable'),'&amp;','&amp;',('dc_type','=','returnable'),('state','!=','purchase'),('type_order','=','work')]}">
+				<field name="picking_count" widget="statinfo" string="Shipment" help="Incoming Shipments"/>
+			</button>
+		</xpath>
+		
+		<xpath expr="//sheet/div/button[@name='action_view_invoice']" position="replace">
+			<button type="object"  name="action_view_invoice" icon="fa-pencil-square-o" class="oe_stat_button"
+				attrs="{'invisible':['&amp;','|',('state','!=','done'),('type_order','=','work'),('payment','=','non_billable')]}">
+				<field name="invoice_count" widget="statinfo" string="Invoices"/>
+			</button> 
+		</xpath>
+		
+		
+		<xpath expr="//sheet/div/button[@name='action_view_invoice']" position="after">
+			<button name="get_attached_docs" class="oe_stat_button"
+				type="object" icon="fa-truck" attrs="{'invisible':[('type_order','!=','work')]}" >
+				<field string="DC" name="attach_doc_count" widget="statinfo" />
+			</button>
+		</xpath>
+		
+		<xpath expr="//sheet/group[1]" position="after">
+			<group string="Service" col="4" colspan="4" attrs="{'invisible':[('type_order','!=','work')]}">
+				<h2><field name="service" attrs="{'invisible':[('type_order','!=','work')],'required':[('type_order','=','work')]}" nolabel="1" /></h2>
+			</group>
+			<br/>
+			
+		</xpath>
+
+		<xpath expr="//sheet/div[@class='oe_title']" position="replace">
+			 <div class="oe_title">
+				<label string="Request for Quotation " attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
+				<label string="Purchase Order " attrs="{'invisible': ['|',('state','in',('draft','sent','bid')),('type_order','!=','purchase')]}" />
+				<label string="Work Order " attrs="{'invisible': ['|',('state','in',('draft','sent','bid')),('type_order','!=','work')]}"/>
+				<h1>
+					<field name="name" readonly="1"/>
+				</h1>
+			</div>
+		</xpath>
+		
+		<!--<button name="action_view_picking" position="after">
+			<div class="oe_button_box" name="button_box">
+					<button name="get_attached_docs" class="oe_stat_button"
+						type="object" icon="fa-archive">
+						<field string="DC" name="attach_doc_count" widget="statinfo" />
+					</button>
+				</div>
+		</button>-->
+		
+		<field name="company_id" position="after" >
+			<field name="sac_code" attrs="{'invisible':['|',('type_order','!=','work')]}" readonly="1"/>
+			<field name="type_order" context="{'default_type_order':'type_order'}"  invisible="1"/>
+			<field name="payment" attrs="{'invisible':['|',('type_order','!=','work'),('dc_type','!=','non_returnable')],'required':[('dc_type','=','non_returnable')]}"/>
+		</field>
+		<field name="partner_ref" position="after" >
+			<field name="dc_type" attrs="{'invisible':[('type_order','!=','work')],'required':[('type_order','=','work')]}"/>
+		</field>
+	</field>
+</record>
+
+					
+<record id="work_order_action" model="ir.actions.act_window">
+	<field name="name">Work Order</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">purchase.order</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="view_id" ref="purchase.purchase_order_tree"/>
+	<field name="context">{'default_type_order':'work','default_type':['product','service','consu'],'search_default_work_order':1}</field>
+</record>
+	
+<record id="purchase.purchase_form_action" model="ir.actions.act_window">
+	<field name="context">{'search_default_purchase_order':1,'default_type':['product','service','consu'],'default_type_order':['purchase']}</field>
+</record>
+
+
+<record id="purchase.purchase_rfq" model="ir.actions.act_window">
+	<field name="context">{'search_default_purchase_order':1,'default_type':['product','service','consu'],'default_type_order':['purchase']}</field>
+</record>
+
+</odoo>

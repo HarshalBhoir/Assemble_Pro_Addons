@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+<!--	['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]-->
+
+<record id="product_supplierinfo_extension_form" model="ir.ui.view">
+	<field name="name">product.supplierinfo.extension.form</field>
+	<field name="model">product.supplierinfo</field>
+	<field name="inherit_id" ref="product.product_supplierinfo_form_view" />
+	<field name="arch" type="xml">
+		
+		<xpath expr="//form/group" position="before">
+			<header><field name="state" widget="statusbar"/></header>
+		</xpath>
+			
+		<field name="product_tmpl_id" position="replace" />
+		<field name="product_name" position="replace" />
+		<field name="product_code" position="replace" />
+		<field name="price" position="replace" />
+		<field name="currency_id" position="replace" />
+		<field name="min_qty" position="replace" />
+		<field name="date_start" position="replace" />
+		<field name="delay"	position="replace" />
+		
+        <field name="company_id" position="after" >
+			<label for="date_start" string="Validity"/>
+			<div><field name="date_start" class="oe_inline"/> to
+			<field name="date_end" class="oe_inline" required="1"/></div>
+			<field name="create_date" invisible="1"/>
+		</field>
+		
+		<field name="create_date" position="after" >
+			<div invisible="1">
+				<label for="custom_lead_time"/>
+				<field name="custom_lead_time" class="oe_inline" /> days
+			</div>
+		</field>
+		
+		<field name="name"  position="replace">
+			<field name="name" context="{'search_default_customer':1,'search_default_supplier':1, 'default_supplier':1, 'default_customer':1}"
+				   domain="['|',('supplier','=',True),('customer','=',True)]"/>
+		</field>
+		
+		<xpath expr="//group[3]" position="after">
+			<group >
+				<button name="update_supplier" type="object" string="Update"  class="btn-primary"
+						attrs="{'invisible':[('state','=','done')]}"/>
+			</group>
+			<group string="Product Details" col="4" colspan="4" >
+				<field name="supplierinfo_id" string="Product Details" nolabel="1" >
+					<tree editable="bottom">
+						<field name="id" invisible="1"/>
+						<field name="default_code" />
+						<field name="hsn_code" />
+						<field name="product_tmpl_id" />
+						<field name="moq" />
+						<field name="delay" />
+						<field name="custom_lead_time" />
+						<field name="rate" />
+						<field name="modvat_applicable" />
+						<field name="tax_class"  widget="many2many_tags"/>
+					</tree>
+				</field>
+			</group>
+		</xpath>
+		
+		<xpath expr="//group[2]" position="replace"></xpath>
+			
+	</field>
+</record>
+
+
+<record id="product_supplierinfo_extension_tree" model="ir.ui.view">
+	<field name="name">product.supplierinfo.extension.tree</field>
+	<field name="model">product.supplierinfo</field>
+	<field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+	<field name="arch" type="xml">
+        
+        <field name="name" position="before" >
+			<field name="id" string='PL No.'/>
+			<field name="create_date"/>
+		</field>
+		<field name="date_end" position="after" >
+			<field name="state"/>
+		</field>
+			
+		<field name="min_qty" position="replace" />
+		<field name="product_tmpl_id" position="replace" />
+		<field name="price" position="replace" />
+		
+	</field>
+</record>
+
+
+<record id="product_pricelist_extension_form" model="ir.ui.view">
+	<field name="name">product.pricelist.extension.form</field>
+	<field name="model">product.pricelist</field>
+	<field name="inherit_id" ref="product.product_pricelist_view" />
+	<field name="arch" type="xml">
+		
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+		
+		<field name="name" position="before" >
+			<field name="name_partner" context="{'search_default_customer':1,'search_default_supplier':1, 'default_supplier':1, 'default_customer':1}"
+				   domain="['|',('supplier','=',True),('customer','=',True)]"/>
+		</field>
+		
+		<xpath expr="//group[1]" position="replace">
+			<group  col="4" colspan="2">
+				<field name="company_id" invisible="1"/>
+				<field name="currency_id" invisible="1"/>
+				<field name="id" string='PL No.' invisible="1"/>
+				<field name="create_date" invisible="1"/>
+			</group>
+		</xpath>
+				
+		<xpath expr="//div[3]" position="after">
+			<group string="Product Details" col="4" colspan="4" >
+				<field name="pricelist_line_id" string="Product Details" nolabel="1" >
+					<tree editable="bottom">
+						<field name="default_code" />
+						<field name="hsn_code" />
+						<field name="product_tmpl_id" />
+						<field name="rate" />
+						<field name="tax_class"  widget="many2many_tags"/>
+						<field name="length_rate" />
+						<field name="stops_rate" />
+						<field name="percentage" />
+					</tree>
+				</field>
+			</group>
+		</xpath>
+	</field>
+</record>
+
+<record id="product_pricelist_extension_tree" model="ir.ui.view">
+	<field name="name">product.pricelist.extension.tree</field>
+	<field name="model">product.pricelist</field>
+	<field name="inherit_id" ref="product.product_pricelist_view_tree" />
+	<field name="arch" type="xml">
+		<field name="currency_id" position="after" >
+			<field name="create_date"/>
+			<field name="company_id"/>
+		</field>
+	</field>
+</record>
+
+</odoo>

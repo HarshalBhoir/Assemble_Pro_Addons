@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<record id="view_account_invoice_ext_form" model="ir.ui.view">
+	<field name="name">account.invoice.form</field>
+	<field name="inherit_id" ref="account.invoice_form" />
+	<field name="model">account.invoice</field>
+	<field name="arch" type="xml">
+		
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+	
+		 <xpath expr="//form/sheet/notebook/page[1]" position="before">
+			<page string="Box Details" attrs="{'invisible':['|',('type_order','=','claim'),('invoice_lines_boolean','=',False)]}">
+				<group string="Box Details" col="4" colspan="4" >
+					 <field name="product_packaging_one2many" string="Box Details" nolabel="1" attrs="{'readonly':[('state','=','paid')]}">
+						 <tree editable="bottom" attrs="{'readonly':[('state','=','paid')]}">
+							 <field name="name" />
+							 <field name="name" string="Box Name"/>
+							 <field name="code" />
+							 <field name="code_name" invisible="0"/>
+							 <field name="hsn_no" invisible="0"/>
+							 <field name="qty" />
+							 <field name="rate" />
+							 <field name="tax_id" widget="many2many_tags"/>
+							 <field name="tax_amount" sum="Total" />
+							 <field name="amount"  invisible="1"/>
+							 <field name="cst" invisible="1"/>
+						 </tree>
+					 </field>
+				 </group>
+
+			</page>
+		</xpath>
+		 
+		 <xpath expr="//tree/field[@name='product_id']" position="before">
+			<field name="hsn_code" readonly="1"/>
+		</xpath>
+		
+		<field name="partner_id" position="after">
+			<field name="gstin_no"  string="Customer GSTIN No" readonly="1"/>
+		</field> 
+
+		<field name="date_due" position="before">
+			<field name="company_gstin_no" readonly="1"/>
+			<field name="tax_class" widget="many2many_tags"/>
+		</field>
+		 
+		 
+		 <xpath expr="//form/header/button[5]" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</xpath>
+		 
+		 <xpath expr="//form/header/button[9]" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</xpath>
+
+		 
+		 <button name="invoice_open" states="draft" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</button>
+		 
+		 <button name="invoice_open" states="proforma2" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</button>
+		 
+		<!--<button name="invoice_cancel" states="draft,proforma2,open" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</button>-->
+		 
+
+		 
+		  <field name="origin" position='attributes' >
+			<attribute name ="string">Sale Order</attribute>
+		</field>
+		 
+		 <field name="payment_term_id" position="before" >
+			<field name="carrier_id" attrs="{'invisible':['|',('company_id','!=',1),('carrier_id','=',False)]}" />
+			<!--<field name='amount_freight'/>-->
+		</field>
+		 
+		 <field name="amount_tax" position="after" >
+			<field name="amount_freight" string="Freight Amount" attrs="{'invisible':['|',('company_id','!=',1),('carrier_id','=',False)]}"/>
+		</field>
+		 
+		 
+		 <field name="user_id" position="before" >
+			<field name="removal_date"/>
+			<field name="invoice_lines_boolean" invisible="1"/>
+			<field name="type_order" invisible="1"/>
+		</field>
+		 
+		  <field name="team_id" position="attributes" >
+			<attribute name ="invisible">1</attribute>
+		</field>
+		  
+		<!--  <field name="incoterms_id" position="attributes" >-->
+		<!--	<attribute name ="invisible">1</attribute>-->
+		<!--</field>-->
+		  
+		  <field name="fiscal_position_id" position="attributes" >
+			<attribute name ="invisible">1</attribute>
+		</field>
+		  
+		   <xpath expr="//tree/field[@name='name']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		   
+		    <xpath expr="//tree/field[@name='account_id']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		 
+		<!--<xpath expr="//form/sheet/notebook/page[2]" position="attributes">-->
+		<!--  <attribute name="attrs">{'invisible':[('invoice_lines_boolean','=',True)]}</attribute>-->
+		<!--</xpath>-->
+		 <xpath expr="//form/sheet/notebook/page[2]" position="after">
+			<page string="Transport Details">
+				<group col="4" colspan="4" >		 
+					<field name="l_r_no" />
+					<field name="transporter"/>
+					<field name="vehicle_no" />
+					<field name="mode_of_transport"/>
+					<field name="destination" />
+					<field name="po_order" invisible="0"/>
+				 </group>
+			</page>
+		</xpath>
+		 
+		 <xpath expr="//field[@name='tax_line_ids']/tree" position="attributes">
+			<attribute name="create">1</attribute>
+		</xpath>
+		 <xpath expr="//field[@name='tax_line_ids']/tree/field[@name='tax_id']" position="attributes">
+			<attribute name="invisible">0</attribute>
+		</xpath>
+			
+		</field>
+</record>
+	
+	
+	
+<record id="view_tax_form_extension" model="ir.ui.view">
+	<field name="name">account.tax.form</field>
+	<field name="inherit_id" ref="account.view_tax_form" />
+	<field name="model">account.tax</field>
+	<field name="arch" type="xml">
+	
+		<field name="name" position="after">
+			<field name="tally_acc" required="0"/>
+		</field>
+		<xpath expr="//field[@name='type_tax_use']" position="after">
+			<field name="active" />
+		</xpath>
+		
+		<field name="description" position="attributes">
+			<attribute name="attrs"></attribute>
+		</field>
+	</field>
+</record>
+	
+	
+	
+<record id="invoice_supplier_form_extension" model="ir.ui.view">
+	<field name="name">account.invoice.form</field>
+	<field name="inherit_id" ref="account.invoice_supplier_form" />
+	<field name="model">account.invoice</field>
+	<field name="arch" type="xml">
+		
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+		
+		<!--<button name="invoice_open" position='replace' >
+			<button name="invoice_open" states="draft,proforma2" string="Validate" class="oe_highlight"
+					groups="assemble_pro.group_assemble_pro_manager,account.group_account_invoice"/>
+		</button>-->
+		
+		<button name="invoice_open" states="draft,proforma2" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</button>
+		
+		<button name="invoice_cancel" states="draft,proforma2" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</button>
+		
+		<xpath expr="//form/header/button[2]" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</xpath>
+		
+		<xpath expr="//form/header/button[3]" position="attributes">
+			<attribute name="groups">assemble_pro.group_assemble_pro_manager,account.group_account_manager</attribute>
+		</xpath>
+
+		
+		<field name="reference" position="after">
+			<field name="grn_no" required="1"/>
+		</field>
+		
+		<field name="partner_id" position="after">
+			<field name="gstin_no" string="Vendor GSTIN No" readonly="1"/>
+		</field>
+		
+		<field name="payment_term_id" position="after">
+			<field name="company_gstin_no" readonly="1"/>
+			<field name="tax_class" widget="many2many_tags"/>
+		</field>
+		
+		 <field name="origin" position='attributes' >
+			<attribute name ="string">Purchase Order</attribute>
+		</field>
+		 
+		 <field name="reference" position='attributes' >
+			<attribute name ="string">Invoice Number</attribute>
+		</field>
+		 
+		 <field name="fiscal_position_id" position="attributes" >
+			<attribute name ="invisible">1</attribute>
+		</field>
+		 
+		 <field name="reference" position="attributes" >
+			<attribute name ="required">1</attribute>
+		</field>
+		 
+		  <xpath expr="//tree/field[@name='name']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		  <xpath expr="//tree/field[@name='account_id']" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</xpath>
+		  
+		<xpath expr="//tree/field[@name='product_id']" position="before">
+			<field name="hsn_code" readonly="1"/>
+		</xpath>
+	</field>
+</record>
+
+
+<record id="view_account_payment_invoice_form_extension" model="ir.ui.view">
+	<field name="name">account.payment.form</field>
+	<field name="inherit_id" ref="account.view_account_payment_invoice_form" />
+	<field name="model">account.payment</field>
+	<field name="arch" type="xml">
+		
+		 <field name="communication" position='attributes' >
+			<attribute name ="string">Invoice Number</attribute>
+		</field>
+		 
+		 <field name="communication" position="replace"> 
+			<div > 
+		 		<h1><label for="communication" string="Invoice Number" attrs="{'invisible': [('partner_type','in',('customer'))]}"/> </h1>
+		 		<h1><label for="communication" string="SO Number" attrs="{'invisible': [('partner_type','in',('supplier'))]}"/> </h1>
+		 	</div> 
+		 	<field name="communication" nolabel="1" />
+		</field>
+		 
+		  
+	</field>
+</record>
+
+</odoo>

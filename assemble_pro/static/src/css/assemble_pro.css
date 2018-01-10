@@ -1,0 +1,18 @@
+/*.assembly_image img
+{
+max-width:610px !important;
+max-height:none !important;
+}*/
+
+
+.assembly_image img
+{
+height:110px !important;
+}
+
+.openerp .oe_form .oe_form_field_image img
+{
+
+max-width:501px;
+
+}

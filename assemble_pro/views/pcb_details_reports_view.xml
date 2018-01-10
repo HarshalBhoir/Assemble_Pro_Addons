@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- PCB Details Report View -->
+<record id="view_pcb_details_report_form" model="ir.ui.view">
+	<field name="name">pcb.details.report.form</field>
+	<field name="model">pcb.details.report</field>
+	<field name="arch" type="xml">
+		<form>
+			<group col="4" colspan="4">
+				<field name="date_from" required="1"/>
+				<field name="date_to" required="1"/>
+				<field name="name" invisible="1"/>
+				<field name="attachment_id" invisible="1"/>
+			</group>
+			<footer>
+				<button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+				<button string="Close" class="btn-default" special="cancel" />
+			</footer>
+		</form>
+	</field>
+</record>
+
+<!-- PCB Details Report Action-->
+<act_window id="action_pcb_details_report"
+	name="PCB Details Report"
+	res_model="pcb.details.report"
+	view_type="form" view_mode="form"
+	key2="client_action_multi" target="new"/>
+</odoo>

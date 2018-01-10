@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+    
+    <record id="view_cp_import" model="ir.ui.view">
+		<field name="name">Import Lines</field>
+            <field name="model">wizard.pricelist.import</field>
+            <field name="arch" type="xml">
+				
+              <form string="Import Lines">
+				<group colspan="4" col="4">
+					<field name="name" required="True" attrs="{'invisible': [('name','=',False)]}" />
+					<field name="delimeter" invisible="1"/>
+					<field name="data" filename="name" colspan="4" />
+					<a href="/pricelists_import/static/data/pricelist.csv">Sample CSV file</a>
+				</group>
+				<separator string="" colspan="4"/>
+				<group col="4" colspan="4">
+					<button special="cancel" string="Cancel" icon="gtk-cancel"/>
+					<button name="send_lines" string="Accept" type="object" icon="gtk-yes" />
+				</group>
+			</form>
+        </field>
+    </record>
+	
+	<record id="view_sp_import" model="ir.ui.view">
+		<field name="name">Import Lines</field>
+            <field name="model">wizard.supplierpricelist.import</field>
+            <field name="arch" type="xml">
+				
+              <form string="Import Lines">
+				<group colspan="4" col="4">
+					<field name="name" required="True" attrs="{'invisible': [('name','=',False)]}" />
+					<field name="delimeter" invisible="1"/>
+					<field name="data" filename="name" colspan="4" />
+					<a href="/pricelists_import/static/data/supplier_pricelist.csv">Sample CSV file</a>
+				</group>
+				<separator string="" colspan="4"/>
+				<group col="4" colspan="4">
+					<button special="cancel" string="Cancel" icon="gtk-cancel"/>
+					<button name="send_supplier_lines" string="Accept" type="object" icon="gtk-yes" />
+				</group>
+			</form>
+        </field>
+    </record>
+
+	<record id="action_customer_pricelist_import" model="ir.actions.act_window">
+		 <field name="name">Import Lines</field>
+		 <field name="res_model">wizard.pricelist.import</field>
+		 <field name="view_type">form</field>
+		 <field name="view_mode">tree,form</field>
+		 <field name="view_id" ref="view_cp_import"/>
+		 <field name="target">new</field>
+	 </record>
+
+	<record id="action_supplier_pricelist_import" model="ir.actions.act_window">
+		 <field name="name">Import Lines</field>
+		 <field name="res_model">wizard.supplierpricelist.import</field>
+		 <field name="view_type">form</field>
+		 <field name="view_mode">tree,form</field>
+		 <field name="view_id" ref="view_sp_import"/>
+		 <field name="target">new</field>
+	 </record>
+            
+    <act_window name="Import Lines" res_model="wizard.pricelist.import" src_model="product.pricelist" view_mode="form" target="new" key2="client_action_multi" id="action_customer_pricelist_import" groups="group_wizard_import_pricelists" />
+	
+	<act_window name="Import Lines" res_model="wizard.supplierpricelist.import" src_model="product.supplierinfo" view_mode="form" target="new" key2="client_action_multi" id="action_supplier_pricelist_import" groups="group_wizard_import_pricelists" />
+	
+	
+        </data>
+</openerp>

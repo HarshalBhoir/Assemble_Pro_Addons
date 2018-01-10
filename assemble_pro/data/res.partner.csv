@@ -1,0 +1,3 @@
+id,is_company,customer,company_type,display_name,name,email,phone,website,currency_id/id,type,street,street2,city,state_id,zip,country_id/id
+partner_assemble_pro_2,TRUE,TRUE,Company,SCHINDLER INDIA PVT LTD,SCHINDLER INDIA PVT LTD,info@yourcompany.com,0832 234 5585,http://www.yourcompany.com,base.INR,Contact,"B/401, Delphi, Hiranandani Business Park,",Powai,Mumbai,Maharashtra,4259,base.in
+partner_assemble_pro_3,TRUE,FALSE,Company,Lift Controls Pvt Ltd Unit II,Lift Controls Pvt Ltd Unit II,info@yourcompany.com,0832 234 5585,http://www.yourcompany.com,base.INR,Contact,"9/1, Murdi-khande, Parkhan",Depar,Ponda,Goa,403406,base.in

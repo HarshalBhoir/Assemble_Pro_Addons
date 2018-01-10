@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_claim_order_filter_extension" model="ir.ui.view">
+	<field name="name">claim.order.list.select</field>
+	<field name="inherit_id" ref="sale.view_sales_order_filter" />
+	<field name="model">sale.order</field>
+	<field name="arch" type="xml">
+		<filter name="message_needaction" position="after">
+			<separator/>
+			<filter string="Claim Order" name="claim_order" domain="[('type_order','=','claim')]"/>
+		</filter>
+    </field>
+</record>
+
+<record id="view_claim_order_form" model="ir.ui.view">
+	<field name="name">claim.order.form</field>
+	<field name="model">sale.order</field>
+	<field name="inherit_id" ref="view_sale_order_extension_form" />
+	<field name="arch" type="xml">
+		<field name="order_line" position="attributes" >
+			<attribute name="context">{'default_type': context.get('default_type')}</attribute>
+			<attribute name="editable">bottom</attribute>
+		</field>
+		<field name="state" position="replace">
+			<div style="display: inline;">
+				<field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done" attrs="{'invisible':[('type_order','!=','sale')]}"/>
+				<field name="claim_state" widget="statusbar" attrs="{'invisible':[('type_order','!=','claim')]}"/>
+			</div>
+		</field>
+		<field name="type_order" position="attributes" >
+			<!--<attribute name="domain">[('type_order','in',context.get('default_order_type'))]</attribute>-->
+			<attribute name="context">{'default_type_order':'type_order'}</attribute>
+		</field>
+		<field name="payment_term_id" position="after" >
+			<field name="type_order" invisible="1" />
+		</field>
+		
+		<!--<button name="action_done" position="after">
+			<button name="action_repair" states="claim" type="object" string="Repair"/>
+		</button>-->
+		
+		<!--<field name="product_id" position="attributes" >-->
+		<!--	<attribute name="domain">[('type','=',context.get('default_type'))]</attribute>-->
+		<!--</field>-->
+		
+		 <!--<notebook position="inside">
+			<page string="Claim Lines" attrs="{'invisible':[('type_order','!=','claim')]}">
+				<button name="claim_products" type="object" string="Claim Products"  class="btn-primary"/>
+					 <field name="claim_line" string="Claim Lines" nolabel="1" >
+						 <tree editable="bottom">
+							<field name="claim_selection" />
+							 <field name="default_code"/>
+							 <field name="product_id" />
+							<field name="name" />
+							<field name="product_uom_qty" />
+							
+							<field name="length"/>
+							<field name="stops"/>
+							
+						 </tree>
+					 </field>
+			</page>
+		 </notebook>-->
+		 
+		
+	</field>
+</record>
+
+					
+<record id="claim_management_action" model="ir.actions.act_window">
+	<field name="name">Claim Order</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">sale.order</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="view_id" ref="sale.view_order_tree"/>
+	<field name="domain">[('type_order','=','claim')]</field>
+	<field name="context">{'default_type_order':'claim',
+							'type_order':True,'search_default_claim_order':1,
+							'default_type':['product','service','consu']}</field>
+</record>
+	
+<record id="sale.action_orders" model="ir.actions.act_window">
+	<field name="context">{'search_default_sale_order':1,'default_type':['product','service','consu'],'default_type_order':['sale','claim']}</field>
+</record>
+
+
+<record id="sale.action_quotations" model="ir.actions.act_window">
+	<field name="context">{'default_type':['product','service','consu'],'default_type_order':['sale','claim']}</field>
+</record>
+
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Issue Note Register Report View -->
+<record id="view_issue_note_register_report_form" model="ir.ui.view">
+	<field name="name">issue.note.register.report.form</field>
+	<field name="model">issue.note.register.report</field>
+	<field name="arch" type="xml">
+		<form>
+			<group col="4" colspan="4">
+				<field name="date_from" required="1"/>
+				<field name="date_to" required="1"/>
+				<field name="name" invisible="1"/>
+				<field name="attachment_id" invisible="1"/>
+			</group>
+			<footer>
+				<button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+				<button string="Close" class="btn-default" special="cancel" />
+			</footer>
+		</form>
+	</field>
+</record>
+
+<!-- Issue Note Register Report Action-->
+<act_window id="action_issue_note_register_report"
+	name="Issue Note Register Report"
+	res_model="issue.note.register.report"
+	view_type="form" view_mode="form"
+	key2="client_action_multi" target="new"/>
+</odoo>

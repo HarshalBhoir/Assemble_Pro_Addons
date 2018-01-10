@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_country_extension_form" model="ir.ui.view">
+	<field name="name">res.country.extension.form</field>
+	<field name="model">res.country</field>
+	<field name="inherit_id" ref="base.view_country_form" />
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='code']" position="after">
+			<field name="active" />
+		</xpath>
+	</field>
+</record>
+
+<record id="view_country_state_extension_form" model="ir.ui.view">
+	<field name="name">res.country.state.extension.form</field>
+	<field name="model">res.country.state</field>
+	<field name="inherit_id" ref="base.view_country_state_form" />
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='country_id']" position="after">
+			<field name="active" />
+		</xpath>
+	</field>
+</record>
+
+</odoo>

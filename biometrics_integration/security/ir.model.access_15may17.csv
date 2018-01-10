@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biometric_machine_user,assemble_pro.biometric_machine user,model_biometric_machine,assemble_pro.group_assemble_pro_user,1,0,0,0
+access_biometric_machine_manager,assemble_pro.biometric_machine manager,model_biometric_machine,assemble_pro.group_assemble_pro_manager,1,1,1,1
+access_hr_all_attendance_user,assemble_pro.hr_all_attendance user,model_hr_all_attendance,assemble_pro.group_assemble_pro_user,1,0,0,0
+access_hr_all_attendance_manager,assemble_pro.hr_all_attendance manager,model_hr_all_attendance,assemble_pro.group_assemble_pro_manager,1,1,1,1

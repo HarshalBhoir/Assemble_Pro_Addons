@@ -1,0 +1,2 @@
+id,name,currency_id/id,company_registry,rml_header1,fiscalyear_last_day,fiscalyear_last_month,partner_id/id,website,phone,street,street2,city,state_id,zip,country_id,email
+company_assemble_pro_3,Lift Controls Pvt Ltd Unit II,base.INR,AAACL6371QXM001,We Assemble Lift,31,March,assemble_pro.partner_assemble_pro_3,http://www.yourcompany.com,0832 234 5585,"9/1, Murdi-khande, Parkhan",Depar,Ponda,Goa,403406,India,info@yourcompany.com

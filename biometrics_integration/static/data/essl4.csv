@@ -1,0 +1,4 @@
+Date,Employee Code,Employee Name,Company,Department,Category,Designation,Grade,Team,Shift,In Time,Out Time,Duration,Overtime,TotalDuration,Late By,Early By,Status,Punch Records,,,
+09-May-2017,10109,Leena,Default,Odoo,Default,,,,FS,09:24:52,17:50:30,08:26,4,08:26,25,40,1/2Present,09:24(in),15:30(out),17:26(in),17:50(out)
+09-May-2017,10104,Harshal,Default,Odoo,Default,,,,FS,09:19:40,17:50:32,08:31,5,08:31,20,39,1/2Present,09:19(in),13:55(out),17:38(in),17:50(out)
+09-May-2017,10093,Vinay,Default,Odoo,Default,,,,FS,10:06:20,18:00:47,07:54,6,07:54,66,29,1/2Present,10:06(in),14:28(out),18:00(in),

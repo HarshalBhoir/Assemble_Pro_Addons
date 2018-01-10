@@ -1,0 +1,40 @@
+.msp1_uom > span:last-of-type {
+    width: 30% !important;
+}
+
+.boolean_label tr>td:nth-child(1), .boolean_label tr>td:nth-child(3) {
+	border-right: 1px solid #DDD;
+}
+
+.boolean_label tr>td:nth-child(1), .boolean_label tr>td:nth-child(3) {
+	width: 1% !important;
+}
+
+.boolean_label tr>td:nth-child(2), .boolean_label tr>td:nth-child(4) {
+	width: 49% !important;
+}
+
+.dynamic_label {
+	font-weight: bold !important;
+	min-width: 100px;
+	display: inline-block !important;
+	line-height: 18px;
+	/*border-right: 1px solid #DDD;*/
+}
+
+.dynamic_label label {
+	font-weight: bold !important;
+}
+
+.dynamic_field {
+	margin-left: 9px !important;
+}
+
+.inline_dates > span {
+	width: auto !important;
+	max-width: 45% !important;
+}
+
+.inline_dates > span .o_datepicker_input {
+	width: 90px !important;
+}

@@ -1,0 +1,25 @@
+<odoo>
+
+    <template id="assemble_pro_report_picking2" inherit_id="assemble_pro.assemble_pro_report_picking">
+            <xpath expr="//th[@name='td_sched_date_h']" position="after">
+                <th t-if="o.picking_type_id.code == 'outgoing'"><strong>Carrier</strong></th>
+                <th><strong>Weight</strong></th>
+            </xpath>
+            <xpath expr="//td[@name='td_sched_date']" position="after">
+                <td t-if="o.picking_type_id.code == 'outgoing'">
+                    <span t-field="o.carrier_id"/>
+                </td>
+                <td>
+                    <span t-field="o.weight"/>
+                </td>
+            </xpath>
+        </template>
+
+    <template id="delivery.report_shipping2">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="assemble_pro.assemble_pro_report_picking2" t-lang="o.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+</odoo>

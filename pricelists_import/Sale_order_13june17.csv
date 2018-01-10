@@ -1,0 +1,3 @@
+Code,Quantity,Unit of Measure,Unit Price,Taxes,Discount
+123,1,Unit(s),51,(standard)Input VAT @ 8%,0.2
+456,1,Unit(s),10,,4

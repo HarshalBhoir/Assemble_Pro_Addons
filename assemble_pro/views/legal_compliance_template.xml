@@ -1,0 +1,24 @@
+<openerp>
+    <data>
+     <record id="legal_compliance_template" model="mail.template">
+            <field name="name">Legal Compliance Reminder</field>
+            <field name="email_from"></field>
+            <field name="model_id" ref="model_legal_compliance"/>
+            <field name="subject">Legal Compliance Reminder</field>
+            <!--<field name="email_to" >${object.performed_user_id.partner_id.email}</field>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <h3><b>Dear ${object.prepare_user_id.name},</b></h3><br/>
+                    This is to inform you that you have been assigned a task:<b> ${object.name} </b>for the employee:<b> ${object.performed_user_id.name}.</b> <br/><br/>
+                    
+                    % if  object.note:
+                        Remarks: ${object.note}  <br/><br/>
+                   % endif
+
+                    
+                    For any further information please <a href="${object.url}">Click here<a/><br/>
+                    Thank you!<br/><br/>
+            ]]></field>
+        </record>
+    </data>
+</openerp>

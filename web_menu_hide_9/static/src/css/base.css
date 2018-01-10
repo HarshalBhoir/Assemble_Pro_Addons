@@ -1,0 +1,22 @@
+.ul_toggle_leftmenu{
+  list-style: outside none none;
+  list-style-type: none;
+  list-style-image: none;
+  list-style-position: outside;
+  margin-bottom: 0px !important;
+  max-width: 50px;
+  padding-top: 9px;
+  padding-left: 10px;
+}
+
+.toggle_leftmenu{
+  color: #FFF !important;
+  padding: 5px 8px;
+}
+
+.toggle_leftmenu:hover{
+  color: #9D9D9D !important;
+  cursor: pointer;
+}
+
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+<record id="group_superadmin" model="res.groups">
+	<field name="name">SuperAdmin</field>
+	<field name="category_id" ref="base.module_category_hidden"/>
+	<field name="users" eval="[(4, ref('base.user_root'))]"/>
+	<field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+	<field name="comment">SuperAdmin will have access to all menus and data.</field>
+</record>
+
+</odoo>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_mrp_bom_extension_form" model="ir.ui.view">
+	<field name="name">mrp.bom.form</field>
+	<field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+	<field name="model">mrp.bom</field>
+	<field name="arch" type="xml">
+
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+		<field name="code" position="replace"></field>
+		<field name="product_tmpl_id" position="before">
+			<field name="code" string = "Bom No." readonly="1" invisible="1"/>
+		</field>
+		<xpath expr="//tree/field[@name='product_id']" position="before">
+			<!--<field name="stock_id" />-->
+			<field name="level1"/>
+			<field name="level2"/>
+			<field name="default_code"/>
+		</xpath>
+		<!--<field name="company_id" position="after">-->
+		<!--	<field name="stock_id" />-->
+		<!--</field>-->
+		<field name="product_tmpl_id" position="after">
+			<field name="default_code" />
+		</field>
+		<field name="product_tmpl_id" position="attributes">
+			<attribute name ="required">0</attribute>
+		</field>
+		<xpath expr="//form/sheet/notebook/page[2]" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</xpath>
+		
+		 <field name="product_id" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="attribute_value_ids" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="date_start" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="date_stop" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="product_efficiency" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="product_rounding" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		
+	</field>
+</record>
+
+<record id="view_mrp_bom_extension_tree" model="ir.ui.view">
+	<field name="name">mrp.bom.tree</field>
+	<field name="inherit_id" ref="mrp.mrp_bom_tree_view" />
+	<field name="model">mrp.bom</field>
+	<field name="arch" type="xml">
+		<field name="code" position="replace"></field>
+		<field name="product_tmpl_id" position="before">
+			<field name="code" string = "Bom No."/>
+		</field>
+	</field>
+</record>
+
+<record id="mrp_production_extension_form_view" model="ir.ui.view">
+	<field name="name">mrp.production.form</field>
+	<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+	<field name="model">mrp.production</field>
+	<field name="arch" type="xml">
+		<xpath expr="//form/sheet" position="attributes">
+			<attribute name="class">remove_sheet</attribute>
+		</xpath>
+		<button name="%(mrp.act_mrp_product_produce)d" states="ready,in_production" type="action" position="attributes">
+			<attribute name="invisible">1</attribute>
+		</button>
+		<button name="%(mrp.act_mrp_product_produce)d" states="ready,in_production" type="action" position="before">
+			<button name="%(act_mrp_product_produce_new)d" states="ready,in_production" string="Produce" type="action" class="oe_highlight" context="{'default_lot_lines': mrp_produce_ids}"/>
+		</button>
+		<xpath expr="//button[@name='force_production']" position="attributes">
+			<attribute name ="invisible">0</attribute>
+		</xpath>
+		<xpath expr="//button[@name='action_assign']" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</xpath>
+		<xpath expr="//field[@name='move_lines']/tree/field[@name='product_uom_qty']" position="after">
+			<field name="serial_no" invisible="0"/>
+		</xpath>
+		
+		<field name="product_id" position="after">
+			<field name="hsn_code" readonly="1"/>
+		 </field>
+		
+		<xpath expr="//form/sheet/notebook" position="inside">
+			<page string="Scanned Products" attrs="{'invisible': [('state','in',('draft','confirmed'))]}">
+				<field name="barcode_scanned" widget="picking_barcode_handler" colspan="4" autofocus="1"/>
+				<div style="padding-top: 17px;padding-bottom: 17px;" attrs="{'invisible': [('state','=','done')]}" >
+				<button name="button_dummy"	string="Update" type="object" class="btn-primary" style="margin-right: 20px;font-size: 16px;padding-top:10px;" /></div>
+				<group col="4" colspan="4" >
+					 <field name="mrp_produce_ids" string="Scanned Products" nolabel="1" context="{'default_product_id': product_id}" >
+						<tree editable="top">
+                                <field name="name" required="0"/>
+                                <field name="product_id" invisible='1'/>
+                                <!--<field name="product_qty"/>-->
+                                <field name="ref" invisible='1'/>
+                                <field name="serial_id" invisible='1'/>
+                            </tree>
+                        </field>
+				</group>
+			</page>
+		</xpath>
+		
+		<xpath expr="//form/sheet/group/group/div" position="replace">
+			<div class="o_row">
+				<field name="qty_scanned" attrs="{'invisible': [('state','!=','done')],'readonly': [('state','=','done')]}"/><div attrs="{'invisible': [('state','!=','done')]}">of</div>
+				<field name="product_qty" on_change="product_id_change(product_id, product_qty)"/>
+				<field name="product_uom" options="{'no_open':True,'no_create':True}" groups="product.group_uom"/>
+				<button type="action"
+					name="%(mrp.action_change_production_qty)d"
+					string="Update" states="confirmed" class="oe_edit_only oe_link"/>
+			</div>
+		</xpath>
+		
+		<field name="user_id" position="attributes">
+			<attribute name ="readonly">[('state','=','done')]</attribute>
+		</field>
+		
+		<field name="origin" position="after">
+			<field name="assemble_work_id" attrs="{'invisible': [('assemble_work_id','=',False)],'readonly': [('state','=','done')]}"/>
+			<field name="employee_id" required="1" attrs="{'readonly': [('state','=','done')]}"/>
+		</field>
+		
+		<xpath expr="//form/sheet/notebook/page[5]" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</xpath>
+
+	</field>
+</record>
+
+<record id="mrp_production_tree_view_extension" model="ir.ui.view">
+	<field name="name">mrp.production.tree</field>
+	<field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+	<field name="model">mrp.production</field>
+	<field name="arch" type="xml">
+		<field name="cycle_total" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="hour_total" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		<field name="product_uom" position="attributes">
+			<attribute name ="invisible">1</attribute>
+		</field>
+		
+	</field>
+</record>
+
+
+<record id="mrp_production_product_extension_tree_view" model="ir.ui.view">
+	<field name="name">mrp.production.product.line.form</field>
+	<field name="inherit_id" ref="mrp.mrp_production_product_tree_view" />
+	<field name="model">mrp.production.product.line</field>
+	<field name="arch" type="xml">
+		<field name="product_qty" position="after">
+			<field name="serial_no" invisible="1"/>
+		</field>
+	</field>
+</record>
+
+
+</odoo>

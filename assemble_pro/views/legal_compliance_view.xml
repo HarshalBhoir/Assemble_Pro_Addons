@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_legal_compliance_tree" model="ir.ui.view">
+	<field name="name">legal.compliance.tree</field>
+	<field name="model">legal.compliance</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="due_date"/>
+			<field name="notify_day" string="Notify Days"/>
+			<field name="prepare_user_id" />
+			<field name="performed_user_id" />
+			<field name="state" invisible="1"/>
+		</tree>
+	</field>
+</record>
+
+<record id="view_legal_compliance_form" model="ir.ui.view">
+	<field name="name">legal.compliance.form</field>
+	<field name="model">legal.compliance</field>
+	<field name="arch" type="xml">
+		<form>
+			<!--<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+			</header>-->
+			<sheet>
+				<center>
+					<h1>Legal Compliance</h1><br/><br/>
+				</center>
+				<div class="oe_title">
+					<h2><field name="name" placeholder="Compliance Details..."/></h2>
+				</div>
+				<group>
+					<group col="4" colspan="2">
+						<field name="acts"/>
+						<field name="form_no"/>
+						<!--<field name="date_due"/>
+						<field name="date"/>-->
+						<field name="prepare_user_id" />
+						<field name="performed_user_id" />
+					</group>
+					<group col="4" colspan="2" string='Reminder'>
+						<field name="schedule_period" />
+						<field name="notify_day" />
+						<field name="due_date"/>
+					</group>
+					<button name="send_mail" type="object" string="Send Mail"  class="btn-primary" invisible="1" />
+				</group>
+				<group string="Notes">
+					<field name="note" colspan='4' nolabel="1"/>
+				</group>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_legal_compliance" model="ir.actions.act_window">
+	<field name="name">Legal Compliance</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">legal.compliance</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

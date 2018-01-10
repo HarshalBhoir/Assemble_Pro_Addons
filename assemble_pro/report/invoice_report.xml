@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<template id="assemble_pro_account_invoice">
+			<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+			<div class="page" style="font-size:14px;">
+					<table style="border:1px solid;width:100%;">
+						<tr>
+							<td style="width:70%;padding-left:5px;padding-right:5px;">
+								<table>
+									<tr style="text-align:center;">
+										<td><b>Tax Invoice / Invoice</b></td>
+									</tr>
+									<tr>
+										<td>Invoice for removal of Excisable goods from factory or warehouse on payment of duty</td>
+									</tr>
+									<tr style="text-align:center;">
+										<td>(Rule 52-A and 173-G)</td>
+									</tr>
+								</table>
+							</td>
+							<td style="width:30%;text-align:right;padding-right:5px;border-left:1px solid;">
+                                <t t-if="counter == 1">
+                                    <span>Original for buyer</span>
+                                </t>
+                                <t t-if="counter == 2">
+                                    <span>Duplicate for transporter</span>
+                                </t>
+                                <t t-if="counter == 3">
+                                    <span>Triplicate for excise</span>
+                                </t>
+                                <t t-if="counter == 4">    
+                                    <span>Office Copy</span>
+                                </t>
+							</td>
+						</tr>
+                    </table>
+                    <table style="border:1px solid;width:100%;">
+                        <tr>
+                            <td style="width:40%;padding-left:5px;vertical-align:top;">
+                                <table>
+                                    <tr>
+                                        <td><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 60px;"/></td>
+                                        <td style="vertical-align: top;">
+                                            <b><span t-field="o.company_id.name"/></b><br/>
+                                            <span t-field="o.company_id.street"/><br/>
+                                            <span t-field="o.company_id.city"/>-<span t-field="o.company_id.zip"/><br/>
+                                            PH: <span t-field="o.company_id.phone"/><br/>
+                                            E-mail: <span t-field="o.company_id.email"/>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>E.C.C. No</td>
+                                        <td><span t-field="o.company_id.partner_id.ecc_no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Range</td>
+                                        <td><span t-field="o.company_id.company_range"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Division</td>
+                                        <td><span t-field="o.company_id.division"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Commissionerate</td>
+                                        <td><span t-field="o.company_id.commissionrate"/></td>
+                                    </tr> -->
+									<tr>
+                                        <td>GSTIN</td>
+                                        <td><span t-field="o.company_id.gstin_no"/></td>
+                                    </tr>
+									<tr>
+                                        <td>ARN No</td>
+                                        <td><span t-field="o.company_id.gstin_no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PAN No</td>
+                                        <td><span t-field="o.company_id.partner_id.pan_no"/></td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>TIN</td>
+                                        <td><span t-field="o.company_id.partner_id.vat_no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CST</td>
+                                        <td><span t-field="o.company_id.partner_id.cst_no"/></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>CIN No</td>
+                                        <td><span t-field="o.company_id.partner_id.cin_no"/></td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>Service Tax No</td>
+                                        <td><span t-field="o.company_id.partner_id.service_tax_no"/></td>
+                                    </tr> -->
+									<tr>
+                                        <td>STATE</td>
+                                        <td><span t-field="o.company_id.state_id.name"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width:60%;border-left:1px solid;vertical-align: top;">
+                                <table>
+                                    <tr>
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="vertical-align: top;width:45%;border-right:1px solid;">
+                                                    <div style="text-align:center;border-bottom:1px solid;">
+                                                        <span>Name of Exisable Goods</span><br/>
+                                                        <span>Lift controls Boxes/Units</span>
+                                                    </div>
+                                                    <div style="text-align:center;border-bottom:1px solid;">
+                                                        <span>Chapter Heading/Sub-Heading No</span><br/>
+                                                        <span>8431.31.00</span>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align: top;width:55%;padding-left:5px;">
+                                                    <div>
+                                                        Invoice No: <span t-field="o.name"/>
+                                                    </div>
+                                                    <div>
+                                                        Date: <span t-field="o.date_invoice"/>
+                                                    </div>
+                                                    <div>
+                                                        P.O No: <span t-field="o.origin"/><br/>
+                                                        <span style="padding-left:50px;" t-field="o.po_order"/>
+                                                    </div>
+                                                    <div>
+                                                        L.R No: <span t-field="o.l_r_no"/> 
+                                                    </div>
+                                                    <div>
+                                                        Transporter: <span t-field="o.transporter"/>      
+                                                    </div>
+                                                    <div>
+                                                        Vehicle No: <span t-field="o.vehicle_no"/>     
+                                                    </div>
+                                                    <div>
+                                                        Mode of Transporter: <span t-field="o.mode_of_transport"/>     
+                                                    </div>
+                                                    <div>
+                                                        Destination: <span t-field="o.destination"/>      
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="border-top:1px solid;">
+													<br/>
+                                                    Date of Preparation of Invoice: <span t-field="o.create_date"/><br/><br/>
+                                                    Date of Removal of Invoice: <span t-field="o.removal_date"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+					</table>
+					<table style="border:1px solid;width:100%;">
+                        <tr>
+                            <td style="width:10%;vertical-align: top;">Invoice To: </td>
+							<td style="width:50%;vertical-align: top;">
+								<b><span t-field="o.partner_id.name"/></b><br/>
+								<span t-field="o.partner_id.street"/><br/>
+								<span t-field="o.partner_id.street2"/><br/>
+								<span t-field="o.partner_id.city"/><span t-if="o.partner_id.zip">-
+								<span t-field="o.partner_id.zip"/></span><br/><br/>
+								<span>GSTIN: <span t-field="o.partner_id.gstin_no"/></span><br/>
+								<span>STATE: <span t-field="o.partner_id.state_id.name"/></span>
+							</td>
+							
+							<!-- <td style="width:50%;vertical-align: top;">
+                                <address t-field="o.partner_id"
+                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+                            </td>-->
+                            <td style="width:40%;">
+                        <!--        <address t-field="o.partner_id"-->
+                        <!--t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />-->
+							<b><span t-field="o.partner_id.name"/></b><br/>
+							<span t-field="o.partner_id.street"/><br/>
+							<span t-field="o.partner_id.street2"/><br/>
+							<span t-field="o.partner_id.city"/><span t-if="o.partner_id.zip">-
+							<span t-field="o.partner_id.zip"/></span><br/><br/>
+							<!--<span>TIN: <span t-field="o.partner_id.vat_no"/> PAN No. <span t-field="o.partner_id.pan_no"/></span><br/>-->
+							<!--<span>ECC: <span t-field="o.partner_id.ecc_no"/>  CST: <span t-field="o.partner_id.cst_no"/></span>-->
+							<span>GSTIN: <span t-field="o.partner_id.gstin_no"/></span><br/>
+							<span>STATE: <span t-field="o.partner_id.state_id.name"/></span>
+							<br/>
+                            </td>
+                        </tr>
+						
+                    </table>
+					
+                    <table style="border:1px solid;width:100%;">
+                        <thead t-if="o.invoice_lines_boolean == True">
+                            <tr>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Sr No</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Particulars</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Tax %</th>
+								<th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">HSN/SAC</th>
+								<th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">ID No</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Qty</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Rate</th>
+                                <th class="text-center" style="border-bottom:1px solid;">Amount</th>
+                            </tr>
+                        </thead>
+                        <thead t-if="o.invoice_lines_boolean == False">
+                            <tr>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Sr No</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Particulars</th>
+								<th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Tax %</th>
+								<th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">HSN/SAC</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Qty</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">UOM</th>
+                                <th class="text-center" style="border-right:1px solid;border-bottom:1px solid;">Rate</th>
+                                <th class="text-center" style="border-bottom:1px solid;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody" t-if="o.invoice_lines_boolean == True" style="border-right:1px solid;">
+                            <t t-set="counter" t-value="1"/>
+                            <tr t-foreach="o.product_packaging_one2many" t-as="l">
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <t t-raw="counter"/>
+                                </td>
+                                <td style="border-right:1px solid;">
+                                    <span t-field="l.name"/>
+                                </td>
+								<td style="border-right:1px solid;text-align:center;">
+                                    <span t-esc="', '.join(map(lambda x: x.description, l.tax_id))"/>
+                                </td>
+								
+								<td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.hsn_no"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.code"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.qty"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.rate"/>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span t-field="l.amount"/>
+                                </td>
+								<t t-set="counter" t-value="counter+1"/>
+                            </tr>
+                        </tbody>
+                        <tbody class="invoice_tbody" t-if="o.invoice_lines_boolean == False">
+                            <t t-set="counter" t-value="1"/>
+                            <tr t-foreach="o.invoice_line_ids" t-as="l">
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <t t-raw="counter"/>
+                                </td>
+                                <td style="border-right:1px solid;">
+                                    <span t-field="l.product_id.name"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.quantity"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.uom_id.name"/>
+                                </td>
+                                <td style="border-right:1px solid;text-align:center;">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td style="text-align:center;">
+                                    <span t-field="l.price_subtotal"/>
+                                </td>
+								<t t-set="counter" t-value="counter+1"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="border:1px solid;width:100%;">
+                        <tr>
+                            <td style="width:60%;padding-left:10px;vertical-align: top;">
+                                <!--Duty: <br/>
+                                Ed Ces:--> <br/>
+                                Total: <span t-esc="o.total_amount_in_words()"/><br/>
+                            </td>
+                            <td style="width:40%">
+
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td  style="border: None;"><strong>Untaxed Amount</strong></td>
+                                        <td class="text-right"  style="border: None;" >
+                                            <span t-field="o.amount_untaxed" />
+                                        </td>
+                                    </tr>
+                                    <t t-set="tax_amt" t-value="0"/>
+                                    <tr t-foreach="o.tax_line_ids" t-as="l">
+                                        <td  style="border: None;">
+                                            <span t-field="l.name"/>
+                                        </td>
+                                        <td class="text-right"  style="border: None;">
+                                            <span t-field="l.amount"/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr t-if="o.amount_freight">
+                                        <td  style="border: None;"><strong>Freight Amount</strong></td>
+                                        <td class="text-right"  style="border: None;" >
+                                            <!--<span t-esc="o.get_amount_freight(o.amount_untaxed,tax_amt,)"/>-->
+                                            <span t-field="o.amount_freight" />
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-right">
+                                             <span t-field="o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black">
+                                            <td><strong>Round</strong></td>
+                                            <td class="text-right">
+                                               <span t-esc="round(o.amount_total)-o.amount_total"/>
+                                            </td>
+                                    </tr>
+                                    <tr class="border-black">
+                                        <td><strong>Total(Round)</strong></td>
+                                        <td class="text-right">
+                                             <span t-esc="round(o.amount_total)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="border:1px solid;width:100%;">
+                        <tr>
+                            <td style="text-align:right;padding-right:10px">
+                                <b>For <span t-field="o.company_id.name"/></b><br/><br/>
+                                <span>Authorised Signatory</span>
+                            </td>
+                        </tr>
+                    </table>				
+		</div>
+	</template>
+	<template id="account.report_invoice">
+		<t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="counter" t-value="1"/>
+                <t t-foreach="range(4)" t-as="l">
+                    <t t-call="assemble_pro.assemble_pro_account_invoice" t-lang="o.partner_id.lang" />
+                    <t t-set="counter" t-value="counter+1"/>
+                </t>
+            </t>
+		</t>
+	</template>
+
+</odoo>

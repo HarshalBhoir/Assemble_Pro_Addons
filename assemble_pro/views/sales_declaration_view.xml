@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_sales_declaration_tree" model="ir.ui.view">
+	<field name="name">sales.declaration.tree</field>
+	<field name="model">sales.declaration</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="partner_id"/>
+			<field name="date_start"/>
+			<field name="date_end"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_sales_declaration_form" model="ir.ui.view">
+	<field name="name">sales.declaration.form</field>
+	<field name="model">sales.declaration</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+			</header>
+
+			<style>
+					.remove_sheet {
+						  min-width: 100%;
+						  max-width: 100%;
+						  margin: 0 auto;
+						}
+				</style>
+
+			
+			<sheet class="remove_sheet">
+				<h1><center>Sales Declaration</center></h1><br/>
+				<div class="oe_title">
+					<h1><field name="name" states="done" readonly="1"/></h1>
+				</div>
+				<group>
+					<group col="4" colspan="2" >
+						<label for="date_start" string="Validity" />
+						<div><field name="date_start" class="oe_inline" attrs="{'readonly':[('state','=','done')]}"/> to <field name="date_end" class="oe_inline" attrs="{'readonly':[('state','=','done')]}"/></div>
+						<field name="company_id" options="{'no_create' : True}" attrs="{'readonly':[('state','=','done')]}"/>
+                    </group>
+					<group col="4" colspan="2">
+						<field name="partner_id" context="{'search_default_customer':1, 'default_supplier':0, 'default_customer':1}" domain="[('customer','=',True)]" attrs="{'readonly':[('state','=','done')]}"/>
+					</group>
+					
+				</group>
+				<group>
+					<group>
+						<field name="transporter" />
+						<field name="lr_no" />
+					</group>
+					<group>
+						<field name="vehicle_no" />
+						<field name="lr_date" />
+					</group>
+				</group>
+
+				<group col="4" colspan="2" class="oe_inline">
+					<div class="col-xs-12" style="margin-top:5%;">
+						<center>
+							<div class="col-xs-2"/>
+							<button name="search_sales" type="object" string="Search"  class="btn-primary col-xs-2" style="font-size: 16px;" attrs="{'invisible': [('state','=','done')]}"/>
+							<div class="col-xs-1"/>
+							<button name="select_all" type="object" string="Select All"  class="btn-primary col-xs-3"  style="font-size: 16px;" />
+							<div class="col-xs-1"/>
+							<button name="sales_declaration_report" type="object" string="Print"  class="btn-primary col-xs-2"  style="font-size: 16px;"/>
+						</center>
+					</div>
+				</group>
+				
+				<group string="Sales Declaration Line" col="4" colspan="4" >
+				<field name="sales_declaration_line_one2many" string="Sales Declaration Line" nolabel="1" mode="tree"/>
+			</group>
+				
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+<record id="view_sales_declaration_line_tree" model="ir.ui.view">
+	<field name="name">sales.declaration.line.tree</field>
+	<field name="model">sales.declaration.line</field>
+	<field name="arch" type="xml">
+		<tree editable="bottom" create="false" delete="false">
+			<field name="selection" string="" />
+			<field name="invoice_no"/>
+			<field name="date"/>
+			<field name="dc_no"/>
+			<field name="name"/>
+			<field name="partner_id"/>
+			<field name="location"/>
+			<field name="amount" />
+		</tree>
+	</field>
+</record>
+
+
+
+<record id="action_sales_declaration" model="ir.actions.act_window">
+	<field name="name">Sales Declaration</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">sales.declaration</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<div t-name="FormSheet" class="oe_form_sheet btn-group" >
+    <t t-foreach="widget.sections" t-as="section">
+        <div class="oe_form_dropdown_section btn-group btn-group-sm">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                    t-if="section.name != 'buttons'"
+                    data-toggle="dropdown">
+                <t t-if="section.name == 'files'" t-raw="widget.items[section.name].length || ''"/>
+                <t t-esc="section.label"/>
+                <span class="caret"></span>
+            </button>
+            <t t-if="section.name == 'buttons'" t-foreach="widget.items[section.name]" t-as="item" t-att-class="item.classname">
+                <button type="button" t-att-title="item.title or ''" t-att-data-section="section.name" t-att-data-index="item_index" t-att-href="item.url"
+                    target="_blank" class="oe_sidebar_button oe_highlight">
+                    <t t-raw="item.label"/>
+                </button>
+            </t>
+            <ul class="dropdown-menu" role="menu">
+                <li t-foreach="widget.items[section.name]" t-as="item" t-att-class="item.classname">
+                    <t t-if="section.name == 'files'">
+                        <t t-set="item.title">
+                            <b>Attachment : </b><br/>
+                            <t t-raw="item.name"/>
+                        </t>
+                        <t t-if="item.create_uid and item.create_uid[0]" t-set="item.title">
+                            <t t-raw="item.title"/><br/>
+                            <b>Created by : </b><br/>
+                            <t t-raw="item.create_uid[1] + ' ' + item.create_date"/>
+                        </t>
+                        <t t-if="item.create_uid and item.write_uid and item.create_uid[0] != item.write_uid[0]" t-set="item.title">
+                            <t t-raw="item.title"/><br/>
+                            <b>Modified by : </b><br/>
+                            <t t-raw="item.write_uid[1] + ' ' + item.write_date"/>
+                        </t>
+                    </t>
+                    <a class="oe_file_attachment" t-att-title="item.title or ''" t-att-data-section="section.name" t-att-data-index="item_index" t-att-href="item.url">
+                        <t t-raw="item.label"/>
+                        <span t-if="section.name == 'files' and widget.options.editable and !item.callback" class="oe_sidebar_delete_item" t-att-data-id="item.id" title="Delete this attachment">
+                            <i class="fa fa-trash-o"/>
+                        </span>
+                    </a>
+                </li>
+                <li t-if="section.name == 'files' and widget.options.editable" class="oe_sidebar_add_attachment">
+                    <t t-call="HiddenInputFile">
+                        <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                        <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                        <input type="hidden" name="model" t-att-value="widget.dataset and widget.dataset.model"/>
+                        <input type="hidden" name="id" t-att-value="widget.model_id"/>
+                        <input type="hidden" name="session_id" t-att-value="widget.session.session_id" t-if="widget.session.override_session"/>
+                        <span>Add...</span>
+                    </t>
+                </li>
+            </ul>
+        </div>
+    </t>
+</div>
+
+</templates>

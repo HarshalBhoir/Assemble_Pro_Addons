@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="sales_declaration_document">
+			<!--<t t-call="report.external_layout">-->
+			<t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+			<div class="page">
+				<div class="row" style=" height: 220px;">
+					<div class="col-xs-5" style="height: 200px; ">
+						<table class="table" >
+							<tr>
+								<td style="width:100px; border-top:none;">
+									<b><u>CONSIGNOR</u></b>
+								</td>
+							</tr>
+							<tr style="height:50px;">
+								<td style="border-top:none;"> 
+									<span t-field="doc.company_id.name"/><br/>
+									<span t-field="doc.company_id.street"/>,
+									<span t-field="doc.company_id.street2"/><br/>
+									<span t-field="doc.company_id.city"/>- 
+									<span t-field="doc.company_id.zip"/><br/>
+									<span t-field="doc.company_id.state_id.name"/><br/>
+									<t t-if="doc.company_id.partner_id.child_ids">
+									<span t-field="doc.company_id.country_id.name"/><br/>
+									Contact Person:
+									<span t-field="doc.company_id.partner_id.child_ids[0].name"/><br/>
+									</t>
+									Phone No: <span t-field="doc.company_id.phone"/><br/>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5" style="height: 200px; " >
+						<table class="table">
+							<tr>
+								<td style="width:100px; border-top:none;">
+									<b><u>CONSIGNEE</u></b>
+								</td>
+							</tr>
+							<tr style="height:50px;">
+								<td style="border-top:none;"> 
+									<span t-field="doc.partner_id.name"/><br/>
+									<span t-field="doc.partner_id.street"/>,
+									<span t-field="doc.partner_id.street2"/><br/>
+									<span t-field="doc.partner_id.city"/>- 
+									<span t-field="doc.partner_id.zip"/><br/>
+									<span t-field="doc.partner_id.state_id.name"/><br/>
+									<span t-field="doc.partner_id.country_id.name"/><br/>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-xs-12" style="height:30px;">
+				Product : Lift Control Boxes / Unit &amp; wiring Harness
+				</div>
+				<div class="col-xs-12" style="height:70px;">
+					<table>
+						<tr>
+							<td style="border:none;">
+								<b>Transporter Name</b>
+							</td>
+							<td style="border:none; width:30px; padding-left: 50px; padding-right: 50px;">
+								<center>:</center>
+							</td>
+							<td style="border:none;">
+								<span t-field="doc.transporter"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="border:none;">
+								<b>L.R No &amp; Date </b>
+							</td>
+							<td style="border:none; width:30px;">
+								<center>:</center>
+							</td>
+							<td style="border:none;">
+								<span t-field="doc.lr_no"/> - <span t-field="doc.lr_date"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="border:none;">
+								<b>Vehicle No</b>
+							</td>
+							<td style="border:none; width:30px;">
+								<center>:</center>
+							</td>
+							<td style="border:none;">
+								<span t-field="doc.vehicle_no"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="col-xs-12">
+					<table class="table">
+						<tr>
+							<td style="border: 1px solid black;">
+								R3
+							</td>
+							<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+								Controller
+							</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;">
+								Harness
+							</td>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black; ">
+								ACVF
+							</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;">
+								MRH
+							</td>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black; ">
+								Spares
+							</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;">
+								OKR
+							</td>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black; ">
+								Repair
+							</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black;  border-left: 1px solid black;">
+								Cedes
+							</td>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black; ">
+								Other
+							</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid black; border-right: none;  border-left: 1px solid black;">
+								
+							</td>
+							<td style="border-bottom: 1px solid black; border-right: 1px solid black; ">
+								Total
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-xs-12" style="height:30px;">
+					RECEIVED TRANSPORTERS &amp; ORIGINALS COPY ALONG WITH THE MATERIAL AS PER BELOW
+					<br/>
+				</div>
+				<br/>
+				<div class="col-xs-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<td style="border: 1px solid black;">
+									<b>Invoice No</b>
+								</td>
+								<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+									<b>Date</b>
+								</td>
+								<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+									<b>DC No</b>
+								</td>
+								<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+									<b>Order No</b>
+								</td>
+								<td style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+									<b>Amount</b>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<t t-foreach="doc.sales_declaration_line_one2many" t-as="l">
+								<t t-if="l.selection"> 
+								<tr>
+									<td style="border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
+										<span t-field="l.invoice_no"/>
+									</td>
+									<td style="border-right: 1px solid black; border-bottom: 1px solid black;">
+										<span t-field="l.date"/>
+									</td>
+									<td style="border-right: 1px solid black; border-bottom: 1px solid black;">
+										<span t-field="l.dc_no"/>
+									</td>
+									<td style="border-right: 1px solid black; border-bottom: 1px solid black;">
+										<span t-field="l.name"/>
+									</td>
+									<td style="border-right: 1px solid black; border-bottom: 1px solid black;">
+										<span t-field="l.amount"/>
+									</td>
+								</tr>
+								</t>
+							</t>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!--</t>-->
+	</template>
+	
+	<template id="sales_declaration_template">
+		<t t-call="report.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="assemble_pro.sales_declaration_document" />
+			</t>
+		</t>
+	</template>
+
+	<report id="sales_declaration_report" name="assemble_pro.sales_declaration_template"
+		file="assemble_pro.sales_declaration_template" string="Sales Declaration" model="sales.declaration"
+		report_type="qweb-pdf" />
+</odoo>

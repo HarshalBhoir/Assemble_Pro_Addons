@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_assemble_instructions_tree" model="ir.ui.view">
+	<field name="name">assemble.instructions.tree</field>
+	<field name="model">assemble.instructions</field>
+	<field name="arch" type="xml">
+		<tree>
+			<!--<field name="name"  invisible="1"/>-->
+			<field name="default_code"/>
+			<field name="display_name"/>
+			<field name="product_id"  invisible="1"/>
+			<field name="employee_id"  invisible="0"/>
+			<field name="start_date"/>
+			<!--<field name="mrp_id" invisible="1"/>-->
+		</tree>
+	</field>
+</record>
+
+<record id="view_assemble_instructions_form" model="ir.ui.view">
+	<field name="name">assemble.instructions.form</field>
+	<field name="model">assemble.instructions</field>
+	<field name="arch" type="xml">
+		<form>
+			<header><br><h1><center>Assembly Config Instructions</center></h1></br></header>
+			<div class="oe_title">
+				<separator/><separator/><separator/><separator/>
+				<div>
+					<label for="name" class="oe_inline" />
+					<h1><field name="name" class="oe_inline" /></h1>
+				</div>
+			</div>
+			<group>
+				<separator/><separator/><separator/><separator/>
+				<group>
+					<field name="work_instruction_id" readonly="1"/>
+					<!--<field name="name" required="0" invisible="0"/>-->
+					<field name="start_date"/>
+					<field name="employee_id" required="1"/>
+					<field name="user_id" invisible="1"/>
+				</group>
+				<group>
+					<field name="product_id"/>
+					<field name="default_code"/>
+				</group>
+			</group>
+			 <group string="Instructions" col="4" colspan="4" >
+				<field name="assemble_sub_one2many" class="assembly_image"
+					string="Instructions" nolabel="1"
+					context="{'default_product_id':product_id,'assemble_sub':assemble_sub_one2many}">
+					<tree editable="bottom">
+					   <field name="handler"  widget="handle"/>
+					   <field name="sequence"/>
+					   <field name="name" required="0"/>
+					   <field name="default_code"  invisible="0"/>
+					   <field name="product_id"  invisible="0"/>
+					   <field name="photo" widget="image" />
+					   <field name="product_qty"/>
+					</tree>
+				</field>
+			 </group>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+<record id="action_assemble_instructions" model="ir.actions.act_window">
+	<field name="name">Assembly Config Instructions</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">assemble.instructions</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_assemble_instructions_tree" model="ir.ui.view">
+	<field name="name">assemble.instructions.tree</field>
+	<field name="model">assemble.instructions</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" required="1"/>
+			<field name="start_date"/>
+		</tree>
+	</field>
+</record>
+
+<record id="view_assemble_work_tree" model="ir.ui.view">
+	<field name="name">assemble.work.tree</field>
+	<field name="model">assemble.work</field>
+	<field name="arch" type="xml">
+		<tree decoration-info="state in ('under_production')" decoration-danger="state in ('draft','inprogress')">
+			<field name="assemble_no" />
+			<field name="name" required="1"/>
+			<field name="product_template_id" string="Product"  invisible="1"/>
+			<field name="user_id" string="Accessed By"  invisible="1"/>
+			<field name="employee_id"  invisible="0"/>
+			<field name="date"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_assemble_work_form" model="ir.ui.view">
+	<field name="name">assemble.work.form</field>
+	<field name="model">assemble.work</field>
+	<field name="arch" type="xml">
+		<form>
+			<style>
+				.openerp .fixed {
+						padding: 45px 0;
+					}
+					
+					.openerp .oe_form header{
+					position: fixed;
+					z-index: 1;
+					width: 82%;
+					}
+			</style>
+			<header class="fixed">
+				<div class="col-xs-4">
+				<button name="action_prev" type="object" string="Previous"  class="btn-primary" states="inprogress" style="margin-right: 20px;font-size: 16px;" invisible="1"/>
+				<button name="action_next" type="object" string="Next" class="btn-primary" attrs="{'invisible':['|',('final_step','=',True),('state','in',('draft','done'))]}" style="margin-right: 20px;font-size: 16px;"/>
+				<button name="action_final" type="object" string="Produce" class="btn-primary" attrs="{'invisible':['|',('final_step','!=',True),('state','=','done')]}" style="margin-right: 20px;font-size: 16px;"/>
+				</div>
+				<div class="col-xs-4">
+				<h1><center>Assembly Work Instructions</center></h1>
+				</div>
+				<div class="col-xs-4">
+				<field name="state" widget="statusbar" statusbar_visible="draft,inprogress"/>
+				<!-- ,under_production -->
+				</div>
+			</header>
+				<br/><br/><br/><br/>
+				<div class="oe_button_box" name="button_box" states="done,under_production">
+					<button name="get_attached_docs" class="oe_stat_button"
+						type="object" icon="fa-archive">
+						<field string="FG" name="attach_doc_count" widget="statinfo"/>
+					</button>
+				</div>
+				<br/><seperator/><seperator/>
+				<group>
+					<group>
+						<field name="assemble_no" attrs="{'readonly':[('state','!=','draft')],'invisible':[('state','=','draft')]}"/>
+						<field name="mrp_production_id" invisible="1" />
+						<field name="name" required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+					</group>
+					<group>
+						<field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="employee_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="user_id" invisible="1"/>
+						<!--<field name="product_template_id" string="Product" invisible="0"/>-->
+						<field name="final_step" invisible="1" />
+					</group>
+				</group>
+				<seperator/><seperator/><seperator/><seperator/>
+				
+				<center>
+					<h2  states="inprogress, done">Instruction No. <field name="sequence" readonly="1" string="Instruction No." style="display:inline"/></h2>
+				</center>
+				<seperator/><seperator/><seperator/><seperator/>
+				<center><button name="action_start" type="object" string="Start" class="btn-primary"  states="draft"/></center>
+				
+				<seperator/><seperator/><seperator/><seperator/>
+
+				<style>
+						.assembly_img img
+						{
+							max-width:100% !important;
+							max-height:none !important;
+						}
+				</style>
+				<br/><br/>
+				 <center>
+					<i class="fa fa-check-circle fa-10x" style="" aria-hidden="true" states="done"></i>
+					<br/><br/>
+					<h1 states="done">Production Complete</h1>
+				 </center>
+				 <center>
+					<i class="fa fa-cogs fa-10x" style="" aria-hidden="true" states="under_production"></i>
+					<br/><br/>
+					<h1 states="under_production">Under Production</h1>
+				 </center>
+				<div attrs="{'invisible':[('photo','in',(False,''))]}">
+					<center><field name="photo" class="assembly_img" widget="image" style="width:610px;" states="inprogress" readonly="1" /></center>
+				</div>
+				<br/><br/>
+				<div style="text-align: center;">
+					<group colspan="2" col="4">
+						<field name="product_id" string="Product" readonly="1" states="inprogress"/>
+						<field name="product_qty" string="Product Qty" readonly="1" states="inprogress"/>
+						
+					</group>
+					<group colspan="2" col="4">
+						<field name="qty_compute" string="Quantity" readonly="0"  attrs="{'readonly':[('tracking','=','serial')],'invisible':['|',('tracking','!=','serial'),('state','in',('draft','under_production','done'))]}"/>
+						<field name="qty_manual" string="Quantity" readonly="0"  attrs="{'invisible':['|',('tracking','=','serial'),('state','in',('draft','under_production','done'))]}"/>
+						<field name="serial_no_text" states="inprogress" default_focus="1"
+							   attrs="{'readonly':[('tracking','!=','serial')]}"/>
+						<field name="qty" string="Quantity" invisible="1"/>
+						
+					</group>
+					<group colspan="2" col="4">
+						<field name="serial_no" readonly="0" states="inprogress" options="{'no_create' : True,'no_create_edit':True,'no_open' :True}" invisible="1"/>
+						<field name="tracking" invisible="1"/>
+						<field name="quant_no" invisible="1" />
+						<!--<field name="serial_list" invisible="0" />-->
+					</group>
+				</div>
+
+				<div style="height: 40px;">
+					<seperator/><seperator/><seperator/><seperator/>
+					<seperator/><seperator/><seperator/><seperator/>
+				</div>
+
+
+				<h1><field name="instruction" states="inprogress" style="font-size: 16px;" readonly="1"/></h1>
+				<br/>
+				<div style="text-align: center;">
+					<button name="action_prev" type="object" string="Previous"  class="btn-primary" states="inprogress" style="margin-right: 20px;font-size: 16px;"  invisible="1"/>
+					<button name="action_next" type="object" string="Next" class="btn-primary" attrs="{'invisible':['|',('final_step','=',True),('state','in',('draft','done'))]}" style="margin-right: 20px;font-size: 16px;" />
+					<button name="action_final"  type="object" string="Produce"	class="btn-primary" attrs="{'invisible':['|',('final_step','!=',True),('state','in',('done','under_production'))]}" />
+				</div>
+				
+				<group string="MRP product Details" col="4" colspan="4"  invisible="1">
+					<field name="assemble_work_mrp_one2many" 
+						   string="Instructions" nolabel="1"  >
+						<tree editable="bottom">
+						   <field name="name" invisible="1" />
+						   <field name="product_id"  invisible="0"/>
+						   <field name="product_uom"/>
+						   <field name="product_qty"  invisible="0"/>
+						   <field name="serial_no" />
+						   <field name="assemble_work_id" invisible="1"/>
+						</tree>
+					</field>
+				</group>
+				
+			<br/><br/><br/><br/>
+
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_assemble_work" model="ir.actions.act_window">
+	<field name="name">Assembly Work Instructions</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">assemble.work</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

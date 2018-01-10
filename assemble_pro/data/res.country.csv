@@ -1,0 +1,254 @@
+id,active,name,code
+base.af,False,"Afghanistan, Islamic State of",AF
+base.ax,False,Åland Islands,AX
+base.al,False,Albania,AL
+base.dz,False,Algeria,DZ
+base.as,False,American Samoa,AS
+base.ad,False,"Andorra, Principality of",AD
+base.ao,False,Angola,AO
+base.ai,False,Anguilla,AI
+base.aq,False,Antarctica,AQ
+base.ag,False,Antigua and Barbuda,AG
+base.ar,False,Argentina,AR
+base.am,False,Armenia,AM
+base.aw,False,Aruba,AW
+base.au,False,Australia,AU
+base.at,False,Austria,AT
+base.az,False,Azerbaijan,AZ
+base.bs,False,Bahamas,BS
+base.bh,False,Bahrain,BH
+base.bd,False,Bangladesh,BD
+base.bb,False,Barbados,BB
+base.by,False,Belarus,BY
+base.be,False,Belgium,BE
+base.bz,False,Belize,BZ
+base.bj,False,Benin,BJ
+base.bm,False,Bermuda,BM
+base.bt,False,Bhutan,BT
+base.bo,False,Bolivia,BO
+base.bq,False,"Bonaire, Sint Eustatius and Saba",BQ
+base.ba,False,Bosnia-Herzegovina,BA
+base.bw,False,Botswana,BW
+base.bv,False,Bouvet Island,BV
+base.br,False,Brazil,BR
+base.io,False,British Indian Ocean Territory,IO
+base.bn,False,Brunei Darussalam,BN
+base.bg,False,Bulgaria,BG
+base.bf,False,Burkina Faso,BF
+base.bi,False,Burundi,BI
+base.kh,False,"Cambodia, Kingdom of",KH
+base.cm,False,Cameroon,CM
+base.ca,False,Canada,CA
+base.cv,False,Cape Verde,CV
+base.ky,False,Cayman Islands,KY
+base.cf,False,Central African Republic,CF
+base.td,False,Chad,TD
+base.cl,False,Chile,CL
+base.cn,True,China,CN
+base.cx,False,Christmas Island,CX
+base.cc,False,Cocos (Keeling) Islands,CC
+base.co,False,Colombia,CO
+base.km,False,Comoros,KM
+base.cg,False,Congo,CG
+base.cd,False,"Congo, Democratic Republic of the",CD
+base.ck,False,Cook Islands,CK
+base.cr,False,Costa Rica,CR
+base.hr,False,Croatia,HR
+base.cu,False,Cuba,CU
+base.cw,False,Curaçao,CW
+base.cy,False,Cyprus,CY
+base.cz,False,Czech Republic,CZ
+base.dk,False,Denmark,DK
+base.dj,False,Djibouti,DJ
+base.dm,False,Dominica,DM
+base.do,False,Dominican Republic,DO
+base.tp,False,East Timor,TP
+base.ec,False,Ecuador,EC
+base.eg,False,Egypt,EG
+base.sv,False,El Salvador,SV
+base.gq,False,Equatorial Guinea,GQ
+base.er,False,Eritrea,ER
+base.ee,False,Estonia,EE
+base.et,False,Ethiopia,ET
+base.fk,False,Falkland Islands,FK
+base.fo,False,Faroe Islands,FO
+base.fj,False,Fiji,FJ
+base.fi,False,Finland,FI
+base.fr,False,France,FR
+base.gf,False,French Guyana,GF
+base.tf,False,French Southern Territories,TF
+base.ga,False,Gabon,GA
+base.gm,False,Gambia,GM
+base.ge,False,Georgia,GE
+base.de,True,Germany,DE
+base.gh,False,Ghana,GH
+base.gi,False,Gibraltar,GI
+base.gr,False,Greece,GR
+base.gl,False,Greenland,GL
+base.gd,False,Grenada,GD
+base.gp,False,Guadeloupe (French),GP
+base.gu,False,Guam (USA),GU
+base.gt,False,Guatemala,GT
+base.gg,False,Guernsey,GG
+base.gn,False,Guinea,GN
+base.gw,False,Guinea Bissau,GW
+base.gy,False,Guyana,GY
+base.ht,False,Haiti,HT
+base.hm,False,Heard and McDonald Islands,HM
+base.va,False,Holy See (Vatican City State),VA
+base.hn,False,Honduras,HN
+base.hk,False,Hong Kong,HK
+base.hu,False,Hungary,HU
+base.is,False,Iceland,IS
+base.in,True,India,IN
+base.id,False,Indonesia,ID
+base.ir,False,Iran,IR
+base.iq,False,Iraq,IQ
+base.ie,False,Ireland,IE
+base.im,False,Isle of Man,IM
+base.il,False,Israel,IL
+base.it,False,Italy,IT
+base.ci,False,Ivory Coast (Cote D'Ivoire),CI
+base.jm,False,Jamaica,JM
+base.jp,False,Japan,JP
+base.je,False,Jersey,JE
+base.jo,False,Jordan,JO
+base.kz,False,Kazakhstan,KZ
+base.ke,False,Kenya,KE
+base.ki,False,Kiribati,KI
+base.kw,False,Kuwait,KW
+base.kg,False,Kyrgyz Republic (Kyrgyzstan),KG
+base.la,False,Laos,LA
+base.lv,False,Latvia,LV
+base.lb,False,Lebanon,LB
+base.ls,False,Lesotho,LS
+base.lr,False,Liberia,LR
+base.ly,False,Libya,LY
+base.li,False,Liechtenstein,LI
+base.lt,False,Lithuania,LT
+base.lu,False,Luxembourg,LU
+base.mo,False,Macau,MO
+base.mk,False,"Macedonia, the former Yugoslav Republic of",MK
+base.mg,False,Madagascar,MG
+base.mw,False,Malawi,MW
+base.my,False,Malaysia,MY
+base.mv,False,Maldives,MV
+base.ml,False,Mali,ML
+base.mt,False,Malta,MT
+base.mh,False,Marshall Islands,MH
+base.mq,False,Martinique (French),MQ
+base.mr,False,Mauritania,MR
+base.mu,False,Mauritius,MU
+base.yt,False,Mayotte,YT
+base.mx,False,Mexico,MX
+base.fm,False,Micronesia,FM
+base.md,False,Moldavia,MD
+base.mc,False,Monaco,MC
+base.mn,False,Mongolia,MN
+base.me,False,Montenegro,ME
+base.ms,False,Montserrat,MS
+base.ma,False,Morocco,MA
+base.mz,False,Mozambique,MZ
+base.mm,False,Myanmar,MM
+base.na,False,Namibia,NA
+base.nr,False,Nauru,NR
+base.np,False,Nepal,NP
+base.nl,False,Netherlands,NL
+base.an,False,Netherlands Antilles,AN
+base.nt,False,Neutral Zone,NT
+base.nc,False,New Caledonia (French),NC
+base.nz,False,New Zealand,NZ
+base.ni,False,Nicaragua,NI
+base.ne,False,Niger,NE
+base.ng,False,Nigeria,NG
+base.nu,False,Niue,NU
+base.nf,False,Norfolk Island,NF
+base.mp,False,Northern Mariana Islands,MP
+base.kp,False,North Korea,KP
+base.no,False,Norway,NO
+base.om,False,Oman,OM
+base.pk,False,Pakistan,PK
+base.pw,False,Palau,PW
+base.ps,False,"Palestinian Territory, Occupied",PS
+base.pa,False,Panama,PA
+base.pg,False,Papua New Guinea,PG
+base.py,False,Paraguay,PY
+base.pe,False,Peru,PE
+base.ph,False,Philippines,PH
+base.pn,False,Pitcairn Island,PN
+base.pl,False,Poland,PL
+base.pf,False,Polynesia (French),PF
+base.pt,False,Portugal,PT
+base.pr,False,Puerto Rico,PR
+base.qa,False,Qatar,QA
+base.re,False,Reunion (French),RE
+base.ro,False,Romania,RO
+base.ru,False,Russian Federation,RU
+base.rw,False,Rwanda,RW
+base.bl,False,Saint Barthélémy,BL
+base.sh,False,Saint Helena,SH
+base.kn,False,Saint Kitts & Nevis Anguilla,KN
+base.lc,False,Saint Lucia,LC
+base.mf,False,Saint Martin (French part),MF
+base.pm,False,Saint Pierre and Miquelon,PM
+base.st,False,Saint Tome (Sao Tome) and Principe,ST
+base.vc,False,Saint Vincent & Grenadines,VC
+base.ws,False,Samoa,WS
+base.sm,False,San Marino,SM
+base.sa,False,Saudi Arabia,SA
+base.sn,False,Senegal,SN
+base.rs,False,Serbia,RS
+base.sc,False,Seychelles,SC
+base.sl,False,Sierra Leone,SL
+base.sg,False,Singapore,SG
+base.sx,False,Sint Maarten (Dutch part),SX
+base.sk,False,Slovakia,SK
+base.si,False,Slovenia,SI
+base.sb,False,Solomon Islands,SB
+base.so,False,Somalia,SO
+base.za,False,South Africa,ZA
+base.gs,False,South Georgia and the South Sandwich Islands,GS
+base.kr,False,South Korea,KR
+base.ss,False,South Sudan,SS
+base.es,False,Spain,ES
+base.lk,False,Sri Lanka,LK
+base.sd,False,Sudan,SD
+base.sr,False,Suriname,SR
+base.sj,False,Svalbard and Jan Mayen Islands,SJ
+base.sz,False,Swaziland,SZ
+base.se,False,Sweden,SE
+base.ch,True,Switzerland,CH
+base.sy,False,Syria,SY
+base.tw,False,Taiwan,TW
+base.tj,False,Tajikistan,TJ
+base.tz,False,Tanzania,TZ
+base.th,False,Thailand,TH
+base.tg,False,Togo,TG
+base.tk,False,Tokelau,TK
+base.to,False,Tonga,TO
+base.tt,False,Trinidad and Tobago,TT
+base.tn,False,Tunisia,TN
+base.tr,False,Turkey,TR
+base.tm,False,Turkmenistan,TM
+base.tc,False,Turks and Caicos Islands,TC
+base.tv,False,Tuvalu,TV
+base.ug,False,Uganda,UG
+base.ua,False,Ukraine,UA
+base.ae,False,United Arab Emirates,AE
+base.uk,True,United Kingdom,GB
+base.us,True,United States,US
+base.uy,False,Uruguay,UY
+base.um,False,USA Minor Outlying Islands,UM
+base.uz,False,Uzbekistan,UZ
+base.vu,False,Vanuatu,VU
+base.ve,False,Venezuela,VE
+base.vn,False,Vietnam,VN
+base.vg,False,Virgin Islands (British),VG
+base.vi,False,Virgin Islands (USA),VI
+base.wf,False,Wallis and Futuna Islands,WF
+base.eh,False,Western Sahara,EH
+base.ye,False,Yemen,YE
+base.yu,False,Yugoslavia,YU
+base.zr,False,Zaire,ZR
+base.zm,False,Zambia,ZM
+base.zw,False,Zimbabwe,ZW

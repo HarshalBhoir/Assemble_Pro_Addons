@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_all_attendance_form" model="ir.ui.view">
+            <field name="name">hr.all.attendance.form</field>
+            <field name="model">hr.all.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Employee attendances">
+                    <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="status"/>
+                            <field name="duration"/>
+                            <field name="overtime"/>
+                        </group>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_all_attendance_who" model="ir.ui.view">
+            <field name="name">hr.all.attendance.tree</field>
+            <field name="model">hr.all.attendance</field>
+            <field eval="3" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Employee attendances">
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="duration"/>
+                    <field name="overtime"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_all_attendance_filter">
+            <field name="name">view_all_hr_attendance_filter</field>
+            <field name="model">hr.all.attendance</field>
+            <field name="arch" type="xml">
+                <search string="Hr Attendance Search">
+                    <field name="name" string="Attendance"/>
+                    <!--<field name="action"/>-->
+                    <field name="department_id"/>
+                    <filter string="Today" name="today" domain="[('name','&gt;=',datetime.datetime.now().replace(hour=0, minute=0, second=0)),('name','&lt;=',datetime.datetime.now().replace(hour=23, minute=59, second=59))]" />
+                    <filter string="Current Month" domain="[('name','&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]" />
+                    <separator/>
+                    <filter string="My Attendance" domain="[('employee_id.user_id.id', '=', uid)]" />
+                    <field name="employee_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                        <separator/>
+                        <filter name="groupby_name" string="Month" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        
+
+        <record id="open_view_all_attendance" model="ir.actions.act_window">
+            <field name="name">All Attendances</field>
+            <field name="res_model">hr.all.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_today":1}</field>
+            <field name="search_view_id" ref="view_hr_all_attendance_filter" />
+            <field name="help">The Time Tracking functionality aims to manage employee attendances from Sign in/Sign out actions. You can also link this feature to an attendance device using Odoo's web service features.</field>
+        </record>
+        
+        
+    <record id="view_attendance_import_form" model="ir.ui.view">
+        <field name="name">attendance.import.form</field>
+        <field name="model">attendance.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <h1><center>Attendance Import</center></h1>
+                    <group>
+                        <separator/><separator/><separator/><separator/>
+                        <field name="import_file" filename="file_name" widget="upload"  attrs="{'readonly':[('state','=','done')]}"/>
+                        <field name="file_name" invisible="1"/>
+                        <button string="Import File" name="action_import"
+                                type="object" icon="gtk-go-forward" colspan="2" attrs="{'invisible':[('state','=','done')]}"/>
+                        <field name="delimeter" invisible="1"/>
+                        <br/><br/>
+                        <a href="/biometrics_integration/static/data/essl4.csv" attrs="{'invisible':[('state','=','done')]}">Sample CSV file</a>
+                    </group>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+            
+            
+            
+    <record id="view_attendance_import_tree" model="ir.ui.view">
+        <field name="name">attendance.import.tree</field>
+        <field name="model">attendance.import</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="file_name"/>
+                <field name="create_date" string="Created Date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_attendance_import_import" model="ir.actions.act_window">
+        <field name="name">Attendance Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">attendance.import</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="All Attendances" action="open_view_all_attendance" id="menu_open_view_all_attendance"
+              parent="hr_attendance.menu_hr_attendance_root" sequence="20" groups="base.group_hr_attendance"/>
+    
+    <menuitem id="attendance_import_id" parent="id_add_bio_machine"  name="Import Attendance"
+              action="action_attendance_import_import" />
+        
+    </data>
+</openerp>

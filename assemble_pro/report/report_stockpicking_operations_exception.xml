@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        
+    <template id="assemble_pro_report_picking_outgoing">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                No: <span t-field="o.name"/><span style="padding-left:70px;">Date:</span><span t-field="o.date_done"/>
+                <table style="border:1px solid;width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid black;">
+                            <th style="font-size:12px;width: 125px;padding-left: 10px;border-right:1px solid black;"><strong>ID</strong></th>
+                            <th style="font-size:12px;width: 180px;padding-left: 10px;border-right:1px solid black;"><strong>Description</strong></th>
+                            <th style="font-size:12px;padding-left: 10px;border-right:1px solid black;"><strong>SR NO</strong></th>
+                            <th style="font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;"><strong>Stops</strong></th>
+                            <th style="font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;"><strong>Qty</strong></th>
+                            <th style="font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;"><strong>UOM</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <t t-foreach="o.packlist_report()" t-as="l">
+                        <tr>
+                            <td t-att-style="'font-size:12px;width: 125px;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[0]"/>
+                            </td>
+                            <td t-att-style="'font-size:12px;width: 180px;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[1]"/>
+                            </td>
+                            <td t-att-style="'font-size:12px;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[2]"/>
+                            </td>
+                            <td t-att-style="'font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[3]"/>
+                            </td>
+                            <td t-att-style="'font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[4]"/>
+                            </td>
+                            <td t-att-style="'font-size:12px;width:60px !important;padding-left: 10px;border-right:1px solid black;%s' % (l[6])">
+                                <span t-esc="l[5]"/>
+                            </td>
+                        </tr>    
+                    </t>
+                    </tbody>
+                </table>
+                </div>
+             </t>
+    </template>
+    
+    <template id="assemble_pro_report_picking_incoming">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <br/>
+                   
+                    <table style="border:1px solid;width:100%;">
+                        <tr style="border-bottom:1px solid;">
+                            <td colspan="3" style="text-align:center;">
+                                <h4><b>GOODS RECEIPT NOTE</b></h4>
+							</td>
+                           
+                        </tr>
+                        
+                        <tr>
+                            <td rowspan="3" style="border-right:1px solid;padding-top:10px;padding-bottom:10px;padding-left:10px;" >
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td>GRN No </td>
+                                        <td><span t-esc="o.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td >Date </td>
+                                        <td><span t-esc="o.min_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Inward No </td>
+                                        <td><span t-esc="o.invoice_no"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Supplier </td>
+                                        <td><span t-esc="o.partner_id.name"/></td>
+                                    </tr>
+									<tr>
+                                        <td>GSTIN No </td>
+                                        <td><span t-esc="o.partner_id.gstin_no"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="border-bottom:1px solid;border-right:1px solid; padding-top:10px;padding-bottom:10px;padding-left:10px;">
+                                <table style="width:100%;">
+                                        <tr>
+                                            <td>Invoice No.</td>
+                                            <td> <span t-esc="o.invoice_no"/></td>
+                                            <td>Date</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>DC No.</td>
+                                            <td> <span t-esc="o.invoice_no"/></td>
+                                            <td>Date</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-bottom:10px;">PO No.</td>
+                                            <td> <span t-esc="o.origin"/></td>
+                                            <td>Date</td>
+                                            <td><span t-esc="o.min_date"/></td>
+                                        </tr>
+                                        <tr style="border-top:1px solid;">
+                                            <td colspan="2" style="padding-top:10px;" >Excise Gate Pass Received</td>
+                                            <td colspan="2"><span t-esc="o.gate_pass"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Test Certificate Received</td>
+                                            <td colspan="2"><span t-esc="o.test_certificate"/></td>
+                                        </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    
+                    
+                    <table class="table table-bordered" style="width:100%;" t-if="o.pack_operation_ids">
+                      <thead>
+                        <tr>
+                            <th >Sr No</th>
+                            <th><strong>Code</strong></th>
+							<th><strong>HSN</strong></th>
+                            <th><strong>Product</strong></th>
+                            <th class="text-right"><strong>CHL QTY</strong></th>
+                            <th class="text-right"><strong>RCVD QTY</strong></th>
+                            <t t-if="o.picking_type_id.code != 'outgoing'"><th><strong>Destination</strong></th></t>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <t t-set="counter" t-value="1"/>
+                        <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                            
+                            <td style="text-align:center;">
+                                    <t t-raw="counter"/>
+                                </td>
+                            <td><span t-field="pack_operation.product_id.default_code"/>
+                                <t t-if="not pack_operation.product_id and pack_operation.package_id"><span  t-field="pack_operation.package_id"/></t></td>
+							 <td><span t-field="pack_operation.product_id.hsn_code"/>
+                                <t t-if="not pack_operation.product_id and pack_operation.package_id"><span  t-field="pack_operation.package_id"/></t></td>
+                            <td><span t-field="pack_operation.product_id"/>
+                                <t t-if="not pack_operation.product_id and pack_operation.package_id"><span  t-field="pack_operation.package_id"/></t></td>
+                            <td class="text-right"><span t-field="pack_operation.product_qty"/> <span t-field="pack_operation.product_uom_id" groups="product.group_uom"/></td>
+                            <td class="text-right"><span t-field="pack_operation.qty_done"/> <span t-field="pack_operation.product_uom_id" groups="product.group_uom"/></td>
+                            <t t-if="o.picking_type_id.code != 'outgoing'"><td><span t-field="pack_operation.location_dest_id"/>
+                                <span t-if="pack_operation.result_package_id">:</span>
+                                <span t-field="pack_operation.result_package_id"/>
+                            </td></t>
+                            <t t-set="counter" t-value="counter+1"/>
+                        </tr>
+                      </tbody> 
+                    </table>
+                    <br/>
+                    
+                    <table style="width:100%; ">
+                        <tr>
+                            <td ><strong>Prepared By:</strong></td>
+                            <td><span t-esc="o.material_checker.display_name"/></td>
+                            <td ><strong>Material Checked By:</strong></td>
+                            <td style="padding-right:120px;"><span t-esc="o.create_uid.name"/></td>
+                        </tr>
+                    </table>
+                    
+                    <p t-if="not o.pack_operation_ids">
+                        You do not have any products reserved for this picking.  Please click the 'Reserve' button
+                        to check if products are available.
+                    </p>
+                </div>
+             </t>
+         </t>
+    </template>
+    
+    <template id="assemble_pro_report_picking_internal">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">
+                                <span><strong>Vendor Address:</strong></span>
+                            </div>
+                            <div t-if="o.picking_type_id.code=='internal' and o.partner_id">
+                                <span><strong>Warehouse Address:</strong></span>
+                            </div>
+                            <div t-if="o.picking_type_id.code=='outgoing' and o.partner_id">
+                                <span><strong>Customer Address:</strong></span>
+                            </div>
+                            <div t-if="o.partner_id" name="partner_header">
+                                <div t-field="o.partner_id"
+                                   t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true, "phone_icons": true}'/>
+                                <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
+                            </div>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1">
+                            <div t-if="o.move_lines and o.move_lines[0].partner_id and o.move_lines[0].partner_id.id != o.partner_id.id">
+                                <span><strong>Delivery Address:</strong></span>
+                                <div t-field="o.move_lines[0].partner_id"
+                                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true, "phone_icons": true}'/>
+                            </div>
+                            <div t-if="o.picking_type_id.code != 'internal' and (not o.move_lines or not o.move_lines[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
+                                <span><strong>Warehouse Address:</strong></span>
+                                <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                                    t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true, "phone_icons": true}'/>
+                            </div>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div t-field="o.picking_type_id"/>
+                    <h1 t-field="o.name" class="mt0"/>
+                    <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th><strong>Order (Origin)</strong></th>
+                            <th><strong>State</strong></th>
+                            <th><strong>Commitment Date</strong></th>
+                            <th name="td_sched_date_h"><strong>Scheduled Date</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span t-field="o.origin"/></td>
+                            <td><span t-field="o.state"/></td>
+                            <td><span t-field="o.date"/></td>
+                            <td name="td_sched_date"><span t-field="o.min_date"/></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <br/><br/>
+                    <table class="table table-condensed" t-if="o.pack_operation_ids">
+                      <thead>
+                        <tr>
+                            <th><strong>Product</strong></th>
+                            <th class="text-right"><strong>Quantity</strong></th>
+                            <t t-if="o.picking_type_id.code != 'incoming'"><th><strong>Source</strong></th></t>
+                            <th><strong>Barcode</strong></th>
+                            <t t-if="o.picking_type_id.code != 'outgoing'"><th><strong>Destination</strong></th></t>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                            <td><span t-field="pack_operation.product_id"/>
+                                <t t-if="not pack_operation.product_id and pack_operation.package_id"><span  t-field="pack_operation.package_id"/></t></td>
+                            <td class="text-right"><span t-field="pack_operation.product_qty"/> <span t-field="pack_operation.product_uom_id" groups="product.group_uom"/></td>
+                            <t t-if="o.picking_type_id.code != 'incoming'"><td><span t-field="pack_operation.location_id"/>
+                                <span t-if="pack_operation.package_id">:</span>
+                                <span t-field="pack_operation.package_id"/>
+                                </td>
+                            </t>
+                            <td>
+                                <span t-if="pack_operation.product_id and pack_operation.product_id.barcode">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', pack_operation.product_id.barcode, 600, 100)" style="width:300px;height:50px"/>
+                                </span>
+                                <span t-if="pack_operation.package_id and not pack_operation.product_id">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', pack_operation.package_id.name, 600, 100)" style="width:300px;height:50px"/>
+                                </span>
+                                <table class="table table-condensed" t-if="pack_operation.pack_lot_ids">
+                                    <thead>
+                                        <tr><th>Lot</th><th>Qty</th></tr>
+                                    </thead>
+                                    <tr t-foreach="pack_operation.pack_lot_ids" t-as="packlot">
+                                        <td>
+                                            <span t-field="packlot.lot_id"/>
+                                            <t t-if="not packlot.lot_id">
+                                                <span t-field="packlot.lot_name"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="packlot.qty"/> <t t-if="o.picking_type_id.use_existing_lots and o.state!='done'"> / <span t-field="packlot.qty_todo"/></t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <t t-if="o.picking_type_id.code != 'outgoing'"><td><span t-field="pack_operation.location_dest_id"/>
+                                <span t-if="pack_operation.result_package_id">:</span>
+                                <span t-field="pack_operation.result_package_id"/>
+                            </td></t>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p t-if="not o.pack_operation_ids">
+                        You do not have any products reserved for this picking.  Please click the 'Reserve' button
+                        to check if products are available.
+                    </p>
+                </div>
+             </t>
+         </t>
+    </template>
+
+
+ 
+    <template id="assemble_pro.assemble_pro_report_picking2">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-if="o.picking_type_id.code=='outgoing' " >
+                    <t t-call="assemble_pro.assemble_pro_report_picking_outgoing" t-lang="o.partner_id.lang" />
+                </t>
+                <t t-if="o.picking_type_id.code =='incoming' " >
+                    <t t-call="assemble_pro.assemble_pro_report_picking_incoming" t-lang="o.partner_id.lang" />
+                </t>
+                <t t-if="o.picking_type_id.code =='internal' " >
+                    <t t-call="assemble_pro.assemble_pro_report_picking_internal" t-lang="o.partner_id.lang" />
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report
+        string="Picking Operations"
+        id="action_report_picking"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="assemble_pro.assemble_pro_report_picking2"
+        file="assemble_pro.report_stockpicking_operations_exception"
+    />
+    
+    <record id="assemble_pro.action_report_picking" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="assemble_pro.packing_list_operation_format"/>
+    </record>
+    
+</odoo>

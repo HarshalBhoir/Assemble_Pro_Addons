@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_purchase_order_extension_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+				
+				<button name="button_confirm" states="sent" position="attributes">
+					<attribute name="groups">assemble_pro.group_assemble_pro_manager,purchase.group_purchase_manager</attribute>
+				</button>
+				<button name="button_confirm" states="draft" position="attributes">
+					<attribute name="groups">assemble_pro.group_assemble_pro_manager,purchase.group_purchase_manager</attribute>
+				</button>
+				
+				<button name="button_done" position="attributes">
+					<attribute name="groups">assemble_pro.group_assemble_pro_manager,purchase.group_purchase_manager</attribute>
+				</button>
+				
+				<button name="button_cancel" position="attributes">
+					<attribute name="groups">assemble_pro.group_assemble_pro_manager,purchase.group_purchase_manager</attribute>
+				</button>
+                
+                <field name="currency_id" position="after" >
+                    <field name="advance_rm_material_id" attrs="{'invisible': [('advance_rm_material_id','=',False)]}"/>
+                </field>
+                
+                <field name="company_id" position="after" >
+					<field name="company_gstin_no" readonly="1"/>
+                    <field name="purchase_type" attrs="{'invisible':[('type_order','!=','purchase_type')]}" />
+					<field name="type_order" context="{'default_type_order':'type_order'}" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
+					<field name="supplier_pricelist_id" />
+                </field>
+				
+				 <field name="partner_id" position="after">
+					<field name="gstin_no" readonly="1"/>
+				 </field>
+				
+				<xpath expr="//form/sheet" position="attributes">
+					<attribute name="class">remove_sheet</attribute>
+				</xpath>
+				
+				 <field name="product_qty" position="after">
+					<field name="modvat_applicable" readonly="0"/>
+				 </field>
+				 
+				 <field name="product_id" position="before">
+					<field name="hsn_code" readonly="1"/>
+				 </field>
+                <xpath expr="//tree/field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//tree/field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+				 <xpath expr="//tree/field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+				<field name="incoterm_id" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+				<field name="fiscal_position_id" position="attributes" >
+                    <attribute name="invisible">1</attribute>
+                </field>
+				<field name="picking_type_id" position="after" >
+                    <field name="transporter" readonly="0"/>
+					<field name="supplier_ref" readonly="0"/>
+					<field name="sap_no" readonly="0"/>
+					<field name="tax_class" widget="many2many_tags"/>
+                </field>
+				<field name="payment_term_id" position="after">
+					<field name="freight" readonly="0"/>
+					<field name="packing" readonly="0"/>
+				 </field>
+				<xpath expr="//page[2]/group" position="inside">
+					<group colspan="4" string="Delivery Terms">
+						<field name="delivery_terms" nolabel="1" readonly="0" style="word-break: break-all;" colspan="4"/>
+					</group>
+                </xpath>
+				
+				<!-- <xpath expr="//page[2]/group/group/field[@name='date_planned']" position="replace"/>
+					<attribute name="class">remove_sheet</attribute>
+				</xpath>-->
+				
+				<!--<field name="partner_ref" position="attributes" >
+                    <attribute name="readonly">[('state','!=','draft')]</attribute>
+                </field>-->
+                 
+                 <!--<xpath expr="//tree/field[@name='product_id']" position="before">
+                    <field name="default_code" />
+                </xpath>-->
+                 
+                <!-- <xpath expr="//tree/field[@name='product_qty']" position="before">
+                     <field name="packing" />
+                    <field name="no_of_packing" />
+                </xpath>-->
+				
+				<!--<field name="type_order" position="attributes" >
+					<attribute name="context">{'default_type_order':'type_order'}</attribute>
+				</field>-->
+                
+        	</field>
+        </record>
+
+
+	<record id="view_purchase_orders_filter_extension" model="ir.ui.view">
+		<field name="name">purchase.order.list.select</field>
+		<field name="inherit_id" ref="purchase.view_purchase_order_filter" />
+		<field name="model">purchase.order</field>
+		<field name="arch" type="xml">
+			<filter name="approved" position="after">
+				<separator/>
+				<filter string="Purchase Orders" name="purchase_order" domain="[('type_order','=','purchase')]"/>
+			</filter>
+		</field>
+	</record>
+	
+	<record id="view_purchase_order_tree_extension" model="ir.ui.view">
+		<field name="name">purchase.order.tree</field>
+		<field name="inherit_id" ref="purchase.purchase_order_tree" />
+		<field name="model">purchase.order</field>
+		<field name="arch" type="xml">
+			<field name="company_id" position="attributes" >
+				<attribute name="invisible">1</attribute>
+			</field>
+		</field>
+	</record>
+	
+<!--	<record id="view_purchase_order_form_editable_list" model="ir.ui.view">
+		<field name="name">purchase.order.form.editable.list</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form"/>
+
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='order_line']/tree" position="attributes">
+				<attribute name="editable"/>
+			</xpath>
+		</field>
+	</record>-->
+
+
+    </data>
+</openerp>

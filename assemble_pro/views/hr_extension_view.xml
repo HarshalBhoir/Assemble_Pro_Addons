@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_hr_extension_form" model="ir.ui.view">
+	<field name="name">hr.employee.form</field>
+	<field name="inherit_id" ref="hr.view_employee_form" />
+	<field name="model">hr.employee</field>
+	<field name="arch" type="xml">
+        
+        <field name="name" position="attributes">
+			<attribute name ="string">First Name</attribute>
+            <attribute name ="placeholder">First Name</attribute>
+		</field>
+		<field name="name" position="after">
+			<field name="last_name" placeholder="Last Name"/>
+		</field>
+        <field name="name" position="after">
+			<field name="middle_name" placeholder="Middle Name"/>
+		</field>
+		
+         
+		 
+		 <xpath expr="//form/sheet/notebook/page[3]" position="after">
+			<page string="Overtimes">
+				<form string="Overtimes">
+				 <group string="Overtimes" col="4" colspan="4" >
+					 <field name="overtime_ids" string="Overtimes" nolabel="1" >
+						 <tree editable="top">
+							 <!--<field name="employee_id" />-->
+							 <field name="name" />
+							 <field name="month" attrs="{'invisible':[('name','=',False)]}"/>
+							 <field name="number_of_hours" />
+						 </tree>
+					 </field>
+				 </group>
+			   </form>
+			</page>
+		</xpath>
+		 
+		 <xpath expr="//form/sheet/notebook/page[4]" position="after">
+			<page string="Salary Details">
+				<form string="Salary Details">
+				 <group string="Salary Details" col="4" colspan="4" >
+					 <field name="hr_employee_salary_one2many" string="Salary Details" nolabel="1" >
+						 <tree editable="top">
+							 <field name="hr_employee_id" invisible="1" />
+							 <field name="date" invisible="1"/>
+							 <field name="month" />
+							 <field name="days_worked" />
+							 
+							 <field name="actual_basic" />
+							 <field name="hra" invisible="1"/>
+							 <field name="conveyance" invisible="1"/>
+							 <field name="allowance" invisible="1"/>
+							 <field name="overtime" invisible="1"/>
+							 <field name="total_ot_hrs" invisible="1"/>
+							 <field name="wage_paid" />
+							 
+							 <field name="pf" invisible="1"/>
+							 <field name="esic" invisible="1"/>
+							 <field name="lwf" invisible="1"/>
+							 <field name="miscellaneous_deduction" invisible="1"/>
+							 <field name="advance" invisible="1"/>
+							 <field name="total_deduction" />
+							 
+							 <field name="net_wages" />
+						 </tree>
+					 </field>
+				 </group>
+			   </form>
+			</page>
+		</xpath>
+		
+	</field>
+</record>
+
+<record id="view_hr_extension_kanban" model="ir.ui.view">
+	<field name="name">hr.employee.kanban</field>
+	<field name="inherit_id" ref="hr.hr_kanban_view_employees" />
+	<field name="model">hr.employee</field>
+	<field name="arch" type="xml">
+        
+       <field name="name" position="replace">
+			<field name="display_name"/>
+		</field>
+	</field>
+</record>
+
+<record id="view_hr_contract_extension_form" model="ir.ui.view">
+	<field name="name">hr.contract.form</field>
+	<field name="inherit_id" ref="l10n_in_hr_payroll.hr_contract_form_in_inherit" />
+	<field name="model">hr.contract</field>
+	<field name="arch" type="xml">
+        
+		<field name="supplementary_allowance" position="after">
+			<field name="conveyance"/>
+			<field name="ot_rates"/>
+		</field>
+        <field name="medical_insurance" position="after">
+			<field name="miscellaneous_deduction"/>
+			<field name="advance"/>
+			<field name="lwf"/>
+			<field name="esic" />
+		</field>
+        
+	</field>
+</record>
+  
+
+<record id="view_hr_employee_export_tree" model="ir.ui.view">
+	<field name="name">hr.employee.export.tree</field>
+	<field name="model">hr.employee.export</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" string="Accessed By"/>
+			<field name="date_start"/>
+			<field name="date_end"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_hr_employee_export_form" model="ir.ui.view">
+	<field name="name">hr.employee.export.form</field>
+	<field name="model">hr.employee.export</field>
+	<field name="arch" type="xml">
+		<form>
+			<header><field name="state" widget="statusbar" statusbar_visible="draft,done"/></header>
+			<sheet>
+				<h1><center>HR Export</center></h1><br/>
+				<div class="oe_title"><h2><field name="name" states="done"/></h2></div>
+				<group>
+					<group col="4" colspan="2">
+						<label for="date_start" string="Validity"/>
+						<div>
+							<field name="date_start" attrs="{'readonly':[('state','!=','draft')]}" class="oe_inline"/> to
+							<field name="date_end" attrs="{'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+						</div>
+						<field name="company_id" options="{'no_create' : True}" invisible="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+					<group col="4" colspan="2">
+						<field name="display_address" invisible="1"/>
+					</group>
+				</group>
+					<center><button name="hr_export" type="object" string="HR Export"  class="btn-primary" style="margin-right: 20px;font-size: 16px;"/></center>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+<record id="action_hr_employee_export" model="ir.actions.act_window">
+	<field name="name">Hr Employee Export</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">hr.employee.export</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_hr_employee_bonus_tree" model="ir.ui.view">
+	<field name="name">hr.employee.bonus.tree</field>
+	<field name="model">hr.employee.bonus</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" string="Accessed By"/>
+			<field name="date_start"/>
+			<field name="date_end"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_hr_employee_bonus_form" model="ir.ui.view">
+	<field name="name">hr.employee.bonus.form</field>
+	<field name="model">hr.employee.bonus</field>
+	<field name="arch" type="xml">
+		<form>
+			<header><field name="state" widget="statusbar" statusbar_visible="done"/></header>
+			<sheet>
+				<h1><center>Employee Bonus</center></h1><br/>
+				<div class="oe_title"><h2><field name="name" states="done" attrs="{'readonly':[('state','!=','draft')]}"/></h2></div>
+				<br/>
+				<group>
+					<group col="4" colspan="2">
+						<label for="date_start" string="Validity"/>
+						<div>
+							<field name="date_start" attrs="{'readonly':[('state','!=','draft')]}" class="oe_inline"/> to
+							<field name="date_end" attrs="{'readonly':[('state','!=','draft')]}" class="oe_inline"/>
+						</div>
+						<field name="company_id" options="{'no_create' : True}" invisible="0"/>
+                    </group>
+					<group col="4" colspan="2">
+						<field name="display_address" invisible="1"/>
+					</group>
+				</group>
+					<center><button name="bonus_export" type="object" string="Bonus" attrs="{'invisible':[('state','!=','draft')]}" class="btn-primary" style="margin-right: 20px;font-size: 16px;"/></center>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+<record id="action_hr_employee_bonus" model="ir.actions.act_window">
+	<field name="name">Hr Employee Bonus</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">hr.employee.bonus</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+<record id="view_hr_overtime_sheet_tree" model="ir.ui.view">
+	<field name="name">hr.overtime.sheet.tree</field>
+	<field name="model">hr.overtime.sheet</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" string="Accessed By"/>
+			<field name="date"/>
+			<field name="date"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_hr_overtime_sheet_form" model="ir.ui.view">
+	<field name="name">hr.overtime.sheet.form</field>
+	<field name="model">hr.overtime.sheet</field>
+	<field name="arch" type="xml">
+		<form>
+			<header><field name="state" widget="statusbar" statusbar_visible="done"/></header>
+			<sheet>
+				<h1><center>Overtime Details</center></h1><br/>
+				<div class="oe_title"><h2><field name="name" states="done" attrs="{'readonly':[('state','!=','draft')]}"/></h2></div>
+				<group>
+					<group col="4" colspan="2">
+						<label for="date" string="Validity" />
+						<div><field name="date" class="oe_inline" attrs="{'readonly':[('state','!=','draft')]}"/></div>
+                    </group>
+				</group>
+					<center><button name="validate" type="object" string="Validate"  class="btn-primary" style="margin-right: 20px;font-size: 16px;"  attrs="{'invisible':[('state','=','done')]}"/></center>
+					
+					<group string="OT Details" col="4" colspan="4" >
+				<field name="hr_overtime_sheet_line_one2many" string="OT Details" nolabel="1" attrs="{'readonly': [('state', 'in', ('done'))]}">
+					<tree editable="bottom">
+						<field name="employee_id"/>
+						<field name="total_ot_hrs"  invisible="0"/>
+					</tree>
+				</field>
+			</group>
+				</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+<record id="action_hr_overtime_sheet" model="ir.actions.act_window">
+	<field name="name">Overtime Details</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">hr.overtime.sheet</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+</odoo>

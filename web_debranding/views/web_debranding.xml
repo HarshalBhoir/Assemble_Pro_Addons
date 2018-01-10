@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?> <!-- Web Debranding by Aqua-Giraffe -->
+<openerp>
+
+<data>
+	<template id="web_debranding.assets_backend" name="Web Debranding CSS JS" inherit_id="web.assets_backend">
+		<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/web_debranding/static/src/less/web.less"/>
+			<script type="text/javascript" src="/web_debranding/static/src/js/title.js"></script>
+			<script type="text/javascript" src="/web_debranding/static/src/js/dialog.js"></script>
+			<script type="text/javascript" src="/web_debranding/static/src/js/announcement.js"></script>
+			<script type="text/javascript" src="/web_debranding/static/src/js/dashboard.js"></script>
+			<script type="text/javascript" src="/web_debranding/static/src/js/field_upgrade.js"></script>
+		</xpath>
+	</template>
+	
+	
+	<template id="web_debranding.web_layout" name="Rebranding Web layout" inherit_id="web.layout">&lt;!DOCTYPE html&gt;
+		<xpath expr="//title" position="replace">
+			<title>AquaGiraffe</title>
+		</xpath>
+		<xpath expr="//link[@rel='shortcut icon']" position="replace">
+			<t t-set="favicon" t-value="request and request.env['ir.config_parameter'].get_param('web_debranding.favicon_url', '').strip() or ''"/>
+			<t t-if="favicon">
+				<link rel="shortcut icon" t-att-href="favicon" type="image/x-icon"/>
+			</t>
+		</xpath>
+	</template>
+	
+	<template id="web_debranding.login" name="Debranded Login" inherit_id="web.login">
+		<xpath expr="//div[@class='form-group field-db']" position="attributes">
+			<attribute name="style">display: none;</attribute>
+		</xpath>
+	</template>
+	
+	<template id="web_debranding.login_layout" name="Debranded Login Layout" inherit_id="web.login_layout">
+		<!--<xpath expr="//img" position="replace">-->
+		<!--	<img t-attf-src="{{ '/web/binary/company_logo?dbname='+db if db else '/web_debranding/static/description/aqua-giraffe.png' }}"/>-->
+		<!--</xpath>-->
+		<xpath expr="//div[@t-if='not disable_footer']" position="replace"></xpath>
+	</template>
+	
+	<template id="web_debranding.menu_secondary" name="Debranded Secondary Menu" inherit_id="web.menu_secondary">
+		<xpath expr="//div[@class='oe_footer']" position="replace">
+			<div class="oe_footer">
+				<!--Powered by <a href="http://www.aqua-giraffe.com" target="_blank"><span>Aquasoft</span></a>-->
+			</div>
+		</xpath>
+	</template>
+	
+	<!-- <record id="account_journal_dashboard_kanban_view_extension" model="ir.ui.view">
+		<field name="name">account.journal.dashboard.kanban.extension</field>
+		<field name="model">account.journal</field>
+		<field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//t[@t-name='JournalBodyBankCash']//div[@class='col-xs-6 o_kanban_primary_right']//div[@class='col-xs-6']//span" position="replace">
+				<span title="Balance">Balance</span>
+			</xpath>
+		</field>
+	</record> -->
+</data>
+
+<data noupdate="1">
+	<record id="web_debranding.new_name" model="ir.config_parameter">
+		<field name="key">web_debranding.new_name</field>
+		<field name="value">AquaGiraffe</field>
+	</record>
+
+	<record id="web_debranding.custom_title" model="ir.config_parameter">
+		<field name="key">web_debranding.new_title</field>
+		<field name="value">AquaGiraffe</field>
+	</record>
+
+	<record id="web_debranding.favicon_url" model="ir.config_parameter">
+		<field name="key">web_debranding.favicon_url</field>
+		<field name="value"> </field>
+	</record>
+
+	<record id="web_debranding.planner_footer" model="ir.config_parameter">
+		<field name="key">web_debranding.planner_footer</field>
+		<field name="value"> </field>
+	</record>
+
+	<record id="default_logo_module" model="ir.config_parameter">
+		<field name="key">web_debranding.default_logo_module</field>
+		<field name="value">web_debranding</field>
+	</record>
+
+	<record id="base.main_partner" model="res.partner">
+		<field name="image"></field>
+	</record>
+</data>
+
+</openerp>

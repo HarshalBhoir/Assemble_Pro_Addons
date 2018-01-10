@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_hr_extension_form" model="ir.ui.view">
+	<field name="name">hr.employee.form</field>
+	<field name="inherit_id" ref="hr.view_employee_form" />
+	<field name="model">hr.employee</field>
+	<field name="arch" type="xml">
+        
+        <field name="name" position="attributes">
+			<attribute name ="string">First Name</attribute>
+            <attribute name ="placeholder">First Name</attribute>
+		</field>
+		<field name="name" position="after">
+			<field name="last_name" placeholder="Last Name"/>
+		</field>
+        <field name="name" position="after">
+			<field name="middle_name" placeholder="Middle Name"/>
+		</field>
+        <!--<xpath expr="//field[@name='name']" position="after">
+			 <field name="second_name" />
+		</xpath>-->
+	<!--	<xpath expr="//form/sheet/notebook/page[2]" position="after">
+			<page string="Salary Settings">
+				<form string="Salary Settings">
+				 <group col="4" colspan="2" string="Salary Settings">
+					<field name="wage" />
+					<field name="hra" />
+					<field name="conveyance" />
+					<field name="special_allowances" />
+				 </group>
+				 <group string="Missc Details" col="4" colspan="4" >
+					 <field name="lwf" />
+					<field name="overtime" />
+					<field name="miscellaneous_deduction" />
+				 </group>
+			   </form>
+			</page>
+		</xpath>-->
+		
+	</field>
+</record>
+
+<record id="view_hr_extension_kanban" model="ir.ui.view">
+	<field name="name">hr.employee.kanban</field>
+	<field name="inherit_id" ref="hr.hr_kanban_view_employees" />
+	<field name="model">hr.employee</field>
+	<field name="arch" type="xml">
+        
+       <field name="name" position="replace">
+			<field name="display_name"/>
+		</field>
+	</field>
+</record>
+
+<record id="view_hr_contract_extension_form" model="ir.ui.view">
+	<field name="name">hr.contract.form</field>
+	<field name="inherit_id" ref="l10n_in_hr_payroll.hr_contract_form_in_inherit" />
+	<field name="model">hr.contract</field>
+	<field name="arch" type="xml">
+        
+		<field name="supplementary_allowance" position="after">
+			<field name="conveyance"/>
+		</field>
+        <field name="medical_insurance" position="after">
+			<field name="miscellaneous_deduction"/>
+			<field name="advance"/>
+			<field name="lwf"/>
+		</field>
+        
+	</field>
+</record>
+  
+
+<record id="view_hr_employee_export_tree" model="ir.ui.view">
+	<field name="name">hr.employee.export.tree</field>
+	<field name="model">hr.employee.export</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" string="Accessed By"/>
+			<field name="date_start"/>
+			<field name="date_end"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_hr_employee_export_form" model="ir.ui.view">
+	<field name="name">hr.employee.export.form</field>
+	<field name="model">hr.employee.export</field>
+	<field name="arch" type="xml">
+		<form>
+			<header><field name="state" widget="statusbar" statusbar_visible="draft,done"/></header>
+			<sheet>
+				<h1><center>HR Export</center></h1><br/>
+				<div class="oe_title"><h2><field name="name" states="done"/></h2></div>
+				<group>
+					<group col="4" colspan="2">
+						<label for="date_start" string="Validity"/>
+						<div>
+							<field name="date_start" class="oe_inline"/> to <field name="date_end" class="oe_inline"/>
+						</div>
+						<field name="company_id" options="{'no_create' : True}"/>
+                    </group>
+					<group col="4" colspan="2">
+						<field name="display_address" invisible="1"/>
+					</group>
+				</group>
+					<center><button name="hr_export" type="object" string="HR Export"  class="btn-primary"/></center>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+<record id="action_hr_employee_export" model="ir.actions.act_window">
+	<field name="name">Hr Employee Export</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">hr.employee.export</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

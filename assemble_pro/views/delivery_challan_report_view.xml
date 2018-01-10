@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="report_delivery_challan"
+            string="Delivery Challan"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="assemble_pro.report_challan" 
+            name="assemble_pro.report_challan" 
+        />
+    </data>
+</openerp>

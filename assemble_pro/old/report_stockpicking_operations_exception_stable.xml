@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        
+        <template id="assemble_pro_report_picking">
+            <!--<t t-call="report.html_container">-->
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                    <table style="border:1px solid;width:100%; cell-padding: 10px;">
+                        <thead>
+                            <tr style="border-bottom:1px solid black;">
+                                <th style="border-right:1px solid black;"><strong>ID</strong></th>
+                                <th style="border-right:1px solid black;"><strong>Description</strong></th>
+                                <th style="border-right:1px solid black;"><strong>SR NO</strong></th>
+                                <th style="border-right:1px solid black;"><strong>Stops</strong></th>
+                                <th style="border-right:1px solid black;"><strong>QTY</strong></th>
+                                <th style="border-right:1px solid black;"><strong>UOM</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <t t-foreach="o.packlist_report()" t-as="l">
+                            <tr>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[0]"/>
+                                </td>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[1]"/>
+                                </td>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[2]"/>
+                                </td>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[3]"/>
+                                </td>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[4]"/>
+                                </td>
+                                <td t-att-style="'border-right:1px solid black;%s' % (l[6])">
+                                    <span t-esc="l[5]"/>
+                                </td>
+                            </tr>    
+                        </t>
+                        </tbody>
+                    </table>
+                    </div>
+                 </t>
+             <!--</t>-->
+        </template>
+
+
+
+    <template id="assemble_pro.assemble_pro_report_picking2">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="assemble_pro.assemble_pro_report_picking" t-lang="o.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+
+    <report
+            string="Picking Operations"
+            id="action_report_picking"
+            model="stock.picking"
+            report_type="qweb-pdf"
+            name="assemble_pro.assemble_pro_report_picking2"
+            file="assemble_pro.report_stockpicking_operations_exception"
+        />
+    
+</odoo>

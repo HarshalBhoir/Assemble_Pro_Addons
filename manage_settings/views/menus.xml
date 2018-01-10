@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+<record id="base.menu_administration" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('manage_settings.group_superadmin')])]"/>
+</record>
+
+<record id="base.menu_management" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('manage_settings.group_superadmin')])]"/>
+</record>
+
+<!--### CRM COnfiguration Menu ###-->
+<menuitem name="Manage" id="menu_manage" sequence="250"/>
+
+<!-- Company Configuration -->
+<menuitem id="menu_company_config" name="Company Configuration" action="act_manage_res_company" parent="menu_manage" sequence="10"/>
+
+<!-- System Users -->
+<menuitem id="menu_config_users" name="Users" action="action_manage_res_users" parent="menu_manage" sequence="20"/>
+
+<!-- Email Configuration -->
+<menuitem id="menu_config_email" name="Email Configuration" parent="menu_manage" sequence="30"/>
+
+<menuitem id="menu_config_email_incoming" name="Incoming Mail Servers" action="fetchmail.action_email_server_tree" parent="menu_config_email" sequence="10"/> <!-- Incoming Mail Servers -->
+<menuitem id="menu_config_email_outgoing" name="Outgoing Mail Servers" action="base.action_ir_mail_server_list" parent="menu_config_email" sequence="20"/> <!-- Outgoing Mail Servers -->
+<menuitem id="menu_config_email_email" name="Emails" action="mail.action_view_mail_mail" parent="menu_config_email" sequence="30"/> <!-- Emails -->
+<menuitem id="menu_config_email_template" name="Email Templates" action="mail.action_email_template_tree_all" parent="menu_config_email" sequence="40"/> <!-- Email Templates -->
+
+<!-- Calendar Configuration -->
+<!-- <menuitem id="menu_config_calender" name="Calender Configuration" parent="menu_manage" sequence="40"/> -->
+
+<!-- <menuitem id="menu_config_calender_alarm" name="Calendar Alarms" action="calendar.action_calendar_alarm" parent="menu_config_calender" sequence="10"/> --> <!-- Calendar Alarms -->
+<!-- <menuitem id="menu_config_calender_event_type" name="Event Types" action="calendar.action_calendar_event_type" parent="menu_config_calender" sequence="20"/> --> <!-- Event Types -->
+
+<!-- <menuitem id="menu_sequence_config" name="Sequences" action="act_agcrm_ir_sequence" parent="menu_manage" sequence="50"/> -->
+
+</odoo>

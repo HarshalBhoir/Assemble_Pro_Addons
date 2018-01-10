@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+<!-- Basic Partner -->
+<record id="base.main_partner" model="res.partner" context="{'default_is_company': True}">
+	<field name="name">Lift Controls Pvt Ltd Unit I</field>
+	<field name="company_id" eval="None"/>
+	<field name="image" type="base64" file="assemble_pro/static/description/icon.png"/>
+	<field name="customer" eval="False"/>
+	<field name="is_company" eval="True"/>
+	<field name="street">9/1, Murdi-khande, Parkhan</field>
+	<field name="street2">Depar, Ponda</field>
+	<field name="city">Ponda</field>
+	<field name="zip">403406</field>
+	<field name="state_id" ref="assemble_pro.state_assemble_pro_2"/>
+	<field name="country_id" ref="base.in"/>
+	<field name="phone">0832 234 5585</field>
+	<field name="email">info@yourcompany.com</field>
+	<field name="website">http://www.yourcompany.com</field>
+	<!--<field name="company_registry">AAACL6371QXM001</field>-->
+	
+</record>
+
+<!-- Basic Company -->
+<record id="base.main_company" model="res.company">
+	<field name="name">Lift Controls Pvt Ltd Unit I</field>
+	<field name="partner_id" ref="base.main_partner"/>
+	<field name="rml_header1">Lift Controls Pvt Ltd</field>
+	<field name="currency_id" ref="base.INR"/>
+</record>
+
+<!--Salary rule for overtime in hours-->
+<record id="hr_salary_rule_ot_hours" model="hr.salary.rule">
+	<field name="code">OT(hours)</field>
+	<field name="name">Overtime(hours)</field>
+	<field name="category_id" ref="hr_payroll.ALW"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = employee.get_overtime_hours(employee.id, payslip.date_from, payslip.date_to)* contract.ot_rates</field>
+	<field name="sequence" eval="11"/>
+</record>
+
+<!--Salary rule for Miscellaneous Deduction-->
+<record id="hr_salary_rule_miscellaneous_deduction" model="hr.salary.rule">
+	<field name="code">MD</field>
+	<field name="name">Miscellaneous Deduction</field>
+	<field name="category_id" ref="hr_payroll.DED"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = -(contract.miscellaneous_deduction)</field>
+	<field name="sequence" eval="12"/>
+</record>
+
+<!--Salary rule for LWF Deduction-->
+<record id="hr_salary_rule_lwf" model="hr.salary.rule">
+	<field name="code">LWF</field>
+	<field name="name">LWF</field>
+	<field name="category_id" ref="hr_payroll.DED"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = -(contract.lwf)</field>
+	<field name="sequence" eval="13"/>
+</record>
+
+<!--Salary rule for ESIC Deduction-->
+<record id="hr_salary_rule_esic" model="hr.salary.rule">
+	<field name="code">ESIC</field>
+	<field name="name">ESIC</field>
+	<field name="category_id" ref="hr_payroll.DED"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = -(employee.get_esic(employee.id, payslip.date_from, payslip.date_to))</field>
+	<field name="sequence" eval="14"/>
+</record>
+
+<!--Salary rule for ESIC Deduction-->
+<record id="hr_salary_rule_advance" model="hr.salary.rule">
+	<field name="code">Advance</field>
+	<field name="name">Advance</field>
+	<field name="category_id" ref="hr_payroll.DED"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = -(contract.advance)</field>
+	<field name="sequence" eval="14"/>
+</record>
+
+<!--Salary rule for PF Deduction-->
+ <record id="hr_payroll.hr_salary_rule_providentfund1" model="hr.salary.rule">
+	<field name="code">PF</field>
+	<field name="name">Provident Fund</field>
+	<field name="category_id" ref="hr_payroll.DED"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = -(employee.get_pf(employee.id, payslip.date_from, payslip.date_to))</field>
+	<field eval="120" name="sequence"/>
+</record>
+ 
+ 
+ <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
+	<field name="name">Basic</field>
+	<field name="sequence" eval="1"/>
+	<field name="code">BASIC</field>
+	<field name="category_id" ref="hr_payroll.BASIC"/>
+	<field name="condition_select">none</field>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = (employee.get_basic(employee.id, payslip.date_from, payslip.date_to))</field>
+</record>
+ 
+ <record id="hr_payroll.hr_salary_rule_houserentallowance1" model="hr.salary.rule">
+	<field name="name">House Rent Allowance</field>
+	<field name="sequence" eval="5"/>
+	<field name="code">HRA</field>
+	<field name="category_id" ref="hr_payroll.ALW"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = (employee.get_hra(employee.id, payslip.date_from, payslip.date_to))</field>
+</record>
+ 
+<!--  <record id="hr_payroll.hr_salary_rule_convanceallowance1" model="hr.salary.rule">-->
+<!--	<field name="name">Conveyance Allowance</field>-->
+<!--	<field name="sequence" eval="10"/>-->
+<!--	<field name="code">CA</field>-->
+<!--	<field name="category_id" ref="hr_payroll.ALW"/>-->
+<!--	<field name="amount_select">code</field>-->
+<!--	<field name="amount_python_compute">result = (employee.get_conveyance(employee.id, payslip.date_from, payslip.date_to))</field>-->
+<!--</record>-->
+  
+<record id="l10n_in_hr_payroll.hr_salary_rule_special" model="hr.salary.rule">
+	<field name="code">SA</field>
+	<field name="name">Special Allowance</field>
+	<field name="category_id" ref="hr_payroll.ALW"/>
+	<!--<field name="condition_select">python</field>-->
+	<!--<field name="condition_python">result = bool(contract.supplementary_allowance)</field>-->
+	<field name="amount_select">code</field>
+   <field name="amount_python_compute">result = (employee.get_special(employee.id, payslip.date_from, payslip.date_to))</field>
+	<field name="sequence" eval="20"/>
+</record>
+  
+<record id="l10n_in_hr_payroll.hr_salary_trans_allownce" model="hr.salary.rule">
+	<field name="name">Transport/Conveyance Allownace</field>
+	<field name="sequence" eval="14"/>
+	<field name="code">TCA</field>
+	<field name="category_id" ref="hr_payroll.ALW"/>
+	<field name="amount_select">code</field>
+	<field name="amount_python_compute">result = (employee.get_tca(employee.id, payslip.date_from, payslip.date_to))</field>
+</record>
+
+<record id="barcode_page_format" model="report.paperformat">
+	<field name="name">Barcode Format</field>
+	<field name="default" eval="True"/>
+	<field name="format">custom</field>
+	<field name="orientation">Landscape</field>
+	<field name="page_height">75</field>
+	<field name="page_width">38</field>
+	<field name="margin_top">0</field>
+	<field name="margin_bottom">0</field>
+	<field name="margin_left">0</field>
+	<field name="margin_right">0</field>
+	<field name="header_line" eval="False"/>
+	<field name="header_spacing">0</field>
+	<field name="dpi">90</field>
+</record>
+
+<record id="handeling_unit_barcode_format" model="report.paperformat">
+	<field name="name">Handeling Unit Barcode</field>
+	<field name="default" eval="True"/>
+	<field name="format">A4</field>
+	<field name="orientation">Portrait</field>
+	<field name="margin_top">10</field>
+	<field name="margin_bottom">10</field>
+	<field name="margin_left">2</field>
+	<field name="margin_right">2</field>
+	<field name="header_line" eval="False"/>
+	<field name="header_spacing">0</field>
+	<field name="dpi">90</field>
+</record>
+
+<record id="packing_list_operation_format" model="report.paperformat">
+	<field name="name">Packing List Operations</field>
+	<field name="default" eval="True"/>
+	<field name="format">A4</field>
+	<field name="orientation">Portrait</field>
+	<field name="margin_top">12</field>
+	<field name="margin_bottom">12</field>
+	<field name="margin_left">3</field>
+	<field name="margin_right">3</field>
+	<field name="header_line" eval="False"/>
+	<field name="header_spacing">35</field>
+	<field name="dpi">90</field>
+</record>
+
+<!--
+<record id="dc_stock_picking_type" model="stock.picking.type">
+	<field name="name">Delivery Challan</field>
+	<field name="code">dc</field>
+	<field name="sequence_id">19</field>
+</record>-->
+
+</odoo>

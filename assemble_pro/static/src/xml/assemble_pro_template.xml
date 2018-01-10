@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend_extension" name="assemble_pro assets" inherit_id="stock_barcode.assets_backend">
+            <script type="text/javascript" src="/stock_barcode/static/src/js/picking_barcode_handler.js" position="replace">
+                <script type="text/javascript" src="/assemble_pro/static/src/js/picking_barcode_handler_extension.js"></script>
+            </script>
+        </template>
+
+        <template id="layout" inherit_id="web.layout">
+            <xpath expr="." positon="inside">
+                <link rel="stylesheet" href='/assemble_pro/static/src/css/remove_sheet.css'/>
+            </xpath>
+        </template>
+		
+    </data>
+</openerp>

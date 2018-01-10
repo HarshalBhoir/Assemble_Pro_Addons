@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?> <!-- Odoo Debranding by Aqua-Giraffe -->
+<odoo>
+
+<record id="view_web_debranding_configuration" model="ir.ui.view">
+	<field name="name">Rebranding Configuration</field>
+	<field name="model">web.debranding.config.settings</field>
+	<field name="arch" type="xml">
+		<form string="Rebranding Settings" class="oe_form_configuration">
+			<header>
+				<button string="Apply" type="object" name="execute" class="oe_highlight"/>
+				<button string="Cancel" type="object" name="cancel" class="oe_link"/>
+			</header>
+			<separator string="Rebranding Settings"/>
+			<group>
+				<field name="name" string="Software Name"/>
+			</group>
+			<group>
+				<field name="title" string="Software Title"/>
+			</group>
+			<group>
+				<field name="favicon_url" string="Favicon" widget="color"/>
+			</group>
+		</form>
+	</field>
+</record>
+
+<record id="action_web_debranding_configuration" model="ir.actions.act_window">
+	<field name="name">Rebranding Settings</field>
+	<field name="res_model">web.debranding.config.settings</field>
+	<field name="view_mode">form</field>
+	<field name="target">inline</field>
+</record>
+
+<menuitem id="base.menu_web_debranding_config" name="Rebranding Settings" parent="base.menu_administration" sequence="1" action="action_web_debranding_configuration"/>
+
+</odoo>

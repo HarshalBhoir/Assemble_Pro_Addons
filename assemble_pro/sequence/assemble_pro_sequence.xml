@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+<!-- Sequences for Assembly Work Instructions -->
+<record id="seq_assemble_work" model="ir.sequence">
+	<field name="name">Assembly Work Instructions</field>
+	<field name="code">assemble.work</field>
+	<field name="prefix">AW-</field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_claim_order" model="ir.sequence">
+        <field name="name">Claim Order</field>
+        <field name="code">claim.order</field>
+        <field name="prefix">CMO</field>
+        <field name="padding">4</field>
+        <!--<field name="suffix">-%(year)s</field>-->
+        <!--<field name="branch_id" eval="2"/>-->
+		<field name="implementation">no_gap</field>
+    </record>
+
+<record id="seq_work_order" model="ir.sequence">
+        <field name="name">Work Order</field>
+        <field name="code">work.order</field>
+        <field name="prefix">WO/</field>
+        <field name="padding">4</field>
+        <!--<field name="suffix">-%(year)s</field>-->
+        <!--<field name="branch_id" eval="2"/>-->
+		<field name="implementation">no_gap</field>
+    </record>
+
+<record id="seq_instruction_order" model="ir.sequence">
+        <field name="name">Work Instructions ID</field>
+        <field name="code">assemble.instructions</field>
+        <field name="prefix">WI-</field>
+        <field name="padding">4</field>
+        <!--<field name="suffix">-%(year)s</field>-->
+        <!--<field name="branch_id" eval="2"/>-->
+		<field name="implementation">no_gap</field>
+    </record>
+
+
+<!-- Sequences for Advance Finished Goods Plan -->
+<record id="seq_advance_fg_material" model="ir.sequence">
+	<field name="name">Advance Finished Goods Plan</field>
+	<field name="code">advance.fg.material</field>
+	<field name="prefix">FG-</field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+
+<!-- Sequences for Advance Raw Material Plan -->
+<record id="seq_advance_rm_material" model="ir.sequence">
+	<field name="name">Advance Raw Material Plan</field>
+	<field name="code">advance.rm.material</field>
+	<field name="prefix">RM-</field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+
+<!-- Sequences for Advance Raw Material Plan -->
+<record id="seq_tally_export" model="ir.sequence">
+	<field name="name">Tally Export</field>
+	<field name="code">tally.export</field>
+	<field name="prefix">TE-</field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_mrp_bom_extension" model="ir.sequence">
+	<field name="name">MRP BOM</field>
+	<field name="code">mrp.bom</field>
+	<field name="prefix"></field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_sales_declaration" model="ir.sequence">
+	<field name="name">Sales Declaration</field>
+	<field name="code">sales.declaration</field>
+	<field name="prefix">SD/</field>
+	<field name="padding">4</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_product_serial" model="ir.sequence">
+	<field name="name">Serial No</field>
+	<field name="code">product.product</field>
+	<field name="prefix"></field>
+	<field name="padding">5</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+
+
+<record id="seq_dc" model="ir.sequence">
+	<field name="name">Delivery Challan Sequence out</field>
+	<field name="code">stock.picking.type</field>
+	<field name="prefix">WH/DC/</field>
+	<field name="padding">5</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_handeling_unit_barcode" model="ir.sequence">
+	<field name="name">Handeling Unit Barcode</field>
+	<field name="code">handeling.unit.barcode</field>
+	<field name="prefix"></field>
+	<field name="padding">10</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+<record id="seq_handeling_unit_barcode_name" model="ir.sequence">
+	<field name="name">Handeling Unit Barcode Name</field>
+	<field name="code">handeling.unit.barcode.name</field>
+	<field name="prefix">HLCP</field>
+	<field name="padding">10</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+
+<record id="seq_otd_calculation" model="ir.sequence">
+	<field name="name">OTD Calculation</field>
+	<field name="code">otd.calculation</field>
+	<field name="prefix">OTD/</field>
+	<field name="padding">5</field>
+	<field name="implementation">no_gap</field>
+</record>
+
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+	<template id="external_layout_webstore_header" inherit_id="report.external_layout_header">
+		<xpath expr="//div[@name='company_address']" position="replace"></xpath>
+		<xpath expr="//img[@t-if='company.logo']" position="attributes">
+			<attribute name="style">max-height: 60px</attribute>
+		</xpath>
+	</template>
+</data>
+</openerp>

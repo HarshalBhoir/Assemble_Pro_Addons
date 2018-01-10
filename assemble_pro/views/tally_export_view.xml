@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_tally_export_tree" model="ir.ui.view">
+	<field name="name">tally.export.tree</field>
+	<field name="model">tally.export</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" string="Accessed By"/>
+			<field name="date_start"/>
+			<field name="date_end"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+
+<record id="view_tally_export_form" model="ir.ui.view">
+	<field name="name">tally.export.form</field>
+	<field name="model">tally.export</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+			</header>
+			<sheet>
+				<h1>
+					<center>
+						Tally Export
+					</center>
+				</h1><br/>
+				<div class="oe_title">
+					<h2><field name="name" states="done" readonly="1"/></h2>
+				</div>
+				<group>
+					<group col="4" colspan="2">
+						<label for="date_start" string="Validity"/>
+						<div><field name="date_start" class="oe_inline" attrs="{'readonly':[('state','=','done')]}"/> to <field name="date_end" class="oe_inline" attrs="{'readonly':[('state','=','done')]}"/></div>
+                    </group>
+					<group col="4" colspan="2">
+						<field name="company_id" options="{'no_create' : True}"/>
+						<field name="voucher_type" colspan="1" invisible="0"/>
+						<field name="display_address" invisible="1"/>
+					</group>
+				</group>
+				<group col="4" colspan="2" class="oe_inline">
+					<div class="col-xs-12" style="margin-top:5%;">
+						<center>
+							<div class="col-xs-6"/>
+							<button name="export_data" type="object" string="ETF Export"  class="btn-primary col-xs-2" style="font-size: 16px;"/>
+						</center>
+					</div>
+				</group>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_tally_export" model="ir.actions.act_window">
+	<field name="name">Tally Export</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">tally.export</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

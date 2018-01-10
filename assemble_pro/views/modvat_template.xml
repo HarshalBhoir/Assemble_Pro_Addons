@@ -1,0 +1,21 @@
+<openerp>
+    <data>
+     <record id="modvat_template" model="mail.template">
+            <field name="name">MODVAT Reminder</field>
+            <field name="email_from"></field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="subject">modVAT Reminder</field>
+            <!--<field name="email_to" >${object.performed_user_id.partner_id.email}</field>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <h3>This is a reminder to collect modVAT copy for the PO Number " ${object.origin}, raised on  ${object.partner_id.name}.</h3><br/> <br/>
+                    The material was inward on <b> ${object.date_done}</b> , bearing GRN number <b> ${object.name}.</b> 
+
+                    <br/><br/>
+                   Please collect the same and upload in the system ! <br/>
+                   For any further information please <a href="${object.url}"><b>Click here</b><a/><br/><br/>
+                    Thank you!<br/><br/> 
+            ]]></field>
+        </record>
+    </data>
+</openerp>

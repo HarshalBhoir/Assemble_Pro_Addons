@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_challan_document">
+    <t t-call="report.external_layout">
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+        <div class="page">
+			<t t-if="doc.dc_type=='non_returnable'"> 
+				<div class="row" style=" height: 220px;">
+					<span><center><b><h2><u>NON RETURNABLE DELIVERY CHALLAN</u></h2></b></center></span><br/>
+					<div class="col-xs-5" style="height: 200px; ">
+						<table class="table" >
+							<tr>
+								<td style="width:100px; border-top:none;">
+									<b><u><span t-field="doc.company_id.name"/></u></b>
+								</td>
+							</tr>
+							<tr style="height:50px;">
+								<td style="border-top:none;"> 
+									<span t-field="doc.company_id.street"/>,
+									<span t-field="doc.company_id.street2"/><br/>
+									<span t-field="doc.company_id.city"/>- 
+									<span t-field="doc.company_id.zip"/><br/>
+									<span t-field="doc.company_id.state_id.name"/><br/>
+									<span t-field="doc.company_id.country_id.name"/><br/>
+									Contact Person:<span t-field="doc.company_id.partner_id.child_ids[0].name"/><br/>
+									Phone No: <span t-field="doc.company_id.phone"/><br/>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5" style="height: 200px;width:50%; " >
+						<table class="table">
+							<tr>
+								<td style="width:100px; border-top:none;">
+									<b><u>Vendor Name</u></b>
+								</td>
+							</tr>
+							<tr style="height:50px;">
+								<td style="border-top:none;"> 
+									<span t-field="doc.partner_id.name"/><br/>
+									<span t-field="doc.partner_id.street"/>,
+									<span t-field="doc.partner_id.street2"/><br/>
+									<span t-field="doc.partner_id.city"/>- 
+									<span t-field="doc.partner_id.zip"/><br/>
+									<span t-field="doc.partner_id.state_id.name"/><br/>
+									<span t-field="doc.partner_id.country_id.name"/><br/>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<strong><left><b><h3><u>Other Informations:</u></h3></b></left></strong>
+				<br/>
+				<t t-if="doc.work_order_id.payment=='billable'">
+					<div class="row mt32 mb32" id="informations">
+						<div class="col-xs-5">
+							<table>
+								<tr>
+									<td class="text-left">
+										<strong>Type Of DC</strong>
+									</td>
+								<td class="text-left">
+									:<span t-field="doc.work_order_id.dc_type"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Payment</strong>
+								</td>
+								<td class="text-leftt">
+									:<span t-field="doc.work_order_id.payment"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Job No</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Inv No</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+							</table>
+						</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5">
+						<table>
+							<tr>
+								<td class="text-left">
+									<strong>Date Of Generation</strong>
+								</td>
+								<td class="text-left">
+									:<span t-field="doc.work_order_id.date_order"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Kind Attn:</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Job Serial No:</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<br/>
+				</div>
+				<span><center><b><h4><u>Please receive the following goods and return one copy of this Challan duly signed.</u></h4></b></center></span>
+				<table class="table table-condensed">
+				<thead>
+					<tr style=" border: 1px solid black;">
+						<th class="text-center" style=" border: 1px solid black;">SR.No.</th>
+						<th class="text-center" style=" border: 1px solid black;">Part Id</th>
+						<th class="text-center" style=" border: 1px solid black;">Part Description</th>
+						<th class="text-center" style=" border: 1px solid black;">Quantity(Sq.ft/nos.)</th>
+						<th class="text-center" style=" border: 1px solid black;">Rate</th>
+						<th class="text-center" style=" border: 1px solid black;">Total Rate</th>
+					</tr>
+			   </thead>
+			   <tbody class="sale_tbody">
+					<t t-set="counter" t-value="1"/>
+					<t t-foreach="doc.move_lines" t-as="l">
+						<tr style=" border: 1px solid black;">
+							<td class="text-center" style=" border: 1px solid black;">
+								<span t-raw="counter"/>
+							</td>
+							<td class="text-center" style=" border: 1px solid black;">
+							   <span t-field="l.product_id.default_code"/>
+							</td>
+							<td class="text-center" style=" border: 1px solid black;">
+							   <span t-field="l.product_id.name"/>
+							</td>
+							<td class="text-center" style=" border: 1px solid black;">
+								<span></span>
+							</td>
+							<td class="text-center" style=" border: 1px solid black;">
+								<span></span>
+							</td>
+							<td class="text-center" style=" border: 1px solid black;">
+								<span t-esc="l.get_total_rate()"/>
+							</td>
+						</tr>
+						<t t-set="counter" t-value="counter+1"/>
+					</t>
+				</tbody>
+			</table>
+		</t>
+				<t t-if="doc.work_order_id.payment=='non_billable'">
+					<div class="row mt32 mb32" id="informations">
+						<div class="col-xs-5">
+							<table>
+								<tr>
+									<td class="text-left">
+										<strong>Type Of DC</strong>
+									</td>
+								<td class="text-left">
+									:<span t-field="doc.work_order_id.dc_type"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Payment</strong>
+								</td>
+								<td class="text-leftt">
+									:<span t-field="doc.work_order_id.payment"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Job No</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left">
+									<strong>Inv No</strong>
+								</td>
+								<td class="text-left">
+									:<span></span>
+								</td>
+							</tr>
+							</table>
+						</div>
+						<div class="col-xs-2">
+						</div>
+						<div class="col-xs-5">
+							<table>
+								<tr>
+									<td class="text-left">
+										<strong>Date Of Generation</strong>
+									</td>
+									<td class="text-left">
+										:<span t-field="doc.work_order_id.date_order"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="text-left">
+										<strong>Kind Attn:</strong>
+									</td>
+									<td class="text-left">
+										:<span></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="text-left">
+										<strong>Job Serial No:</strong>
+									</td>
+									<td class="text-left">
+										:<span></span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<br/>
+					</div>
+					<span><center><b><h4><u>Please receive the following goods and return one copy of this Challan duly signed.</u></h4></b></center></span>
+					<div>
+						<table class="table table-condensed">
+						<thead>
+							<tr style=" border: 1px solid black;">
+								<th class="text-center" style=" border: 1px solid black;">SR.No.</th>
+								<th class="text-center" style=" border: 1px solid black;">Part Id</th>
+								<th class="text-center" style=" border: 1px solid black;">Part Description</th>
+								<th class="text-center" style=" border: 1px solid black;">Quantity</th>
+								<th class="text-center" style=" border: 1px solid black;">Reason/Remark</th>
+							</tr>
+					   </thead>
+					   <tbody class="sale_tbody">
+							<t t-set="counter" t-value="1"/>
+							<t t-foreach="doc.move_lines" t-as="l">
+								<tr style=" border: 1px solid black;">
+									<td class="text-center" style=" border: 1px solid black;">
+										<span t-raw="counter"/>
+									</td>
+									<td class="text-center" style=" border: 1px solid black;">
+									   <span t-field="l.product_id.default_code"/>
+									</td>
+									<td class="text-center" style=" border: 1px solid black;">
+									   <span t-field="l.product_id.name"/>
+									</td>
+									<td class="text-center" style=" border: 1px solid black;">
+										<span></span>
+									</td>
+									<td class="text-center" style=" border: 1px solid black;">
+										<span t-field="doc.remark"/>
+									</td>
+								</tr>
+								<t t-set="counter" t-value="counter+1"/>
+							</t>
+						</tbody>
+						</table>
+					</div>
+			</t>
+		<br/>
+		<div class="row mt32 mb32" id="informations">
+			<div class="col-xs-5">
+				<strong>Receiver's Name/Stamp:</strong>
+				<u><p></p></u>
+				<br></br>
+				<br></br>
+				<strong>Signature:</strong>
+				<u><p></p></u>
+			</div>
+			<div class="col-xs-2">
+			</div>
+			<div class="col-xs-5">
+				<b><strong>FOR LIFT CONTROLS PVT.LTD.</strong></b>
+				<u><p></p></u>
+				<br></br>
+				<br></br>
+				<strong>(Authorised By)</strong>
+			</div>
+		</div>
+	</t>
+			<t t-if="doc.dc_type=='returnable'"> 
+				<div class="row" style=" height: 220px;">
+						<span><center><b><h2><u>GATE PASS - RETURNABLE MATERIAL</u></h2></b></center></span><br/>
+						<div class="col-xs-5" style="height: 200px; ">
+							<table class="table" >
+								<tr>
+									<td style="width:100px; border-top:none;">
+										<b><u><span t-field="doc.company_id.name"/></u></b>
+									</td>
+								</tr>
+								<tr style="height:50px;">
+									<td style="border-top:none;"> 
+										<span t-field="doc.company_id.street"/>,
+										<span t-field="doc.company_id.street2"/><br/>
+										<span t-field="doc.company_id.city"/>- 
+										<span t-field="doc.company_id.zip"/><br/>
+										<span t-field="doc.company_id.state_id.name"/><br/>
+										<span t-field="doc.company_id.country_id.name"/><br/>
+										Contact Person:<span t-field="doc.company_id.partner_id.child_ids[0].name"/><br/>
+										Phone No: <span t-field="doc.company_id.phone"/><br/>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-xs-2">
+						</div>
+						<div class="col-xs-5" style="height: 200px; " >
+							<table class="table">
+								<tr>
+									<td style="width:100px; border-top:none;">
+										<b><u>Vendor Name</u></b>
+									</td>
+								</tr>
+								<tr style="height:50px;">
+									<td style="border-top:none;"> 
+										<span t-field="doc.partner_id.name"/><br/>
+										<span t-field="doc.partner_id.street"/>,
+										<span t-field="doc.partner_id.street2"/><br/>
+										<span t-field="doc.partner_id.city"/>- 
+										<span t-field="doc.partner_id.zip"/><br/>
+										<span t-field="doc.partner_id.state_id.name"/><br/>
+										<span t-field="doc.partner_id.country_id.name"/><br/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<strong><left><b><h3><u>Other Informations:</u></h3></b></left></strong>
+					<br/>
+					<div class="row mt32 mb32" id="informations">
+					<div class="col-xs-5">
+						<table>
+							<tr>
+								<td>
+									<strong>Type Of DC:</strong>
+								</td>
+							<td>
+								<p t-field="doc.work_order_id.dc_type"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Work Order No:</strong>
+							</td>
+							<td>
+								<p t-field="doc.work_order_id.name"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Type Of Service:</strong>
+							</td>
+							<td>
+								<p t-field="doc.work_order_id.service"/>
+							</td>
+						</tr>
+						</table>
+					</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5">
+						<table>
+							<tr>
+								<td>
+									<strong>DC No.:</strong>
+								</td>
+								<td>
+									<p t-field="doc.name"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Date Of Generation:</strong>
+								</td>
+								<td>
+									<p t-field="doc.work_order_id.date_order"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Scheduled Date:</strong>
+								</td>
+								<td>
+									<p t-field="doc.min_date"/>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<br/>
+				</div>
+					<span><center><b><h4><u>Please receive the following goods and return one copy of this Challan duly signed.</u></h4></b></center></span>
+					<table class="table table-condensed">
+					<thead>
+						<tr style=" border: 1px solid black;">
+							<th class="text-center" style=" border: 1px solid black;">SR.No.</th>
+							<th class="text-center" style=" border: 1px solid black;">Part Id</th>
+							<th class="text-center" style=" border: 1px solid black;">Part Description</th>
+							<th class="text-center" style=" border: 1px solid black;">Quantity(Sq.ft/nos.)</th>
+							<th class="text-center" style=" border: 1px solid black;">Type Of Color/Type Of Plating</th>
+							<th class="text-center" style=" border: 1px solid black;">Status</th>
+						</tr>
+				   </thead>
+				   <tbody class="sale_tbody">
+						<t t-set="counter" t-value="1"/>
+						<t t-foreach="doc.move_lines" t-as="l">
+							<tr style=" border: 1px solid black;">
+								<td class="text-center" style=" border: 1px solid black;">
+									<span t-raw="counter"/>
+								</td>
+								<td class="text-center" style=" border: 1px solid black;">
+								   <span t-field="l.product_id.default_code"/>
+								</td>
+								<td class="text-center" style=" border: 1px solid black;">
+								   <span t-field="l.product_id.name"/>
+								</td>
+								<td class="text-center" style=" border: 1px solid black;">
+									<span></span>
+								</td>
+								<td class="text-center" style=" border: 1px solid black;">
+									<span></span>
+								</td>
+								<td class="text-center" style=" border: 1px solid black;">
+									<span t-field="l.state"/>
+								</td>
+							</tr>
+							<t t-set="counter" t-value="counter+1"/>
+						</t>
+					</tbody>
+				</table>
+				<br/>
+				<div class="row mt32 mb32" id="informations">
+					<div class="col-xs-5">
+						<strong>Receiver's Name/Stamp:</strong>
+						<u><p></p></u>
+						<br></br>
+						<br></br>
+						<strong>Signature:</strong>
+						<u><p></p></u>
+					</div>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-5">
+						<b><strong>FOR LIFT CONTROLS PVT.LTD.</strong></b>
+						<u><p></p></u>
+						<br></br>
+						<br></br>
+						<strong>(Authorised By)</strong>
+					</div>
+				</div>
+			</t>
+		</div>
+	</t>
+</template>
+
+
+<template id="report_challan">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="assemble_pro.report_challan_document" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

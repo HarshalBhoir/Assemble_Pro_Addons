@@ -1,0 +1,36 @@
+#
+# Assemble Pro
+#
+import res_partner_extension
+import product_extension
+import res_country_extension
+import res_company_extension
+import res_users_extension
+import assemble_instruction
+import sale_order_extension
+import claim_management
+import work_order
+import mrp_extension
+import packaging_extension
+import supplier_pricelist_extension
+import account_extension
+import stock_extension
+import advance_material_plan
+import purchase_extension
+import tall_export
+import sales_declaration
+import otd_calculation
+import handeling_unit_barcode
+import legal_compliance
+import hr_extension
+import sale_report
+import sale_register_report
+import rg_export_report
+import purchase_report
+import packing_list_report
+import fg_summary_report
+import pcb_details_report
+import rm_serial_search_report
+import rm_stock_summary_report
+import msl_report
+import issue_note_register_report
